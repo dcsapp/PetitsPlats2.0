@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- fontawesome setup -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Petits Plats</title>
+  </head>
+
+  <body>
+    <header>
+      <section class="header__img">
+        <img src="./assets/images/Mask group.jpg" alt="" />
+        <div class="mainTitle">
+            <h1>
+                <span>CHERCHEZ PARMI PLUS DE 1500 RECETTES </span>
+                <span>DU QUOTIDIEN,SIMPLES ET DELICIEUSES </span>
+            </h1>
+        </div>
+        <div class="main__searchBar">
+          <input
+            type="text"
+            id="mainSearchInput"
+            placeholder="Rechercher une recette, un ingrédient, ..."
+            autocomplete="off"
+          />
+
+          <div class="clearSearch">
+            <i class="fa-solid fa-xmark"></i>
+          </div>
+          <button class="loopCTA">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </section>
+    </header>
+    <main>
+      <section class="sub__search">
+        <div class="sub__search__container">
+          <div class="searchCriteria">
+            <p>Ingrédients</p>
+            <span><i class="fa-solid fa-chevron-down"></i></span>
+          </div>
+          <div class="searchCriteria">
+            <p>Appareils</p>
+            <span><i class="fa-solid fa-chevron-down"></i></span>
+          </div>
+          <div class="searchCriteria">
+            <p>Ustensiles</p>
+            <span><i class="fa-solid fa-chevron-down"></i></span>
+          </div>
+        </div>
+        <div class="total_recipes">
+          <p>1500 recettes</p>
+        </div>
+      </section>
+      <section class="recipes__tags">
+
+      </section>
+      <section id = "recipesSelected">
+        <p>oooooooooooooooooooo</p>
+      </section>
+    </main>
+    <script src="./data/recipes.js"></script>
+    <script src="./scripts/factories/cardRecipe.js"></script>
+    <script src="./scripts/main.js"></script>
+  </body>
+</html>
