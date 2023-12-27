@@ -5,7 +5,7 @@ function recipeCardTemplate(recipeIndex) {
   console.log("oooo: ", typeof(recipeIndex));
   let currentRecipe = recipes[recipeIndex];
   //  console.log("QQQQQQ: ", currentRecipe);
-  const pathToImage = "../assets/images/recettes";
+  const pathToImage = "./assets/images/recettes";
   const { image, time, name, description, ingredients } = recipes[recipeIndex];
   // const { image, time, name, description, ingredients } = currentRecipe;
   console.log("image: ", image);
