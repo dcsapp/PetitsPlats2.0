@@ -3,9 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/style.css" />
     <!-- fontawesome setup -->
     <link
@@ -22,11 +25,14 @@
     <header>
       <section class="header__img">
         <img src="./assets/images/Mask group.jpg" alt="" />
+        <div class="logo">
+          <img src="./assets/logo/Logo.png" alt="logo Les petits plats" />
+        </div>
         <div class="mainTitle">
-            <h1>
-                <span>CHERCHEZ PARMI PLUS DE 1500 RECETTES </span>
-                <span>DU QUOTIDIEN,SIMPLES ET DELICIEUSES </span>
-            </h1>
+          <h1>
+            <span>CHERCHEZ PARMI PLUS DE 1500 RECETTES </span>
+            <span>DU QUOTIDIEN,SIMPLES ET DELICIEUSES </span>
+          </h1>
         </div>
         <div class="main__searchBar">
           <input
@@ -65,15 +71,17 @@
           <p>1500 recettes</p>
         </div>
       </section>
-      <section class="recipes__tags">
+      <section class="recipes__tags"></section>
+      <div class="sub__search__container__bis">
+        <section id="selectors"></section>
+      </div>
+      <div class="testList"></div>
 
-      </section>
-      <section id = "recipesSelected">
-        <p>oooooooooooooooooooo</p>
-      </section>
+      <section id="recipesSelected"></section>
     </main>
     <script src="./data/recipes.js"></script>
     <script src="./scripts/factories/cardRecipe.js"></script>
+    <script src="./scripts/factories/searchCriteria.js"></script>
     <script src="./scripts/main.js"></script>
   </body>
 </html>

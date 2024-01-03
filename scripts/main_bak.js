@@ -39,6 +39,27 @@ function returnUniqueSortedList(arr = "", elem = "") {
   });
   return [...setOfUniqueValue].sort();
 }
+//console.log("zzzzzzzzzzzz ===>: ", ingredientsVsRecipes);
+
+console.log(
+  "####+++==== INGREDIENTS >: ",
+  returnUniqueSortedList("ingredients", "ingredient")
+);
+
+console.log("####+++==== USTENSILS >: ", returnUniqueSortedList("ustensils"));
+// console.log("####+++==== APPLIANCE >: ", returnUniqueSortedList("appliance"));
+
+/* 
+const ingredientsVsRecipes = {}
+ingredientsVsRecipes.sucre = [1, 15, 17, 21];
+ingredientsVsRecipes.pomme = [6, 15, 21, 34];
+console.log("-----------------------------------");
+console.log('"A+A+A+A===>', ingredientsVsRecipes);
+console.log("-----------------------------------");
+ingredientsVsRecipes.sucre.push(45);
+console.log('"B+B+B+B===>', ingredientsVsRecipes);
+console.log("-----------------------------------");
+ */
 
 let listOfIngredients = [];
 /* const toto = recipes.forEach((item) => {
@@ -46,14 +67,14 @@ let listOfIngredients = [];
     //.forEach((ing) => {ing.ingredient}))
 })
  */
-/* 
 let toto = [];
 recipes.forEach((item) => {
   let tempo = item.ingredients;
   toto = [...toto, ...tempo];
 
   console.log(tempo);
- 
+  //.forEach((ing) => {ing.ingredient}))
+  /* }) */
   toto.forEach((item) => {
     if (listOfIngredients.includes(item.ingredient)) {
       listOfIngredients;
@@ -65,7 +86,6 @@ recipes.forEach((item) => {
 
 console.log("toto", toto);
 console.log("list of ingredients", listOfIngredients.sort());
- */
 
 const setOfIngredients = new Set();
 
@@ -80,6 +100,57 @@ const uniqueSortedIngredient = [...setOfIngredients].sort();
 console.log("====> Set of ingredients: ", setOfIngredients);
 console.log("====> Sorted ingredients: ", uniqueSortedIngredient);
 
+//const specificRecipes =
+
+/* 
+recipes.filter((item) => {
+    // item.name === "Frangipane"
+    item[0]
+})
+ */
+//console.log("rrr", specificRecipes)
+// console.log("specificRecipes", recipeID);
+
+function retrieveData(input) {
+  let recipeID = [];
+  let recipeINDX = [];
+
+  let searchString = input;
+  searchString.toLocaleLowerCase();
+  console.log("search: ", searchString);
+
+  recipes.forEach((recipe) => {
+    recipe.ingredients.forEach((item) => {
+      if (item.ingredient.toLowerCase().includes(searchString)) {
+        console.log(
+          "Ingredient: ",
+          item.ingredient.toLowerCase(),
+          recipe.id,
+          "Recette: ",
+          recipe.name
+        );
+        if (!recipeID.includes(recipe.id)) {
+          recipeID.push(recipe.id);
+          recipeINDX.push(recipes.indexOf(recipe));
+        }
+      }
+    });
+    if (
+      recipe.name.toLowerCase().includes(searchString) ||
+      recipe.description.toLowerCase().includes(searchString)
+    ) {
+      if (!recipeID.includes(recipe.id)) {
+        recipeID.push(recipe.id);
+        recipeINDX.push(recipes.indexOf(recipe));
+      }
+    }
+  });
+  //console.log("List of Recipes", recipeID, recipeID.length, recipeINDX);
+  const totalRecipes = document.querySelector(".total_recipes");
+  totalRecipes.innerHTML = recipeID.length + " recettes";
+  return recipeINDX;
+}
+
 function getSelectedRecipes(recipeList) {}
 /* 
 const {ingredients: listeOfIngredients } = recipes[0];
@@ -90,84 +161,54 @@ listeOfIngredients.forEach((elem) => {
 console.log("Recette: ", recipes[0]);
  */
 
-function displayRecipes(listID) {
+function displayRecipes(listIndex) {
   const recipeDisplaySection = document.getElementById("recipesSelected");
   recipeDisplaySection.replaceChildren();
-  listID.forEach((id) => {
-    const recipeModel = recipeCardTemplate(id);
+  listIndex.forEach((indx) => {
+    const recipeModel = recipeCardTemplate(indx);
     const recipeCard = recipeModel.getRecipeCard();
     recipeDisplaySection.appendChild(recipeCard);
+    //recipeCardTemplate(indx))
   });
-};
+}
 
-const criterias = ["Ingrédients", "Appareils", "Ustensiles"];
-const selCriteria = [["a", "b", "c"], [1, 2, 3], ["z", "y", "x"]]
-function displayCriteriaSelectors(criteriaType, data) {
-    // ingredients
+function displayCriteriaSelectors() {
   const selectorsSection = document.getElementById("selectors");
-
-for (let i = 0; i<3; i++) {
-    const criteriaModel = criteriaSelectorTemplate(criteriaType[i], data[i]);
-    const criteriaList =criteriaModel.getCriteriaSelector();
-    selectorsSection.appendChild(criteriaList);
+  const selectorModel = criteriaSelectorTemplate("Ingredients", [
+    "a",
+    "b",
+    "c",
+  ]);
+  const selector = selectorModel.getCriteriaSelector();
+  selectorsSection.appendChild(selector);
 }
-
-}
-displayCriteriaSelectors(criterias, selCriteria);
-
-
-// const data = [1, 2, 3, 4];
-function updateCriteriaSelector(selector, data) {
-    const selectorTitle = document.querySelector(`.${selector}`);
-    // console.log("querySelector: ", selectorTitle)
-
-    data.forEach((item) => {
-        const itemDetails = document.createElement("li");
-        itemDetails.classList.add("itemDetails");
-        itemDetails.textContent = item;
-        selectorTitle.appendChild(itemDetails);
-    });
-
-}
-// updateCriteriaSelector("Ingrédients", data);
-
+displayCriteriaSelectors();
 
 function listToDisplay(selectedRecipesIngredients) {
-  // const ingCriteria = document.querySelector(".testList");
-  const ingCriteria = document.querySelector(".itemList");
-  
-  let liste = "";
-  selectedRecipesIngredients.map((item) => {
-    liste += `<li>${item}</li>`;
-  });
-  console.log("list li:", liste);
-    // ingCriteria.innerHTML = liste;
-    ingCriteria.appendChild(liste);
+    const ingCriteria = document.querySelector(".testList");
+    let liste = "";
+    selectedRecipesIngredients.map((item) => {
+        liste += `<li>${item}</li>`
+    });
+    console.log("list des ingredients: ", liste)
+    // ingCriteria.appendChild(liste);
+    ingCriteria.innerHTML = liste;
+}
 
-    selectedRecipesIngredients.forEach((item) => {
-        const itemDetails = document.createElement("li");
-        itemDetails.classList.add("itemDetails");
-        itemDetails.textContent = item;
-
-        //.appendChild(itemDetails);
-})
-};
-
-function createCriteriaList(listID) {
+function createCriteriaList(listIndex) {
   const setOfIngredients = new Set();
   const setOfAppliances = new Set();
   const setOfUstensils = new Set();
 
-  listID.forEach((id) => {
-    let currentRecipe = recipes.filter((currentRecipe) => currentRecipe.id === id); //[recipeIndex];
+  listIndex.forEach((ind) => {
     // list of Appliances
-    setOfAppliances.add(currentRecipe[0].appliance);
+    setOfAppliances.add(recipes[ind].appliance);
     // list of Ustensils
-    currentRecipe[0].ustensils.forEach((ustensil) => {
-      setOfUstensils.add(ustensil);
+    recipes[ind].ustensils.forEach((ust) => {
+      setOfUstensils.add(ust);
     });
     // list of ingredients
-    currentRecipe[0].ingredients.forEach((ingredient) => {
+    recipes[ind].ingredients.forEach((ingredient) => {
       setOfIngredients.add(ingredient.ingredient);
     });
   });
@@ -177,45 +218,16 @@ function createCriteriaList(listID) {
   selectedRecipesAppliance = [...setOfAppliances].sort();
   console.log(
     "listIndex: ",
-    listID,
+    listIndex,
     selectedRecipesIngredients,
-    selectedRecipesUstensils,
-    selectedRecipesAppliance
+  selectedRecipesUstensils,
+  selectedRecipesAppliance 
   );
-  // listToDisplay(selectedRecipesIngredients);
-  updateCriteriaSelector("Ingrédients", selectedRecipesIngredients);
-  updateCriteriaSelector("Ustensiles", selectedRecipesUstensils);
-  updateCriteriaSelector("Appareils", selectedRecipesAppliance);
+  listToDisplay(selectedRecipesIngredients)
 }
 
-function retrieveRecipes(input) {
-  let recipeID = []; // ID list of selected recipes
 
-  let searchString = input;
-  searchString.toLocaleLowerCase();
-  recipes.forEach((recipe) => {
-    recipe.ingredients.forEach((item) => {
-      if (item.ingredient.toLowerCase().includes(searchString)) {
-        if (!recipeID.includes(recipe.id)) {
-          recipeID.push(recipe.id);
-        }
-      }
-    });
-    if (
-      recipe.name.toLowerCase().includes(searchString) ||
-      recipe.description.toLowerCase().includes(searchString)
-    ) {
-      if (!recipeID.includes(recipe.id)) {
-        recipeID.push(recipe.id);
-      }
-    }
-  });
-  const totalRecipes = document.querySelector(".total_recipes");
-  totalRecipes.innerHTML = recipeID.length + " recettes";
-  return recipeID;
-};
 
-// Retrieve recipes from Main search bar
 const mainInputBox = document.getElementById("mainSearchInput");
 mainInputBox.onkeyup = function () {
   let input = mainInputBox.value;
@@ -226,9 +238,11 @@ mainInputBox.onkeyup = function () {
   }
 
   if (input.length >= 3) {
-    let listIndex = retrieveRecipes(input);
+    let listIndex = retrieveData(input);
     displayRecipes(listIndex);
     createCriteriaList(listIndex);
+
+    console.log("Liste index: ", listIndex);
   } else {
     recipesSelected.innerHTML = "Aucune recette sélectionnée...";
   }

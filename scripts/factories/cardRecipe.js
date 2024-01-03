@@ -1,14 +1,9 @@
 // R E C I P E  C A R D
-console.log("recipes CARDS !!!", recipes);
+function recipeCardTemplate(recipeID) {
+  let currentRecipe = recipes.filter((currentRecipe) => currentRecipe.id === recipeID); //[recipeIndex];
 
-function recipeCardTemplate(recipeIndex) {
-  console.log("oooo: ", typeof(recipeIndex));
-  let currentRecipe = recipes[recipeIndex];
-  //  console.log("QQQQQQ: ", currentRecipe);
   const pathToImage = "./assets/images/recettes";
-  const { image, time, name, description, ingredients } = recipes[recipeIndex];
-  // const { image, time, name, description, ingredients } = currentRecipe;
-  console.log("image: ", image);
+  const { image, time, name, description, ingredients } = currentRecipe[0];
   function getRecipeCard() {
     // Each card is created as an article
     const article = document.createElement("article");
@@ -92,5 +87,4 @@ function recipeCardTemplate(recipeIndex) {
     return article;
   }
   return { getRecipeCard };
-}
-recipeCardTemplate(recipes[0]);
+};
