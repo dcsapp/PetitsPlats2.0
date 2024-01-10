@@ -41,7 +41,6 @@
             placeholder="Rechercher une recette, un ingrédient, ..."
             autocomplete="off"
           />
-
           <div class="clearSearch">
             <i class="fa-solid fa-xmark"></i>
           </div>
@@ -51,6 +50,7 @@
         </div>
       </section>
     </header>
+
     <main>
       <section class="sub__search">
         <div class="sub__search__container">
@@ -71,17 +71,69 @@
           <p>1500 recettes</p>
         </div>
       </section>
+      <!--  -->
+      
       <section class="recipes__tags"></section>
-      <div class="sub__search__container__bis">
+
+      <!-- <div class="sub__search__container__bis"> -->
+        <div class="sub__search__container">
         <section id="selectors"></section>
+        <div class="total_recipes">
+          <p>1500 recettes</p>
+        </div>
       </div>
       <div class="testList"></div>
+
+      <div class="criteriaWrapper">
+        <div class="criteria__header">
+          <p>Ingrédients</p>
+          <span class="displaySearch">
+            <i class="fa-solid fa-chevron-down"></i>
+          </span>
+        </div>
+ 
+
+        <div class="criteria__search">
+          <div class="input-control">
+            <input type="text" id="search" />
+
+            <label for="search">
+              <i class="fa-solid fa-xmark close__search"></i>
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </label>
+          </div>
+        </div>
+
+        <div class="item__selected">
+          <p>Coco</p>
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <div class="item__list">
+          <ul>
+            <li>item1</li>
+            <li>item2</li>
+            <li>item3</li>
+          </ul>
+        </div>
+      </div>
+      <section class="sub__search">
+        <div class="sub__search__container">
+          <section id="tyui"></section>
+          <div id="ingredients"></div>
+          <div id="appliances"></div>
+          <div id="ustensils"></div>
+        </div>
+        <div class="total_recipes">
+          <p>1500 recettes</p>
+        </div>
+      </section>
 
       <section id="recipesSelected"></section>
     </main>
     <script src="./data/recipes.js"></script>
     <script src="./scripts/factories/cardRecipe.js"></script>
-    <script src="./scripts/factories/searchCriteria.js"></script>
+    <script src="./scripts/factories/searchDropdown.js"></script>
+    <script src="./scripts/factories/dropTemplate.js"></script>
     <script src="./scripts/main.js"></script>
   </body>
 </html>

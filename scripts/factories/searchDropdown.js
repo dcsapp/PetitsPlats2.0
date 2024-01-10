@@ -13,14 +13,14 @@ function criteriaSelectorTemplate(typeOfCriteria, data) {
     selectorCriteria.appendChild(criteriaTitle);
     const arrowIcon = document.createElement("i");
     arrowIcon.classList.add("fa-solid", "fa-chevron-down");
-    // arrowIcon.classList.add("fa-solid fa-chevron-down");
     selectorCriteria.appendChild(arrowIcon);
     selectorWrapper.appendChild(selectorCriteria);
     //
     //
-    const content = document.createElement("div");
-    content.classList.add("content");
-    //
+    //const content = document.createElement("div");
+    // content.classList.add("content");
+
+    // Search box / delete search / magninify
     const searchBox = document.createElement("div");
     searchBox.classList.add("searchBox");
     const inputField = document.createElement("input");
@@ -32,12 +32,15 @@ function criteriaSelectorTemplate(typeOfCriteria, data) {
     searchBox.appendChild(inputField);
     searchBox.appendChild(closeCross);
     searchBox.appendChild(magnifyingIcon);
-    content.appendChild(searchBox);
+    // content.appendChild(searchBox);
+    selectorWrapper.appendChild(searchBox);
+    
     //
     //
     const selectedItem = document.createElement("div");
     selectedItem.classList.add("selectedItem");
-    content.appendChild(selectedItem);
+    //content.appendChild(selectedItem);
+    selectorWrapper.appendChild(searchBox);
     //
     const selectedDatalist = document.createElement("ul");
     selectedDatalist.classList.add("datalist", `${typeOfCriteria}`);
@@ -50,13 +53,13 @@ function criteriaSelectorTemplate(typeOfCriteria, data) {
         selectedDatalist.appendChild(itemDetails);
     });
  */
-    content.appendChild(selectedDatalist);
-
+    //content.appendChild(selectedDatalist);
+    selectedItem.appendChild(selectedDatalist);
     //
     //
     //
-    selectorWrapper.appendChild(content);
-
+    // selectorWrapper.appendChild(content);
+    selectorWrapper.appendChild(selectedItem);
     return selectorWrapper;
   }
   return { getCriteriaSelector };

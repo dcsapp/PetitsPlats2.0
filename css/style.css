@@ -11,8 +11,9 @@ body {
   background: #e5e5e5;
   max-width: 1440px;
   margin: 0 auto;
+  font-family: "Manrope", sans-serif;
 }
-
+/* H E A D E R */
 header {
   position: relative;
 }
@@ -36,6 +37,18 @@ header {
   position: absolute;
   top: 245px;
   left: 275px;
+}
+
+h1 {
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  font-size: 44px;
+  text-align: center;
+  color: #ffd700;
+}
+
+h1 span {
+  display: block;
 }
 
 .main__searchBar {
@@ -86,12 +99,7 @@ header {
   font-size: 23px;
   cursor: pointer;
 }
-/* 
-button .fa-xmark {
-    color: #000;
-    font-size: 100px;
-}
- */
+
 .loopCTA {
   width: 51px;
   height: 52px;
@@ -109,25 +117,16 @@ button .fa-solid {
   font-size: 30px;
 }
 
+/* M A I N  &  S E C T I O N S   */
 main {
   width: 1236px;
   margin: 0 auto;
   /* border: 1px solid black; */
 }
 
-h1 {
-  font-family: "Anton", sans-serif;
-  font-weight: 400;
-  font-size: 44px;
-  text-align: center;
-  color: yellow;
-}
-h1 span {
-  display: block;
-}
+/* section S U B _ _ S E A R C H  and  T O T A L  R E C I P E S */
 
-.sub__search,
-#selectors {
+.sub__search {
   margin: 30px auto;
   display: flex;
   flex-direction: row;
@@ -138,8 +137,17 @@ h1 span {
 .sub__search__container {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: start;
   gap: 70px;
+}
+
+/* Dropdownlist */
+.selector__wrapper {
+  width: 195px;
+  display: flex;
+  flex-direction: column;
+  max-height: 315px;
+  /* overflow-y: auto; */
 }
 
 .searchCriteria {
@@ -161,6 +169,9 @@ h1 span {
   font-size: 21px;
   font-family: "Anton", sans-serif;
 }
+/* section R E C I P E _ _ T A G */
+
+/*   */
 
 #recipesSelected {
   display: grid;
@@ -169,6 +180,104 @@ h1 span {
   row-gap: 70px;
 }
 
+.sub__search__container__bis {
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  justify-content: space-between;
+  /* gap: 70px; */
+}
+
+#selectors {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  /* align-items: center; */
+}
+
+.selector__wrapper {
+  width: 195px;
+  min-height: 56px;
+  background: #fff;
+  border-radius: 11px;
+  display: flex;
+  flex-direction: column;
+}
+
+.selector__criteria {
+  padding: 17px 16px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.selector__criteria i {
+  font-size: 16px;
+  transition: transform 0.2s linear;
+}
+
+.content {
+  display: block;
+  /* border: 1px solid grey; */
+  /* padding: 17px 16px; */
+}
+
+.searchBox {
+  height: 36px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.searchBox input {
+  height: 36px;
+}
+
+.itemDetails {
+  height: 37px;
+  font-size: 14px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 400;
+  list-style-type: none;
+  padding-top: 10px;
+}
+
+.itemDetails:hover {
+  background: #ffd700;
+  cursor: pointer;
+}
+
+.searchBox i {
+  color: grey;
+}
+
+.selectedItem {
+  height: 200px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.selectedItem li {
+  margin: 17px 16px;
+}
+/* 
+    p {
+        display: -webkit-box;
+        max-width: 200px;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+    }
+     */
+
+/* section S E L E C T E D  R E C I P E S  D I S P L A Y */
+
+/* R E C I P E  C A R D S */
 .recipeCard__layout {
   width: 380px;
   border-radius: 21px;
@@ -191,7 +300,7 @@ h1 span {
   width: 65px;
   height: 26px;
   border-radius: 14px;
-  background: yellow;
+  background: #ffd700;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -266,93 +375,91 @@ h1 span {
   color: grey;
 }
 
-/* Search selectors */
+/*  */
 
-.sub__search__container__bis {
+.criteriaWrapper {
+    width: 195px;
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 11px;
+    min-height: 56px;
+    max-height: 250px;
+}
+.criteria__header {
+    display: flex;
     justify-content: space-between;
-    /* gap: 70px; */
-  }
-
-#selectors {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
     align-items: center;
+    margin: 17px 16px 0;
+    font: 16px;
+    font-family: "Manrope", sans-serif;
+}
+.criteria__search {
+    display: none;
 }
 
-
-.selector__wrapper {
-  width: 195px;
-  min-height: 56px;
-  background: #fff;
-  border-radius: 11px;
+.input-control {
   display: flex;
-  flex-direction: column;
-}
-
-.selector__criteria {
-  padding: 17px 16px;
-  font-family: "Manrope", sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  color: #000;
-  display: flex;
-  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
+  margin: 17px 16px;
+  border: 1px solid lightgrey;
+  caret-color: lightgrey;
+  /* width: 195px;
+  height: 56px; */
 }
-
-.selector__criteria i {
-  font-size: 16px;
-  transition: transform 0.2s linear;
-}
-
-.content {
-  display: block;
-  /* border: 1px solid grey; */
-  padding: 17px 16px;
-}
-
-.searchBox {
-  height: 36px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.searchBox input {
-  height: 36px;
-}
-
-.itemDetails {
-  height: 37px;
+.input-control input {
+  width: 100%;
   font-size: 14px;
-  font-family: "Manrope", sans-serif;
   font-weight: 400;
-  list-style-type: none;
-  padding-top: 10px;
+  color: #000;
+  caret-color: lightgrey;
+  /* padding-right: 10px; */
+  padding: 7px;
+  outline: 0;
+  border: 0;
 }
 
-.itemDetails:hover {
-  background: yellow;
-  cursor: pointer;
+.input-control label {
+    display: flex;
+  
 }
 
-.searchBox i {
-  color: grey;
+.input-control label i {
+    display: inline-block;
+    padding: 0 0 0 10px;
 }
 
 
-/* 
-p {
-    display: -webkit-box;
-    max-width: 200px;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
+.input-control label i .close__search {
+    display: none;
 }
- */
+
+.item__selected {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    height: 37px;
+    
+    background: #ffd700;
+    
+}
+.item__selected p {
+    color: #000;
+    font-weight: 700;
+    margin: 17px 16px;
+}
+
+.item__list {
+    display: none;
+}
+
+
+/*  */
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
