@@ -172,6 +172,12 @@ function expandDropBox(e) {
         chev.children[1].classList.toggle("criteria__open");
         chev.parentElement.classList.toggle("expand");
     } */
+
+  // Tag display from selected items
+    if (e.target.matches("li")) {
+      tagTemplate(e.target.dataset.item)
+      console.log("item: ", e.target)
+    }
 }
 
 // Retrieve data from input boxes
@@ -201,6 +207,26 @@ function getData(e) {
     recipesSelected.innerHTML = "Aucune recette sélectionnée...";
   }
 }
+
+
+// End of Events Delegation 
+
+
+// Tag template
+function tagTemplate(critItem) {
+  document.getElementById("recipes__tags").innerHTML += `
+      <div class="tag__wrapper data-attr=${critItem}">
+        <p>${critItem}</p>
+        <span class="closeCrossTag"><i class="fa-solid fa-xmark close__search"></i></span>
+      </div>
+    `;
+}
+
+
+
+
+
+
 
 function displayRecipes(listID) {
   const recipeDisplaySection = document.getElementById("recipesSelected");
