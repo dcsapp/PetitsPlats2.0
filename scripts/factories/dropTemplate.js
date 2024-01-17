@@ -13,10 +13,46 @@ function recipeItem(selectedRecipesIngredients) {
     `;
 }
 
+function arrayIntersection(arr1, arr2) {
+  const arr3 = arr1.filter((data) => arr2.includes(data));
+  return arr3;
+}
+
+const arr1 = [1, 2, 3 ,4, 5];
+const arr2 = [1, 6, 5, 7, 2];
+
+console.log("Intersection: ", arrayIntersection(arr1, arr2))
+
+
+
+
 
 // Create a list of recipe based on sub criterias
 // And possibly merged with list of recipes selection from main search bar
-const criteriaRecipesList = []; 
+let criteriaRecipesList = []; 
+
+
+function merge(criteriaList) {
+    const toto = [];
+    if(criteriaRecipesList.length === 0) {
+      console.log("criteria Recipe is empty")
+      toto = criteriaList.slice();
+    } else {
+    criteriaRecipesList.forEach((item) => {
+        if (criteriaList.includes(item)) {
+            toto.push(item)
+        }
+    })
+  }
+  criteriaRecipesList = toto.slice()
+    console.log('T O T O : ', toto);
+};
+
+
+
+
+
+
 
 function mergeCriteria(critList) {
   console.log("inside: ", criteriaRecipesList.length)
@@ -39,9 +75,37 @@ function mergeCriteria(critList) {
 
 }
 
+function tagTemplate(critItem) {
+  document.getElementById("recipes__tags").innerHTML += `
+    <div class="tag__wrapper data-attr=${critItem}">
+      <p>${critItem}</p>
+      <span class="closeCrossTag"><i class="fa-solid fa-xmark close__search"></i></span>
+    </div>
+  `
+}
+// tagTemplate("jus de pomme");
+tagTemplate("test2");
+
+function removeTag(e){
+  e.stopPropagation();
+  const currentTag = e.target.dataset//.getAttribute("data-attr")
+  console.log("clicked: ", e.target.children[0].textContent)
+  e.target.classList.add("hide")
+  //.getAttribute("data-attr"))
+}
+
+const itemTag = document.querySelectorAll(".tag__wrapper");
+console.log("azerty: ", itemTag);
+itemTag.forEach(tag => tag.addEventListener("click", removeTag))
+  //  => tag.classList.add(".hide"))})
+  //(e) => {this.removeTag(e)});
+// })
+
+
 
 
 function createSelector(crit, selectorTitle) {
+  console.log("crit crit= ", crit)
   document.getElementById(`${crit}`).innerHTML = `
     <div class="criteriaWrapper data-criteria-${crit}">
         <div class="criteria__header">
@@ -65,13 +129,9 @@ function createSelector(crit, selectorTitle) {
             <i class="fa-solid fa-circle-xmark"></i>
         </div>
 
-        <div class="item__list">
+        <div class="item__list itemList${crit}">
 
-            <ul>
-                <li>item1</li>
-                <li>item2</li>
-                <li>item3</li>
-            </ul>
+            
         </div>
     </div>
 `;
@@ -80,6 +140,14 @@ function createSelector(crit, selectorTitle) {
 createSelector("ingredients", "Ingrédients");
 createSelector("appliances", "Appareils");
 createSelector("ustensils", "Ustensiles");
+
+const criteriaSelectors = document.querySelectorAll(".criteria__header");
+criteriaSelectors.forEach((sel) => sel.addEventListener("click" , (e) => {
+  console.log("criteria selector clicked...", e.target.parentNode)
+  /* e.target.parentNode.style.height = "250px"; */
+  e.target.parentNode.classList.toggle("expand");
+
+}))
 
 function aTest(inputElem, searchCriteria) {
   const localRecipes = [];
@@ -90,13 +158,15 @@ function aTest(inputElem, searchCriteria) {
   const criteriaList = `listOf${list}`;
   // criteriaList = eval(criteriaList.toString())
   console.log("List: ",list);
-  const criteriaListItem = eval(criteriaList.toString())
-  console.log("Eval: ", criteriaListItem);
+  // const criteriaListItem = eval(criteriaList.toString())
+  // console.log("Eval: ", criteriaListItem);
+  console.log("Eval: ", criteriaList);
 
   let searchString = inputElem;
   searchString.toLocaleLowerCase();
   
-  const itemsKeys = Object.keys(criteriaListItem);
+  const itemsKeys = Object.keys(criteriaList);
+  // const itemsKeys = Object.keys(criteriaListItem);
   itemsKeys.forEach((item) => {
     if(item.includes(searchString)) {
       console.log("item: ", item)
@@ -107,8 +177,8 @@ function aTest(inputElem, searchCriteria) {
   })
   criteriaRecipesList.push(localRecipes.flat());
   console.log("Full: ", criteriaRecipesList.flat());
-  // mergeCriteria(criteriaRecipesList.flat());
-  displayRecipes(criteriaRecipesList.flat())
+  merge(criteriaRecipesList.flat());
+  // displayRecipes(criteriaRecipesList.flat())
 }
 
 

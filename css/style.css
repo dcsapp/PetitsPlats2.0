@@ -13,6 +13,7 @@ body {
   margin: 0 auto;
   font-family: "Manrope", sans-serif;
 }
+
 /* H E A D E R */
 header {
   position: relative;
@@ -50,7 +51,7 @@ h1 {
 h1 span {
   display: block;
 }
-
+/* Main search bar */
 .main__searchBar {
   width: 954px;
   height: 72px;
@@ -134,6 +135,161 @@ main {
   justify-content: space-between;
 }
 
+.criterias {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 70px;
+}
+
+/* DROPDOWN CRITERIA BOX */
+/* wrapper */
+.criteriaWrapper {
+  display: flex;
+  flex-direction: column;
+  max-height: 56px;
+  overflow: hidden;
+  width: 195px;
+  background: #fff;
+  border-radius: 11px;
+  margin-left: 20px;
+  transition: 500ms;
+}
+
+.expand {
+  max-height: 250px;
+  transition: 500ms;
+}
+
+/* 1 - Header: title & chevron handling  */
+.criteria__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 56px;
+  flex-shrink: 0;
+  margin: 0px 10px;
+  cursor: pointer;
+}
+
+.criteria__header p {
+  font-size: 16px;
+  color: #000;
+  pointer-events: none;
+}
+
+.criteria__header span {
+  pointer-events: none;
+}
+
+.criteria__header span i {
+  pointer-events: none;
+  transition: all 500ms;
+}
+
+.criteria__open {
+  transform: rotate(180deg);
+  transition: all 500ms;
+}
+
+/* 2 - input box & delete cross & magnify icon */
+.criteria__search {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 175px;
+  height: 36px;
+  margin: 0 10px;
+  padding-bottom: 15px;
+}
+
+.input-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin: 17px 16px; */
+  border: 1px solid lightgrey;
+  border-radius: 2px;
+  caret-color: lightgrey;
+  /* width: 195px;
+    height: 56px; */
+}
+.input-control input {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  color: grey;
+  caret-color: lightgrey;
+  padding-right: 10px;
+  padding: 7px;
+  outline: 0;
+  border: 0;
+}
+
+.input-control label {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.input-control label i {
+  color: lightgrey;
+  display: inline-block;
+  padding: 0 0 0 10px;
+}
+
+.input-control label i .close__search {
+  display: none;
+}
+
+/* 3 - Selected item  */
+#item__selected {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  height: 37px;
+  margin: 10px 0;
+}
+
+#item__selected:hover {
+  background: #ffd700;
+}
+
+#item__selected p {
+  color: #000;
+  font-weight: 700;
+  margin: 17px 16px;
+}
+
+.iconXmark {
+  margin-right: 10px;
+}
+
+/* List of items */
+.item__list {
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+ul li {
+  height: 19px;
+  font-size: 14px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 400;
+  list-style-type: none;
+  padding: 5px 10px;
+}
+
+.recipeItem:hover {
+  background-color: #ffd700;
+  font-weight: 700;
+}
+
+/* O L D */
+
 .sub__search__container {
   display: flex;
   flex-direction: row;
@@ -166,6 +322,7 @@ main {
 }
 
 .total_recipes {
+  align-items: start;
   font-size: 21px;
   font-family: "Anton", sans-serif;
 }
@@ -375,8 +532,41 @@ main {
   color: grey;
 }
 
-/*  */
+/* Tag section */
+#recipes__tags {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 20px;
+  margin: 15px;
+}
 
+.tag__wrapper {
+  min-width: 100px;
+  max-width: fit-content;
+  height: 53px;
+  background: #ffd700;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  filter: drop-shadow(0px 4px 4px #000);
+  cursor: pointer;
+}
+
+.tag__wrapper p {
+  pointer-events: none;
+}
+
+.closeCrossTag {
+  margin-left: 10px;
+  pointer-events: none;
+}
+
+/*  */
+/* 
 .criteriaWrapper {
     width: 195px;
     display: flex;
@@ -386,6 +576,7 @@ main {
     min-height: 56px;
     max-height: 250px;
 }
+
 .criteria__header {
     display: flex;
     justify-content: space-between;
@@ -394,6 +585,9 @@ main {
     font: 16px;
     font-family: "Manrope", sans-serif;
 }
+*/
+
+/* 
 .criteria__search {
     display: none;
 }
@@ -405,8 +599,6 @@ main {
   margin: 17px 16px;
   border: 1px solid lightgrey;
   caret-color: lightgrey;
-  /* width: 195px;
-  height: 56px; */
 }
 .input-control input {
   width: 100%;
@@ -414,7 +606,6 @@ main {
   font-weight: 400;
   color: #000;
   caret-color: lightgrey;
-  /* padding-right: 10px; */
   padding: 7px;
   outline: 0;
   border: 0;
@@ -435,6 +626,10 @@ main {
     display: none;
 }
 
+ */
+
+/* 
+
 .item__selected {
     display: none;
     justify-content: space-between;
@@ -454,7 +649,21 @@ main {
     display: none;
 }
 
+.recipeItem {
+  height: 19px;
+  font-size: 14px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 400;
+  list-style-type: none;
+  padding: 5px 10px;
+}
 
+.recipeItem:hover {
+  background-color: #ffd700;
+  font-weight: 700;
+}
+
+ */
 /*  */
 .hide {
   display: none;
@@ -462,4 +671,8 @@ main {
 
 .show {
   display: block;
+}
+
+.show-flex {
+  display: flex;
 }

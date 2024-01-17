@@ -38,6 +38,7 @@
           <input
             type="text"
             id="mainSearchInput"
+            data-name="mainSearch"
             placeholder="Rechercher une recette, un ingrédient, ..."
             autocomplete="off"
           />
@@ -52,6 +53,19 @@
     </header>
 
     <main>
+      <section class="sub__search">
+        <div class="criterias">
+          <div id="ingredients"></div>
+          <div id="appliances"></div>
+          <div id="ustensils"></div>
+        </div>
+        <div class="total_recipes">
+          <p>1500 recettes</p>
+        </div>
+      </section>
+      <hr />
+      <hr />
+<!-- 
       <section class="sub__search">
         <div class="sub__search__container">
           <div class="searchCriteria">
@@ -71,12 +85,14 @@
           <p>1500 recettes</p>
         </div>
       </section>
+ -->
       <!--  -->
-      
-      <section class="recipes__tags"></section>
+
+      <section id="recipes__tags"></section>
 
       <!-- <div class="sub__search__container__bis"> -->
-        <div class="sub__search__container">
+<!-- 
+      <div class="sub__search__container">
         <section id="selectors"></section>
         <div class="total_recipes">
           <p>1500 recettes</p>
@@ -91,7 +107,6 @@
             <i class="fa-solid fa-chevron-down"></i>
           </span>
         </div>
- 
 
         <div class="criteria__search">
           <div class="input-control">
@@ -116,6 +131,7 @@
           </ul>
         </div>
       </div>
+
       <section class="sub__search">
         <div class="sub__search__container">
           <section id="tyui"></section>
@@ -128,12 +144,21 @@
         </div>
       </section>
 
+      <div class="testUL">
+        <div id="ing"></div>
+        <div id="ust"></div>
+        <div id="app"></div>
+      </div>
+ -->
       <section id="recipesSelected"></section>
     </main>
     <script src="./data/recipes.js"></script>
     <script src="./scripts/factories/cardRecipe.js"></script>
+    <script src="./scripts/factories/criteriasTemplate.js"></script>
+    <!-- 
     <script src="./scripts/factories/searchDropdown.js"></script>
     <script src="./scripts/factories/dropTemplate.js"></script>
+     -->
     <script src="./scripts/main.js"></script>
   </body>
 </html>
