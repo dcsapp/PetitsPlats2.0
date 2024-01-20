@@ -7,19 +7,22 @@ function createSelector(crit, selectorTitle) {
             
           <div class="criteria__header">
              
-                  <p>${selectorTitle}</p>
+                <p>${selectorTitle}</p>
                  
                 <span class="displaySearch">
                     <i class="fa-solid fa-chevron-down chevronDown"></i>
-                </span>
-                
+                </span>          
           </div>
           <div class="criteria__search">
                <div class="input-control">
                    <input type="text" id="criteriaBox${crit}" data-name=${crit} />
                    <label for="search">
-                       <span class="closeCross hide"><i class="fa-solid fa-xmark close__search"></i></span>
-                       <span><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <span class="closeCross hide">
+                            <i class="fa-solid fa-circle-xmark close__search"></i>
+                        </span>
+                        <span>
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
                    </label>
                </div>
           </div>

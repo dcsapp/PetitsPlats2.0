@@ -89,7 +89,7 @@ h1 span {
 
 .clearSearch {
   display: inline-flex;
-  display: none;
+  /* display: none; */
   align-items: center;
   justify-content: center;
   width: 40px;
@@ -256,12 +256,17 @@ main {
 
 #item__selected:hover {
   background: #ffd700;
+  cursor: pointer;
 }
 
 #item__selected p {
   color: #000;
   font-weight: 700;
   margin: 17px 16px;
+}
+
+.item_used {
+  background: #999999;
 }
 
 .iconXmark {

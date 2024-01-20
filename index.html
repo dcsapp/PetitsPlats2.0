@@ -34,15 +34,16 @@
             <span>DU QUOTIDIEN,SIMPLES ET DELICIEUSES </span>
           </h1>
         </div>
-        <div class="main__searchBar">
+        <div class="main__searchBar searchBar">
           <input
             type="text"
             id="mainSearchInput"
+            
             data-name="mainSearch"
             placeholder="Rechercher une recette, un ingrédient, ..."
             autocomplete="off"
           />
-          <div class="clearSearch">
+          <div class="clearSearch hide">
             <i class="fa-solid fa-xmark"></i>
           </div>
           <button class="loopCTA">
@@ -64,6 +65,11 @@
         </div>
       </section>
       <hr />
+      <section class="lists">
+        <div class="selectedReceipes"></div>
+        <div class="mainSearchBar"></div>
+        <div class="criteriaSearch"></div>
+      </section>
       <hr />
 <!-- 
       <section class="sub__search">
