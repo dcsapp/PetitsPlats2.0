@@ -94,8 +94,8 @@ function getData(e) {
   console.log("inputBox: ", inputBox);
   console.log("inputBoxClassName: ", inputBoxClassName);
 
-  console.log("Parent: ", e.target.parentElement.children);
-  console.log("inputBox target: ", e.target.closest("span"));
+  // console.log("Parent: ", e.target.parentElement.children);
+  // console.log("inputBox target: ", e.target.closest("span"));
   let inputValue = e.target.parentElement.children[0].value;
   console.log("key pressed: ", inputValue);
   // Display reset field cross
@@ -109,7 +109,7 @@ function getData(e) {
     // Check input location
     // Main search bar or one of the dropbox selector
     if (inputBox === "mainSearchInput") {
-      let listIndex = retrieveRecipes(inputValue, inputBox);
+      listIndex = retrieveRecipes(inputValue, inputBox);
       console.log("list index1: ", listIndex);
       createCriteriaList(listIndex)
       displayRecipes(listIndex);
@@ -122,19 +122,6 @@ function getData(e) {
     // console.log("list index: ", listIndex);
   }
 
-  // ====== old ======
-  /* 
-  if (inputValue.length >= 3) {
-    let listIndex = retrieveRecipes(inputValue, inputBox);
-    console.log("list index: ", listIndex);
-    displayRecipes(listIndex);
-    createCriteriaList(listIndex);
-  } else {
-    createCriteriaList([]);
-    recipesSelected.innerHTML = "Aucune recette sélectionnée...";
-  }
-  */
-  // ====== old ======
 }
 
 function displayRecipes(listID) {
@@ -149,8 +136,8 @@ function displayRecipes(listID) {
 
 function displayResetCross(inputFieldName, onOff) {
   const toBeDisplayed = document.querySelector(`.${inputFieldName}`);
-  console.log("toBeDisplayed", toBeDisplayed);
-  console.log("inputFieldName", inputFieldName);
+  // console.log("toBeDisplayed", toBeDisplayed);
+  // console.log("inputFieldName", inputFieldName);
   if (onOff === "ON") {
     toBeDisplayed.style.display = "flex";
   }
@@ -196,3 +183,18 @@ function clearInputCleared(e) {
 */
 /* let toto = e.target.closest("input");
   console.log("body click: ", inputField) */
+
+
+  // ====== old ======
+  /* 
+  if (inputValue.length >= 3) {
+    let listIndex = retrieveRecipes(inputValue, inputBox);
+    console.log("list index: ", listIndex);
+    displayRecipes(listIndex);
+    createCriteriaList(listIndex);
+  } else {
+    createCriteriaList([]);
+    recipesSelected.innerHTML = "Aucune recette sélectionnée...";
+  }
+  */
+  // ====== old ======

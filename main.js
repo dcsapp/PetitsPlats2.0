@@ -36,6 +36,8 @@ function updateCriteriaList(criteria, data) {
   //      main bar selected recipes and / or
   //      criteria search field
   const ulContent = document.querySelector(`#itemList${criteria}`);
+  // Remove previous ul before update
+  ulContent.replaceChildren();
 
   const ul = document.createElement("ul");
   ul.classList.add(`ul-${criteria}`, "ulCriteria");
@@ -65,7 +67,6 @@ function updateCriteriaList(criteria, data) {
   });
 }
 
-
 function removeTag(selectedItem) {
   const tagToRemove = document.querySelector(
     `[data-criteria-tag = "${selectedItem}"]`
@@ -75,9 +76,14 @@ function removeTag(selectedItem) {
 
 // ====================================================
 
-// Search Input boxes Activation
+// I N I T
+// Create from templates all search Input boxes.
 createMainSearchBar();
 createCriteriaSelectors("ingredients", "Ingrédients");
 createCriteriaSelectors("appliances", "Appareils");
 createCriteriaSelectors("ustensils", "Ustensiles");
-displayNumberOfRecipes("0")
+displayNumberOfRecipes("0");
+// Feed Selectors list. By default all item of each cateory are available
+updateCriteriaList("ingredients", Object.keys(listOfIngredients).sort());
+updateCriteriaList("appliances", Object.keys(listOfAppliances).sort());
+updateCriteriaList("ustensils", Object.keys(listOfUstensils).sort());

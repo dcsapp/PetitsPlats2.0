@@ -14,22 +14,26 @@ let selectorsTagsList = [];
 
 // R E S U L T  O F  S E A R C H E S  I N P U T  B O X E S
 // List of recipes IDs to be displayed
-let selectedRecipes = [];
+let selectedRecipes = []; // 52
+let listIndex = [];
 
 // L I S T  H A N D L I N G
 function updateTagList(option, itemSelected) {
   // option: add or remove the tag info from the tagsList
   //
   // Get the item from full array
-  // console.log("fullList ===>", fullList);
-  const tagDetail = fullList[0][itemSelected];
+  console.log("fullList ===>", fullList);
+  const tagDetail = fullList[0][itemSelected.toLowerCase()];
   // console.log("tag Detail===>", tagDetail);
 
   if (option === "add") {
     console.log("++++++++++++ ADDing", itemSelected);
     // 1 - Add the new item to the tagsList array
     console.log("tagDetail: ", tagDetail);
-    selectorsTagsList.push({ item: itemSelected, recID: tagDetail });
+    selectorsTagsList.push({
+      item: itemSelected.toLowerCase(),
+      recID: tagDetail,
+    });
     // tagsList.push({item: `${itemSelected}`, recID: tagDetail})
     console.log("tag List ADD ===> : ", selectorsTagsList);
   }
@@ -38,7 +42,7 @@ function updateTagList(option, itemSelected) {
     console.log("++++++++++++ REMOVing", itemSelected);
     // 1 - Get index of tag to be removed:
     let index = selectorsTagsList.findIndex(
-      (elem) => elem["item"] === itemSelected
+      (elem) => elem["item"] === itemSelected.toLowerCase()
     );
     console.log("Index: ", index);
     // 2 - remove from tagsList
@@ -46,7 +50,7 @@ function updateTagList(option, itemSelected) {
     console.log("Tags list: ", selectorsTagsList);
   }
   if (selectorsTagsList.length === 1) {
-    selectedRecipes = [...selectorsTagsList];
+    listIndex = [...selectorsTagsList];
     console.log("selected Recipes: ", selectedRecipes);
   }
   updateSelectedRecipes();
@@ -55,7 +59,7 @@ function updateTagList(option, itemSelected) {
 function updateSelectedRecipes() {
   tempoArr = [];
   selectorsTagsList.forEach((elem) => {
-    console.log(elem["recID"]);
+    console.log("rec ID", elem["recID"]);
     tempoArr = [...tempoArr, ...elem["recID"]];
   });
   /* 
@@ -132,14 +136,9 @@ const { getListOfIngredients, getListOfUstensils, getListOfAppliances } = alls;
 const listOfIngredients = getListOfIngredients;
 const listOfUstensils = getListOfUstensils;
 const listOfAppliances = getListOfAppliances;
-// console.log("listOfIngredients: ", listOfIngredients);
-//console.log("listOfUstensils: ", listOfUstensils);
-// console.log("listOfAppliances: ", listOfAppliances);
-
-const fullList = [
-  { ...listOfIngredients, ...listOfUstensils, ...listOfAppliances },
-];
-
+//
+// 3 lists merged in one
+fullList = [{ ...listOfIngredients, ...listOfUstensils, ...listOfAppliances }];
 
 // R E T R I E V E  D A T A  F R O M  R E C I P E S
 // Feed differents lists according to input box used (crit):
@@ -219,11 +218,12 @@ function createCriteriaList(listID) {
     recipesName.push(currentRecipe[0].name);
   });
 
+  console.log("selectedRecipesIngredients", selectedRecipesIngredients);
   selectedRecipesIngredients = [...setOfIngredients].sort();
   selectedRecipesUstensils = [...setOfUstensils].sort();
   selectedRecipesAppliances = [...setOfAppliances].sort();
 
-/* 
+  /* 
   templateSelectorUpdate("ingredients", selectedRecipesIngredients);
   templateSelectorUpdate("appliances", selectedRecipesAppliances);
   templateSelectorUpdate("ustensils", selectedRecipesUstensils);
@@ -233,16 +233,12 @@ function createCriteriaList(listID) {
   updateCriteriaList("appliances", selectedRecipesAppliances);
   updateCriteriaList("ustensils", selectedRecipesUstensils);
 
-  
-
-  
-
   console.log("Ingrédients", selectedRecipesIngredients);
   console.log("Ustensiles", selectedRecipesUstensils);
   console.log("Appareils", selectedRecipesAppliances);
   //
   console.log("Recipe Name: ", recipesName);
-}
+} /*
 
 // console.log("fullList: ", typeof fullList[0]["ail"]);
 
@@ -400,9 +396,9 @@ var tagDetail = jsObjects.find(obj => {
 // console.log("reduce: ", recipesList);
 // }
 
- // ===================================
+// ===================================
 
-  /* 
+/* 
     if (criteriaBox === "mainSearchInput") {
       recipes.forEach((recipe) => {
         recipe.ingredients.forEach((item) => {
@@ -423,19 +419,26 @@ var tagDetail = jsObjects.find(obj => {
       });
     }
   */
-  // =========================
-  // let setToArray = [...recipeID];
-  // console.log("set to array", setToArray)
-  // const totalRecipes = document.querySelector(".total_recipes");
-  // totalRecipes.innerHTML = [...recipeID].length + " recettes";
+// =========================
+// let setToArray = [...recipeID];
+// console.log("set to array", setToArray)
+// const totalRecipes = document.querySelector(".total_recipes");
+// totalRecipes.innerHTML = [...recipeID].length + " recettes";
 
-
-  /* 
+/* 
 const fullList2 = [
      ...listOfIngredients, ...listOfUstensils, ...listOfAppliances
   ];
- */ /* 
+ */
+/*
 const merged = []
   .concat(listOfIngredients, listOfUstensils, listOfAppliances)
   .flat();
  */
+
+// console.log("listOfIngredients: ", listOfIngredients);
+//console.log("listOfUstensils: ", listOfUstensils);
+// console.log("listOfAppliances: ", listOfAppliances);
+
+// console.log("------ selected R E C I P E S: ", listIndex);
+// console.log("------ item S E L E C T E D: ", itemSelected);
