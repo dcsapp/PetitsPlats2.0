@@ -30,42 +30,11 @@ function unSelectLi(selectedItem) {
   return;
 }
 
-function updateCriteriaList(criteria, data) {
-  // criteria: ingredients / appliances / ustentils
-  // data: criteria associted items from:
-  //      main bar selected recipes and / or
-  //      criteria search field
-  const ulContent = document.querySelector(`#itemList${criteria}`);
-  // Remove previous ul before update
-  ulContent.replaceChildren();
+function criteriaListByItem(criteria, data) {
 
-  const ul = document.createElement("ul");
-  ul.classList.add(`ul-${criteria}`, "ulCriteria");
-  ulContent.appendChild(ul);
-  // console.log(data);
-  data.map((item) => {
-    // li
-    const itemLi = document.createElement("li");
-    itemLi.classList.add("recipeItem");
-    itemLi.setAttribute("data-criteria-li", `${item}`);
-    itemLi.setAttribute("data-selected", "false");
-    // p item name
-    const paraLi = document.createElement("p");
-    paraLi.textContent = `${item}`;
-    itemLi.appendChild(paraLi);
-    // span for xmark icon
-    const spanXmark = document.createElement("span");
-    spanXmark.classList.add("hide");
-    // i fa-circle-xmark
-    const circleXmarkIcon = document.createElement("i");
-    circleXmarkIcon.classList.add("fa-solid", "fa-circle-xmark");
-    spanXmark.appendChild(circleXmarkIcon);
-    //
-    itemLi.appendChild(spanXmark);
-    //
-    ul.appendChild(itemLi);
-  });
 }
+
+
 
 function removeTag(selectedItem) {
   const tagToRemove = document.querySelector(
@@ -83,7 +52,12 @@ createCriteriaSelectors("ingredients", "Ingrédients");
 createCriteriaSelectors("appliances", "Appareils");
 createCriteriaSelectors("ustensils", "Ustensiles");
 displayNumberOfRecipes("0");
-// Feed Selectors list. By default all item of each cateory are available
-updateCriteriaList("ingredients", Object.keys(listOfIngredients).sort());
-updateCriteriaList("appliances", Object.keys(listOfAppliances).sort());
-updateCriteriaList("ustensils", Object.keys(listOfUstensils).sort());
+
+function updateAllCriteriaLists() {
+  // Feed Selectors list. By default all item of each cateory are available
+  updateCriteriaList("ingredients", Object.keys(listOfIngredients).sort());
+  updateCriteriaList("appliances", Object.keys(listOfAppliances).sort());
+  updateCriteriaList("ustensils", Object.keys(listOfUstensils).sort());
+}
+updateAllCriteriaLists();
+

@@ -17,25 +17,33 @@ let selectorsTagsList = [];
 let selectedRecipes = []; // 52
 let listIndex = [];
 
+let itemList = [];
+
 // L I S T  H A N D L I N G
 function updateTagList(option, itemSelected) {
   // option: add or remove the tag info from the tagsList
   //
   // Get the item from full array
+  console.log("item list ===>", itemList);
   console.log("fullList ===>", fullList);
-  const tagDetail = fullList[0][itemSelected.toLowerCase()];
+  console.log("item selected ===>", itemSelected);
+  const tagDetails = fullList[0][itemSelected];
+  // const tagDetail = fullList[0][itemSelected.toLowerCase()];
   // console.log("tag Detail===>", tagDetail);
 
   if (option === "add") {
     console.log("++++++++++++ ADDing", itemSelected);
     // 1 - Add the new item to the tagsList array
-    console.log("tagDetail: ", tagDetail);
-    selectorsTagsList.push({
-      item: itemSelected.toLowerCase(),
-      recID: tagDetail,
-    });
-    // tagsList.push({item: `${itemSelected}`, recID: tagDetail})
+    console.log("tagDetail: ", tagDetails);
+    let newTag = {};
+    newTag[itemSelected.toLowerCase()] = tagDetails;
+    // console.log("new taaag: ", newTag, typeof newTag)
+    selectorsTagsList.push(newTag);
     console.log("tag List ADD ===> : ", selectorsTagsList);
+    // 2 - Update list of recipes
+    // => get intersection of current recipes and new tag recipe(s)
+    // updateSelectedRecipes();
+    updateSelectedRecipes(tagDetails);
   }
 
   if (option === "remove") {
@@ -49,25 +57,74 @@ function updateTagList(option, itemSelected) {
     selectorsTagsList.splice(index, 1);
     console.log("Tags list: ", selectorsTagsList);
   }
+/* 
   if (selectorsTagsList.length === 1) {
     listIndex = [...selectorsTagsList];
     console.log("selected Recipes: ", selectedRecipes);
   }
   updateSelectedRecipes();
+   */
 }
 
-function updateSelectedRecipes() {
+function updateSelectedRecipes(tagDetails) {
+  // tagDetail: recipe(s) ID of the current selected tag
+  //
+  // Search starting from selectors
+  // tagDetails feeds listIndex
+  if (listIndex.length === 0) {
+    // listIndex = [...selectorsTagsList];
+    listIndex = [...tagDetails];
+    console.log(
+      "<<<<<<<<<<<< == Search starting at selector 1st tag ==== >>>>>>>>>>",
+      listIndex
+    );
+   //  createCriteriaList(listIndex);
+   //  displayRecipes(listIndex);
+  } else {
+    // A listIndex already exists:
+    // - from a mainSearchBox or
+    // - from a previous tag selection
+    // ==> Get only recipe(s) IDs with the same ID
+    // listIndex is always update and it is compared with the new ID
+    //
+    // tagDetails are added to the current listIndex
+    console.log("...listIndex, ...tagDetails", listIndex, tagDetails);
+    const mergedArray = [...listIndex, ...tagDetails];
+    // duplicated ID(s) are retrieve o get the new listIndex
+    const intersection = new Set();
+    for (id1 in mergedArray) {
+      for (id2 in mergedArray) {
+        if (id1 === id2) {
+          continue;
+        } else {
+          if (mergedArray[id1] === mergedArray[id2]) {
+            intersection.add(mergedArray[id1]);
+          }
+        }
+      }
+    }
+    listIndex = [...intersection];
+    console.log("mergedArray", mergedArray);
+    console.log("intersection:", [...intersection]);
+    console.log("listIndex:", listIndex);
+  }
+  createCriteriaList(listIndex);
+  displayRecipes(listIndex);
+}
+
+/* 
   tempoArr = [];
   selectorsTagsList.forEach((elem) => {
     console.log("rec ID", elem["recID"]);
     tempoArr = [...tempoArr, ...elem["recID"]];
   });
-  /* 
+ */
+/* 
     const duplicatesId = (tempoArr) => tempoArr.filter((item, index) => {
         tempoArr.indexOf(item !== index)
     })
  */
-
+/* 
   console.log("tempo: ", tempoArr);
   // const duplicateElements = toFindDuplicates(tempoArr);
   const duplicateElements = getDuplicatesRecipesID(tempoArr);
@@ -75,7 +132,7 @@ function updateSelectedRecipes() {
   //tagsList = [...duplicateElements];
 
   //console.log("tempo: ", duplicatesId);
-}
+ */
 
 function getDuplicatesRecipesID(dataArray) {
   console.log("I N  get dup ");
@@ -103,7 +160,8 @@ function iuaVsRecipeId() {
     let ingredients = recipe.ingredients;
     let ustensils = recipe.ustensils;
     let appliance = recipe.appliance;
-
+    /*    
+// ingredients
     ingredients.map((ingredient) => {
       if (!getListOfIngredients[ingredient.ingredient.toLowerCase()]) {
         getListOfIngredients[ingredient.ingredient.toLowerCase()] = [recipe.id];
@@ -113,7 +171,7 @@ function iuaVsRecipeId() {
         );
       }
     });
-
+// ustensils
     ustensils.map((ustensil) => {
       if (!getListOfUstensils[ustensil.toLowerCase()]) {
         getListOfUstensils[ustensil.toLowerCase()] = [recipe.id];
@@ -121,11 +179,35 @@ function iuaVsRecipeId() {
         getListOfUstensils[ustensil.toLowerCase()].push(recipe.id);
       }
     });
-
+// appliances
     if (!getListOfAppliances[appliance.toLowerCase()]) {
       getListOfAppliances[appliance.toLowerCase()] = [recipe.id];
     } else {
       getListOfAppliances[appliance.toLowerCase()].push(recipe.id);
+    }
+ */
+
+    // ingredients
+    ingredients.map((ingredient) => {
+      if (!getListOfIngredients[ingredient.ingredient]) {
+        getListOfIngredients[ingredient.ingredient] = [recipe.id];
+      } else {
+        getListOfIngredients[ingredient.ingredient].push(recipe.id);
+      }
+    });
+    // ustensils
+    ustensils.map((ustensil) => {
+      if (!getListOfUstensils[ustensil]) {
+        getListOfUstensils[ustensil] = [recipe.id];
+      } else {
+        getListOfUstensils[ustensil].push(recipe.id);
+      }
+    });
+    // appliances
+    if (!getListOfAppliances[appliance]) {
+      getListOfAppliances[appliance] = [recipe.id];
+    } else {
+      getListOfAppliances[appliance].push(recipe.id);
     }
   });
   return { getListOfIngredients, getListOfUstensils, getListOfAppliances };
@@ -136,6 +218,10 @@ const { getListOfIngredients, getListOfUstensils, getListOfAppliances } = alls;
 const listOfIngredients = getListOfIngredients;
 const listOfUstensils = getListOfUstensils;
 const listOfAppliances = getListOfAppliances;
+
+console.log("const listOfIngredients", listOfIngredients);
+console.log("vbgfdrtyyyy: =======> ", Object.keys(listOfIngredients)[0]);
+
 //
 // 3 lists merged in one
 fullList = [{ ...listOfIngredients, ...listOfUstensils, ...listOfAppliances }];
@@ -143,6 +229,7 @@ fullList = [{ ...listOfIngredients, ...listOfUstensils, ...listOfAppliances }];
 // R E T R I E V E  D A T A  F R O M  R E C I P E S
 // Feed differents lists according to input box used (crit):
 //    mainSearch / ingredients / appliances / ustensils
+//
 function retrieveRecipes(inputValue, inputBox) {
   console.log("inputValue: ", inputValue);
   console.log("inputBox: ", inputBox);
@@ -154,16 +241,30 @@ function retrieveRecipes(inputValue, inputBox) {
   recipes.forEach((recipe) => {
     recipe.ingredients.forEach((item) => {
       // Retrieve ingredients
+
+      recipe.ingredients.forEach((item) => {
+        if (
+          item.ingredient.toLowerCase().includes(searchString.toLowerCase())
+        ) {
+          recipeID.add(recipe.id);
+        }
+      });
+
+      /* 
       recipe.ingredients.forEach((item) => {
         if (item.ingredient.toLowerCase().includes(searchString)) {
           recipeID.add(recipe.id);
         }
-      });
+      })
+    });
+
+ */
+
       // If search comes from main search bar
       if (criteriaBox === "mainSearchInput") {
         if (
-          recipe.name.toLowerCase().includes(searchString) ||
-          recipe.description.toLowerCase().includes(searchString)
+          recipe.name.toLowerCase().includes(searchString.toLowerCase()) ||
+          recipe.description.toLowerCase().includes(searchString.toLowerCase())
         ) {
           recipeID.add(recipe.id);
         }
@@ -173,6 +274,59 @@ function retrieveRecipes(inputValue, inputBox) {
   displayNumberOfRecipes([...recipeID].length);
   return [...recipeID];
 }
+
+function retrieveItems(inputValue, inputBox) {
+  console.log("I N S I D E  retrieve  I T E M", inputBox);
+  let recipeID = new Set();
+  let searchString = inputValue;
+  switch (inputBox) {
+    case "ingredients":
+      recipes.forEach((recipe) => {
+        recipe.ingredients.forEach((item) => {
+          // Retrieve ingredients
+          recipe.ingredients.forEach((item) => {
+            if (
+              item.ingredient.toLowerCase().includes(searchString.toLowerCase())
+            ) {
+              recipeID.add(recipe.id);
+            }
+          });
+        });
+      });
+      return [...recipeID];
+
+    default:
+      console.log("error");
+  }
+  console.log("selected ingredients: ", [...selectedIngredients]);
+}
+
+/* 
+
+      selectedIngredients = new Set();
+      console.log("Y Y Y Y Y Y ", Object.keys(listOfIngredients));
+      console.log("Y Y Y Y Y Y ", listOfIngredients);
+      Object.keys(listOfIngredients).forEach((ing) => {
+        // listOfIngredients.forEach((ing) => {
+        if (ing.toLowerCase().includes(inputValue)) {
+          let currentIng = ing;
+          console.log("currentIng: ", currentIng);
+          selectedIngredients.add(
+            `{${currentIng}: [${listOfIngredients[currentIng]}]}`
+          );
+        }
+      });
+      console.log("type of: ", typeof [...selectedIngredients]);
+      return [...selectedIngredients];
+ */
+
+/*  listOfIngredients.forEach((ing) => {
+        if()
+      }) 
+    case ustensils:
+      statements
+    case appliances:
+      statements */
 
 function displayNumberOfRecipes(nbrRecipes) {
   const totalRecipes = document.querySelector(".total_recipes");
@@ -197,6 +351,7 @@ function createCriteriaList(listID) {
   const setOfUstensils = new Set();
   // -------
   const recipesName = [];
+  console.log("list_________ID >>>: ", listID);
 
   listID.forEach((id) => {
     let currentRecipe = recipes.filter(
@@ -232,13 +387,96 @@ function createCriteriaList(listID) {
   updateCriteriaList("ingredients", selectedRecipesIngredients);
   updateCriteriaList("appliances", selectedRecipesAppliances);
   updateCriteriaList("ustensils", selectedRecipesUstensils);
-
+  /* 
   console.log("Ingrédients", selectedRecipesIngredients);
   console.log("Ustensiles", selectedRecipesUstensils);
   console.log("Appareils", selectedRecipesAppliances);
+   */
   //
   console.log("Recipe Name: ", recipesName);
-} /*
+}
+
+function createCriteriaList_includingTags(listID) {
+  const setOfIngredients = new Set();
+  const setOfAppliances = new Set();
+  const setOfUstensils = new Set();
+  // -------
+  const recipesName = [];
+  console.log("list_________ID >>>: ", listID);
+
+  listID.forEach((id) => {
+    let currentRecipe = recipes.filter(
+      (currentRecipe) => currentRecipe.id === id
+    ); //[recipeIndex];
+    // list of Appliances
+    setOfAppliances.add(currentRecipe[0].appliance);
+    // list of Ustensils
+    currentRecipe[0].ustensils.forEach((ustensil) => {
+      setOfUstensils.add(ustensil);
+    });
+    // list of ingredients
+    currentRecipe[0].ingredients.forEach((ingredient) => {
+      setOfIngredients.add(ingredient.ingredient);
+    });
+    // ----------
+    // Recipe Name
+
+    recipesName.push(currentRecipe[0].name);
+  });
+
+  console.log("selectedRecipesIngredients", selectedRecipesIngredients);
+  selectedRecipesIngredients = [...setOfIngredients].sort();
+  selectedRecipesUstensils = [...setOfUstensils].sort();
+  selectedRecipesAppliances = [...setOfAppliances].sort();
+
+  /* 
+  templateSelectorUpdate("ingredients", selectedRecipesIngredients);
+  templateSelectorUpdate("appliances", selectedRecipesAppliances);
+  templateSelectorUpdate("ustensils", selectedRecipesUstensils);
+ */
+
+  updateCriteriaList("ingredients", selectedRecipesIngredients);
+  updateCriteriaList("appliances", selectedRecipesAppliances);
+  updateCriteriaList("ustensils", selectedRecipesUstensils);
+  /* 
+  console.log("Ingrédients", selectedRecipesIngredients);
+  console.log("Ustensiles", selectedRecipesUstensils);
+  console.log("Appareils", selectedRecipesAppliances);
+   */
+  //
+  console.log("Recipe Name: ", recipesName);
+}
+
+function createCriteriaListByItems(listItems, inputBox, inputValue) {
+  console.log("createCriteriaListByItems 1,", listItems);
+  console.log("createCriteriaListByItems 2,", inputBox);
+  console.log("createCriteriaListByItems 3,", inputValue);
+
+  const setOfIngredients = new Set();
+
+  for (const [key, value] of Object.entries(listOfIngredients)) {
+    if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
+      // ingredient added to the list
+      setOfIngredients.add(`${key}`);
+    }
+  }
+  selectedRecipesIngredients = [...setOfIngredients].sort();
+  // console.log("selectedRecipesIngredients);", selectedRecipesIngredients);
+  updateCriteriaList("ingredients", selectedRecipesIngredients);
+}
+
+/*  
+  listItems.forEach((id) => {
+    let currentRecipe = recipes.filter(
+      (currentRecipe) => currentRecipe.id === id
+    );
+}
+currentRecipe[0].ingredients.forEach((ingredient) => {
+  setOfIngredients.add(ingredient.ingredient);
+}))}
+ */
+
+/*
 
 // console.log("fullList: ", typeof fullList[0]["ail"]);
 
@@ -442,3 +680,29 @@ const merged = []
 
 // console.log("------ selected R E C I P E S: ", listIndex);
 // console.log("------ item S E L E C T E D: ", itemSelected);
+
+/* 
+  const setOfIngredients = new Set();
+  listItems.forEach((id) => {
+    let currentRecipe = recipes.filter(
+      (currentRecipe) => currentRecipe.id === id
+    ); //[recipeIndex];
+    console.log("currentRecipe[0]", currentRecipe[0]);
+    // list of ingredients
+    currentRecipe[0].ingredients.forEach((ing) => {
+      // console.log("I N G R E D I E N T =", ing)
+      // item.ingredient.toLowerCase().includes(searchString.toLowerCase())
+      if (ing.ingredient.toLowerCase().includes(inputValue.toLowerCase())) {
+        setOfIngredients.add(ing.ingredient);
+      }
+    });
+
+ */
+/* if(setOfIngredients.size === 1) {
+      updateCriteriaSelectedItem(inputBox, [...setOfIngredients])
+    } */
+// ----------
+// Recipe Name
+
+// });
+// console.log("zzzzzzzzzzz==========> ", setOfIngredients)

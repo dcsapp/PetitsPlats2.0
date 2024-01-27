@@ -16,7 +16,7 @@ function recipeCardTemplate(recipeID) {
     recipeCard__img.classList.add("recipCard__img");
     // Receipe duration
     const recipeDuration = document.createElement("div");
-    recipeDuration.classList.add("recipeDuration");
+    recipeDuration.classList.add("reciCard__duration");
     const recipeDuration__text = document.createElement("p");
     recipeDuration.appendChild(recipeDuration__text)
     recipeDuration__text.textContent = `${time}min`;

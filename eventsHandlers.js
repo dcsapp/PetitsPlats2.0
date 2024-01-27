@@ -1,19 +1,80 @@
 // E V E N T S  D E L E G A T I O N
 // ------------------------------------
 //
-// Dropbox selectors
-// 
+// R E T R I E V E  D A T A  F R O M  I N P U T  B O X E S
+//
+//    Ref is body in order to access to all input boxes
+//    Each input box has a data attribute data-name=
+//        mainSearch / ingredients / ustensils / appliances
+const inputBoxContent = document.querySelector("body");
+inputBoxContent.addEventListener("keyup", getData);
+
+function getData(e) {
+  // Get inputValue origin: mainSearch / ingredients / appliances / ustensils
+  let inputBox = e.target.dataset.name;
+  let inputBoxClassName = `${inputBox}CloseCross`;
+  console.log("inputBox: ", inputBox);
+  console.log("inputBoxClassName: ", inputBoxClassName);
+
+  // console.log("Parent: ", e.target.parentElement.children);
+  // console.log("inputBox target: ", e.target.closest("span"));
+  let inputValue = e.target.parentElement.children[0].value;
+  console.log("key pressed: ", inputValue);
+  // Display reset field cross
+  if (inputValue.length > 0) {
+    displayResetCross(inputBoxClassName, "ON");
+  } else {
+    displayResetCross(inputBoxClassName, "OFF");
+  }
+
+  if (inputValue.length >= 3) {
+    // Check input location
+    // Main search bar or one of the dropbox selector
+    if (inputBox === "mainSearchInput") {
+      listIndex = retrieveRecipes(inputValue, inputBox);
+      console.log("list  I N D E X: ", listIndex);
+      createCriteriaList(listIndex);
+      displayRecipes(listIndex);
+    } else {
+      // search on specific selector: ingredient
+      const listItems = retrieveItems(inputValue, inputBox);
+      console.log("list  I T E M S: ", listItems);
+      console.log("I N P U T  B O X: ", inputBox);
+      createCriteriaListByItems(listItems, inputBox, inputValue);
+    }
+  }
+}
+
+// D R O P B O X  S E L E C T O R S
+//
 const dropBox = document.querySelector(".criterias");
 dropBox.addEventListener("click", expandDropBox);
 //
 function expandDropBox(e) {
-  if (e.target.matches(".criteria__header")) {
-    // pointer-event disabled for p and span
-    // arrow rotation
-    e.target.children[1].firstElementChild.classList.toggle("criteria__open");
-    // dropdown expand
-    e.target.closest(".criteriaWrapper").classList.toggle("expand");
+  // Close the dropbox if it is clicked and already open
+  if (
+    e.target.children[1].firstElementChild.classList.contains("criteria__open")
+  ) {
+    closeAllSelectors();
+  } else {
+    if (e.target.matches(".criteria__header")) {
+      // pointer-event disabled for p and span
+      // arrow rotation
+      closeAllSelectors();
+      e.target.children[1].firstElementChild.classList.toggle("criteria__open");
+      // dropdown expand
+      e.target.closest(".criteriaWrapper").classList.toggle("expand");
+    }
   }
+}
+
+function closeAllSelectors() {
+  // console.log("close all selectors ==============")
+  const allSelectors = document.querySelectorAll(".criteriaWrapper");
+  const allChevrons = document.querySelectorAll(".criteria__open");
+  // console.log("poiuy: ", allSelectors)
+  allSelectors.forEach((sel) => sel.classList.remove("expand"));
+  allChevrons.forEach((sel) => sel.classList.remove("criteria__open"));
 }
 //
 //
@@ -63,65 +124,27 @@ function tagHandling(e) {
   }
 }
 //
-//
-// Search field handling: delete input field containt
+// S E A R C H  F I E L D S  H A N D L I N G S
+// Delete input field containt
 //
 const resetSearchInputField = document.querySelector("body");
 resetSearchInputField.addEventListener("click", clearInputField);
 //
 function clearInputField(e) {
-  const selectedField = (e.target.closest("span").parentElement.parentElement.children[0].value = "");
-  console.log("cross clear input: ", e.target.closest("span"));
+  const selectedField = (e.target.closest(
+    "span"
+  ).parentElement.parentElement.children[0].value = "");
+  // console.log("cross clear input Selected field: ", e.target.closest("span"));
+  console.log("cross clear input Selected field: ", selectedField);
   // Hide cross icon
-  e.target.closest("span").style.display = "none";
+  selectedField.closest("span").style.display = "none";
+  // e.target.closest("span").style.display = "none";
+
   // Suppress displayed recipes
   document.getElementById("recipesSelected").replaceChildren();
+  closeAllSelectors();
+  updateAllCriteriaLists();
   displayNumberOfRecipes(0);
-}
-
-// R E T R I E V E  D A T A  F R O M  I N P U T  B O X E S
-//
-//    Ref is body in order to access to all input boxes
-//    Each input box has a data attribute data-name=
-//        mainSearch / ingredients / ustensils / appliances
-const inputBoxContent = document.querySelector("body");
-inputBoxContent.addEventListener("keyup", getData);
-
-function getData(e) {
-  // Get inputValue origin: mainSearch / ingredients / appliances / ustensils
-  let inputBox = e.target.dataset.name;
-  let inputBoxClassName = `${inputBox}CloseCross`;
-  console.log("inputBox: ", inputBox);
-  console.log("inputBoxClassName: ", inputBoxClassName);
-
-  // console.log("Parent: ", e.target.parentElement.children);
-  // console.log("inputBox target: ", e.target.closest("span"));
-  let inputValue = e.target.parentElement.children[0].value;
-  console.log("key pressed: ", inputValue);
-  // Display reset field cross
-  if (inputValue.length > 0) {
-    displayResetCross(inputBoxClassName, "ON");
-  } else {
-    displayResetCross(inputBoxClassName, "OFF");
-  }
-
-  if (inputValue.length >= 3) {
-    // Check input location
-    // Main search bar or one of the dropbox selector
-    if (inputBox === "mainSearchInput") {
-      listIndex = retrieveRecipes(inputValue, inputBox);
-      console.log("list index1: ", listIndex);
-      createCriteriaList(listIndex)
-      displayRecipes(listIndex);
-    } else {
-      let listIndex = retrieveRecipes(inputValue, inputBox);
-      console.log("list index2: ", listIndex);
-      createCriteriaList(listIndex)
-      displayRecipes(listIndex);
-    }
-    // console.log("list index: ", listIndex);
-  }
-
 }
 
 function displayRecipes(listID) {
@@ -145,6 +168,11 @@ function displayResetCross(inputFieldName, onOff) {
     toBeDisplayed.style.display = "none";
   }
 }
+
+const searchFields = document.querySelectorAll(".main__searchBar");
+console.log("searchFields = ", searchFields);
+
+/* =================------ T R A S H ------============ */
 
 /* 
 console.log(("etarget", e.target));
@@ -184,9 +212,8 @@ function clearInputCleared(e) {
 /* let toto = e.target.closest("input");
   console.log("body click: ", inputField) */
 
-
-  // ====== old ======
-  /* 
+// ====== old ======
+/* 
   if (inputValue.length >= 3) {
     let listIndex = retrieveRecipes(inputValue, inputBox);
     console.log("list index: ", listIndex);
@@ -197,4 +224,22 @@ function clearInputCleared(e) {
     recipesSelected.innerHTML = "Aucune recette sélectionnée...";
   }
   */
-  // ====== old ======
+// ====== old ======
+
+/* 
+
+function expandDropBox2(e) {
+  let tre = e.target.closest(".criteria__header");
+  console.log("etarget........",tre);
+
+  if (e.target.matches(".criteria__header")) {
+    // pointer-event disabled for p and span
+    // arrow rotation
+    
+    closeAllSelectors();
+    e.target.children[1].firstElementChild.classList.toggle("criteria__open");
+    // dropdown expand
+    e.target.closest(".criteriaWrapper").classList.toggle("expand");
+  }
+}
+ */
