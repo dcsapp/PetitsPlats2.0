@@ -21,28 +21,44 @@ function getData(e) {
   let inputValue = e.target.parentElement.children[0].value;
   console.log("key pressed: ", inputValue);
   // Display reset field cross
+  console.log("S I Z E  O F :", inputValue.length)
   if (inputValue.length > 0) {
     displayResetCross(inputBoxClassName, "ON");
   } else {
     displayResetCross(inputBoxClassName, "OFF");
   }
+if (inputValue < 3) {
+  listIndex = 0
+}
 
-  if (inputValue.length >= 3) {
-    // Check input location
-    // Main search bar or one of the dropbox selector
-    if (inputBox === "mainSearchInput") {
+
+  if(inputBox === "mainSearchInput") {
+    if(inputValue.length < 3) {
+      listIndex.length = 0;
+    } else {
       listIndex = retrieveRecipes(inputValue, inputBox);
       console.log("list  I N D E X: ", listIndex);
+      mainSearchInputIdList = [...listIndex];
+      console.log("mainSearchInputIdList: ", mainSearchInputIdList);
       createCriteriaList(listIndex);
-      displayRecipes(listIndex);
-    } else {
-      // search on specific selector: ingredient
-      const listItems = retrieveItems(inputValue, inputBox);
-      console.log("list  I T E M S: ", listItems);
-      console.log("I N P U T  B O X: ", inputBox);
-      createCriteriaListByItems(listItems, inputBox, inputValue);
     }
-  }
+    displayRecipes(listIndex);
+  } else {
+     // search on specific selector: ingredient
+     const listItems = retrieveItems(inputValue, inputBox);
+     console.log("list  I T E M S: ", listItems);
+     console.log("I N P U T  B O X: ", inputBox);
+     createCriteriaListByItems(listItems, inputBox, inputValue);
+     displayRecipes(listIndex);
+  } 
+
+
+
+
+
+
+
+
 }
 
 // D R O P B O X  S E L E C T O R S
@@ -78,6 +94,19 @@ function closeAllSelectors() {
 }
 //
 //
+
+
+// T A G S  A N D  L I  S E L E C T I O N  
+
+
+
+
+
+
+
+
+
+
 // Tags of selected items
 //
 const criteriaSelectorsHandlers = document.querySelector("body");
@@ -85,6 +114,7 @@ criteriaSelectorsHandlers.addEventListener("click", tagHandling);
 //
 function tagHandling(e) {
   let selectedItem = e.target;
+  console.log("selectedItem: <<<<<<<<>>>>>>>>>><", selectedItem);
   // if click target is li
   if (e.target.matches(".recipeItem")) {
     let liCriteria = selectedItem.dataset.criteriaLi;
@@ -130,6 +160,7 @@ function tagHandling(e) {
 const resetSearchInputField = document.querySelector("body");
 resetSearchInputField.addEventListener("click", clearInputField);
 //
+/* 
 function clearInputField(e) {
   const selectedField = (e.target.closest(
     "span"
@@ -146,6 +177,29 @@ function clearInputField(e) {
   updateAllCriteriaLists();
   displayNumberOfRecipes(0);
 }
+ */
+function clearInputField(e) {
+  console.log("cross clear input Selected field: ", e.target.closest(".clearSearch"));
+  const selectedField = (e.target.closest(
+    ".clearSearch"
+  ).parentElement.parentElement.children[0].value = "");
+  console.log("cross clear input Selected field: ", e.target.closest(".clearSearch"));
+  // console.log("cross clear input Selected field: ", selectedField);
+  // Hide cross icon
+  selectedField.closest(".clearSearch").style.display = "none";
+  // e.target.closest("span").style.display = "none";
+
+  // Suppress displayed recipes
+  console.log("===============!!!!!!!!!=============")
+  document.getElementById("recipesSelected").replaceChildren();
+  closeAllSelectors();
+  updateAllCriteriaLists();
+  displayNumberOfRecipes(0);
+}
+
+
+
+
 
 function displayRecipes(listID) {
   const recipeDisplaySection = document.getElementById("recipesSelected");
@@ -242,4 +296,26 @@ function expandDropBox2(e) {
     e.target.closest(".criteriaWrapper").classList.toggle("expand");
   }
 }
+ */
+
+/* 
+  if (inputValue.length >= 3) {
+    console.log("3 S I Z E  O F :", inputValue.length);
+    // Check input location
+    // Main search bar or one of the dropbox selector
+    if (inputBox === "mainSearchInput") {
+      listIndex = retrieveRecipes(inputValue, inputBox);
+      console.log("list  I N D E X: ", listIndex);
+      mainSearchInputIdList = [...listIndex];
+      console.log("mainSearchInputIdList: ", mainSearchInputIdList)
+      createCriteriaList(listIndex);
+      displayRecipes(listIndex);
+    } else {
+      // search on specific selector: ingredient
+      const listItems = retrieveItems(inputValue, inputBox);
+      console.log("list  I T E M S: ", listItems);
+      console.log("I N P U T  B O X: ", inputBox);
+      createCriteriaListByItems(listItems, inputBox, inputValue);
+    }
+  }
  */

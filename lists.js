@@ -9,8 +9,9 @@ let selectedRecipesAppliances = [];
 // S E A R C H  I N P U T  L I S T S
 // Recipe IDs from main bar search:
 let mainTagList = [];
+let mainSearchInputIdList =[];
 // Recipe IDs from selectors item / ID
-let selectorsTagsList = [];
+let selectorsTagsList = {}; //[];
 
 // R E S U L T  O F  S E A R C H E S  I N P U T  B O X E S
 // List of recipes IDs to be displayed
@@ -27,7 +28,8 @@ function updateTagList(option, itemSelected) {
   console.log("item list ===>", itemList);
   console.log("fullList ===>", fullList);
   console.log("item selected ===>", itemSelected);
-  const tagDetails = fullList[0][itemSelected];
+  let tagDetails = fullList[itemSelected];
+  // const tagDetails = fullList[0][itemSelected];
   // const tagDetail = fullList[0][itemSelected.toLowerCase()];
   // console.log("tag Detail===>", tagDetail);
 
@@ -35,10 +37,14 @@ function updateTagList(option, itemSelected) {
     console.log("++++++++++++ ADDing", itemSelected);
     // 1 - Add the new item to the tagsList array
     console.log("tagDetail: ", tagDetails);
-    let newTag = {};
-    newTag[itemSelected.toLowerCase()] = tagDetails;
+    
+    itemList.push(itemSelected);
+    console.log("item list: ", itemList);
+    //newTag[itemSelected.toLowerCase()] = tagDetails;
     // console.log("new taaag: ", newTag, typeof newTag)
-    selectorsTagsList.push(newTag);
+    // selectorsTagsList.push(newTag);
+    selectorsTagsList[itemSelected.toLowerCase()] = tagDetails;
+
     console.log("tag List ADD ===> : ", selectorsTagsList);
     // 2 - Update list of recipes
     // => get intersection of current recipes and new tag recipe(s)
@@ -47,23 +53,35 @@ function updateTagList(option, itemSelected) {
   }
 
   if (option === "remove") {
-    console.log("++++++++++++ REMOVing", itemSelected);
-    // 1 - Get index of tag to be removed:
-    let index = selectorsTagsList.findIndex(
-      (elem) => elem["item"] === itemSelected.toLowerCase()
-    );
-    console.log("Index: ", index);
+    console.log("++++++++++++ REMOVing", itemSelected, selectorsTagsList);
+    // 1 - Delele the tag from selectorsTagsList:
+    // console.log("selectorsTagsList BEFORE: ", selectorsTagsList);
+    delete selectorsTagsList[`${itemSelected.toLowerCase()}`];
+    console.log("selectorsTagsList AFTER: ", selectorsTagsList);
+    console.log("selectorsTagsList AFTER length: ", Object.keys(selectorsTagsList).length);
     // 2 - remove from tagsList
-    selectorsTagsList.splice(index, 1);
-    console.log("Tags list: ", selectorsTagsList);
+    // selectorsTagsList.splice(index, 1);
+    if(Object.keys(selectorsTagsList).length === 0 ){
+      console.log("E M P T Y ")
+      tagDetails.length = 0;
+    }
+    if(Object.keys(selectorsTagsList).length === 1) {
+      console.log("tagDetails :", Object.values(selectorsTagsList)[0]);
+      tagDetails = Object.values(selectorsTagsList)[0];
+
+      //tagDetails = fullList[itemSelected.toLowerCase()];
+      // console.log("TTTTT ============== TTTTTTTT", tagDetails, "item", itemSelected, "tytyty: ", tytyty)
+    }
+    console.log("selectorsTagsList: ", selectorsTagsList)// [`${itemSelected.toLowerCase()}`]); 
+    console.log("tagDetails :", tagDetails);
+
+    // get items in item lists
+    // delete itemList[`${itemSelected.toLowerCase()}`];
+    // console.log("item list after deletion: ", itemList)
+
+    updateSelectedRecipes(tagDetails);
+    closeAllSelectors();
   }
-/* 
-  if (selectorsTagsList.length === 1) {
-    listIndex = [...selectorsTagsList];
-    console.log("selected Recipes: ", selectedRecipes);
-  }
-  updateSelectedRecipes();
-   */
 }
 
 function updateSelectedRecipes(tagDetails) {
@@ -71,15 +89,16 @@ function updateSelectedRecipes(tagDetails) {
   //
   // Search starting from selectors
   // tagDetails feeds listIndex
-  if (listIndex.length === 0) {
+  if (listIndex.length === 0 || Object.keys(selectorsTagsList).length === 1) {
     // listIndex = [...selectorsTagsList];
     listIndex = [...tagDetails];
     console.log(
       "<<<<<<<<<<<< == Search starting at selector 1st tag ==== >>>>>>>>>>",
-      listIndex
+      listIndex,
+      selectorsTagsList
     );
-   //  createCriteriaList(listIndex);
-   //  displayRecipes(listIndex);
+    //  createCriteriaList(listIndex);
+    //  displayRecipes(listIndex);
   } else {
     // A listIndex already exists:
     // - from a mainSearchBox or
@@ -89,27 +108,46 @@ function updateSelectedRecipes(tagDetails) {
     //
     // tagDetails are added to the current listIndex
     console.log("...listIndex, ...tagDetails", listIndex, tagDetails);
-    const mergedArray = [...listIndex, ...tagDetails];
-    // duplicated ID(s) are retrieve o get the new listIndex
-    const intersection = new Set();
-    for (id1 in mergedArray) {
-      for (id2 in mergedArray) {
-        if (id1 === id2) {
-          continue;
-        } else {
-          if (mergedArray[id1] === mergedArray[id2]) {
-            intersection.add(mergedArray[id1]);
+    if(tagDetails.length === 0) {
+      // If no tag get id from main searchbar if any
+      listIndex = [...mainSearchInputIdList];
+      console.log("list index updated", listIndex )
+    } else 
+    {
+      const mergedArray = [...listIndex, ...tagDetails];
+      // duplicated ID(s) are retrieve o get the new listIndex
+      const intersection = new Set();
+      for (id1 in mergedArray) {
+        for (id2 in mergedArray) {
+          if (id1 === id2) {
+            continue;
+          } else {
+            if (mergedArray[id1] === mergedArray[id2]) {
+              intersection.add(mergedArray[id1]);
+            }
           }
         }
       }
+      listIndex = [...intersection]; // listIndex = array from set intersection
+      console.log("mergedArray", mergedArray);
+      console.log("intersection:", [...intersection]);
+      console.log("listIndex:", listIndex);
     }
-    listIndex = [...intersection];
-    console.log("mergedArray", mergedArray);
-    console.log("intersection:", [...intersection]);
-    console.log("listIndex:", listIndex);
+
   }
+  console.log("S I Z E  O F  C R I T E R I A ", listIndex.length)
   createCriteriaList(listIndex);
+  if(listIndex.length === 0) {
+    updateAllCriteriaLists()
+  }
   displayRecipes(listIndex);
+  displayNumberOfRecipes(listIndex.length);
+  closeAllSelectors();
+}
+
+function activateLiSelectedTag(tag) {
+  console.log("ttt aaa ggg :", tag);
+  // let temp = document.querySelector([`data-criteria-li=${tag}`])
 }
 
 /* 
@@ -218,14 +256,15 @@ const { getListOfIngredients, getListOfUstensils, getListOfAppliances } = alls;
 const listOfIngredients = getListOfIngredients;
 const listOfUstensils = getListOfUstensils;
 const listOfAppliances = getListOfAppliances;
-
+/* 
 console.log("const listOfIngredients", listOfIngredients);
 console.log("vbgfdrtyyyy: =======> ", Object.keys(listOfIngredients)[0]);
-
+console.log("saladier: =======> ", listOfAppliances["Saladier"]);
+ */
 //
 // 3 lists merged in one
-fullList = [{ ...listOfIngredients, ...listOfUstensils, ...listOfAppliances }];
-
+fullList = { ...listOfIngredients, ...listOfUstensils, ...listOfAppliances };
+// console.log("full list: ", fullList)
 // R E T R I E V E  D A T A  F R O M  R E C I P E S
 // Feed differents lists according to input box used (crit):
 //    mainSearch / ingredients / appliances / ustensils
@@ -706,3 +745,18 @@ const merged = []
 
 // });
 // console.log("zzzzzzzzzzz==========> ", setOfIngredients)
+
+// 1 - Get index of tag to be removed:
+/* 
+    let index = selectorsTagsList.findIndex(
+      (elem) => elem["item"] === itemSelected.toLowerCase()
+    );
+ */
+
+/* 
+  if (selectorsTagsList.length === 1) {
+    listIndex = [...selectorsTagsList];
+    console.log("selected Recipes: ", selectedRecipes);
+  }
+  updateSelectedRecipes();
+   */

@@ -152,6 +152,12 @@ function updateCriteriaList(criteria, data) {
   // data: criteria associated items from:
   //      main bar selected recipes and / or
   //      criteria search field
+//
+//
+let tagListValue = Object.keys(selectorsTagsList); // ["tomate", "concombre"]//
+console.log("tagListValue", tagListValue );// selectorsTagsList);
+//
+//
 
   // console.log("updateCriteriaList(criteria, ",data);
   const ulContent = document.querySelector(`#itemList${criteria}`);
@@ -182,6 +188,17 @@ function updateCriteriaList(criteria, data) {
     //
     itemLi.appendChild(spanXmark);
     //
+    
+    if(tagListValue.includes(`${item}`.toLowerCase())) {
+      itemLi.setAttribute("data-selected", "true");
+      // console.log("item true", `${item}`.toLowerCase());
+      itemLi.classList.add("recipeAsTag");
+      spanXmark.classList.toggle("hide");
+    } else {
+      itemLi.classList.remove("recipeAsTag");
+      // console.log("item false", `${item}`.toLowerCase());
+    }
+    
     ul.appendChild(itemLi);
   });
 }

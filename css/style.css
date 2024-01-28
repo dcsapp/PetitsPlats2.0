@@ -460,6 +460,11 @@ li p {
   font-weight: 700;
 }
 
+.recipeAsTag {
+  background : #ffd700;
+  font-weight : 700;
+}
+
 /* section S E L E C T E D  R E C I P E S  D I S P L A Y */
 
 #recipesSelected {

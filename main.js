@@ -1,17 +1,21 @@
+// 
+
+
+
 function selectLi(selectedItem) {
-  // console.log("enter S E L E C T  li", selectedItem);
+  console.log("enter S E L E C T  li", selectedItem);
   // console.log("tag not selected");
 
   // if selected item in list is not selected
   // item tag is created
   //                createTag(selectedItem.dataset.criteriaLi);
   // selected item status updated to true
-  selectedItem.dataset.selected = "true";
+  // ===> selectedItem.dataset.selected = "true";
   // selected item background color changed to yellow and font weight to bold (700)
-  selectedItem.style.background = "#ffd700";
-  selectedItem.style.fontWeight = "700";
+  // ===> selectedItem.style.background = "#ffd700";
+  // ===> selectedItem.style.fontWeight = "700";
   // // xmark displayed
-  selectedItem.children[1].classList.toggle("hide");
+  // ===> selectedItem.children[1].classList.toggle("hide");
   return;
 }
 
@@ -21,12 +25,12 @@ function unSelectLi(selectedItem) {
 
   // If selected item is clicked again:
   // yellow background color font weight bold are removed
-  selectedItem.style.background = "";
-  selectedItem.style.fontWeight = "400";
+  // ===> selectedItem.style.background = "";
+  // ===> selectedItem.style.fontWeight = "400";
   // xmark is hidden
-  selectedItem.children[1].classList.toggle("hide");
+  // ===> selectedItem.children[1].classList.toggle("hide");
   // selected item status is reverted to false
-  selectedItem.dataset.selected = "false";
+  // ===> selectedItem.dataset.selected = "false";
   return;
 }
 
