@@ -155,7 +155,7 @@ function updateCriteriaList(criteria, data) {
 //
 //
 let tagListValue = Object.keys(selectorsTagsList); // ["tomate", "concombre"]//
-console.log("tagListValue", tagListValue );// selectorsTagsList);
+// console.log("tagListValue", tagListValue );// selectorsTagsList);
 //
 //
 

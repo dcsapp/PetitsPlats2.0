@@ -195,11 +195,10 @@ hr {
 }
 
 .total_recipes {
-
-  position: absolute;
+ /*  position: absolute;
   z-index: 10;
   right: 0px;
-
+ */
   align-items: start;
   font-size: 21px;
   font-family: "Anton", sans-serif;
@@ -257,12 +256,12 @@ hr {
 }
 
 .tag__wrapper p {
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 .closeCrossTag {
   margin-left: 10px;
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 /* 1 - Header: title & chevron handling  */
@@ -282,15 +281,16 @@ hr {
 .criteria__header p {
   font-size: 16px;
   color: #000;
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 .criteria__header span {
-  pointer-events: none;
+  transition: all 500ms;
+  /* pointer-events: none; */
 }
 
 .criteria__header span i {
-  pointer-events: none;
+  /* pointer-events: none; */
   transition: all 500ms;
 }
 
@@ -447,12 +447,12 @@ li .recipeItem p {
   font-size: 14px;
   font-family: "Manrope", sans-serif;
   font-weight: 400;
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 li i,
 li p {
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 .recipeItem:hover {
