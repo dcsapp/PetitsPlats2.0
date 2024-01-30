@@ -64,7 +64,8 @@ function updateAllCriteriaLists() {
   updateCriteriaList("ustensils", Object.keys(listOfUstensils).sort());
 }
 updateAllCriteriaLists();
-console.log("fullList ===>", fullList);
+
+
 // Insert cursor in the main input search bar when the page is loaded 
 window.onload = function() {mainSearchInput.focus()};
 

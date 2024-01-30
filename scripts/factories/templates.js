@@ -10,6 +10,7 @@ function createMainSearchBar() {
   //
   const inputBox = document.createElement("input");
   inputBox.setAttribute("id", "mainSearchInput");
+  inputBox.classList.add("inputField");
   inputBox.setAttribute("data-name", "mainSearchInput");
   inputBox.setAttribute(
     "placeholder",
@@ -79,6 +80,7 @@ function createCriteriaSelectors(criteria, criteriaTitle) {
   //
   const inputBox = document.createElement("input");
   inputBox.setAttribute("id", `criteriaBox${criteria}`);
+  inputBox.classList.add("inputFieldSelector");
   inputBox.setAttribute("data-name", `${criteria}`);
   criteriaInput.appendChild(inputBox);
   // label
@@ -148,14 +150,14 @@ toto.appendChild(selectedIndividualItem__name);
 }
  */
 function updateCriteriaList(criteria, data) {
-  // criteria: ingredients / appliances / ustentils
+  // criteria = selector: ingredients / appliances / ustentils
   // data: criteria associated items from:
   //      main bar selected recipes and / or
   //      criteria search field
 //
 //
 let tagListValue = Object.keys(selectorsTagsList); // ["tomate", "concombre"]//
-// console.log("tagListValue", tagListValue );// selectorsTagsList);
+// console.log("tagListValue=========!!!!!!!!!", tagListValue );// selectorsTagsList);
 //
 //
 

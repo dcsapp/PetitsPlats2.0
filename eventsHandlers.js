@@ -16,10 +16,8 @@ function getData(e) {
   console.log("inputBox: ", inputBox);
   console.log("inputBoxClassName: ", inputBoxClassName);
 
-  // console.log("Parent: ", e.target.parentElement.children);
-  // console.log("inputBox target: ", e.target.closest("span"));
   let inputValue = e.target.parentElement.children[0].value;
-  console.log("key pressed: ", inputValue);
+  console.log("key pressed: ", inputValue)
   // Display reset field cross
   console.log("S I Z E  O F :", inputValue.length);
   if (inputValue.length > 0) {
@@ -30,17 +28,23 @@ function getData(e) {
   if (inputBox === "mainSearchInput") {
     if (inputValue.length < 3) {
       listIndex.length = 0;
+      listIndex=0;
+      mainSearchInputIdList = 0;
     } else {
+      
       listIndex = retrieveRecipes(inputValue, inputBox);
       console.log("list  I N D E X: ", listIndex);
+      if(listIndex.length === 0){
+        displayNoRecipeFound("Pas de chance - try again...");
+      }
       mainSearchInputIdList = [...listIndex];
-      console.log("mainSearchInputIdList: ", mainSearchInputIdList);
+      //console.log("mainSearchInputIdList: ", mainSearchInputIdList);
       createCriteriaList(listIndex);
       // createCriteriaListByItems(listIndex, inputBox, inputValue)
     }
     displayRecipes(listIndex);
   } else {
-    console.log("E N T E R I N G  I N P U T  B O X: ", inputBox);
+    console.log("E N T E R I N G  S U B  I N P U T  B O X: ", inputBox);
     /* 
     // search on specific selector: ingredient
     const listItems = retrieveItems(inputValue, inputBox);
@@ -57,7 +61,9 @@ function getData(e) {
     //createCriteriaList(listIndex);
     // createCriteriaList_includingTags(listIndex);
     createCriteriaListByItems(listIndex, inputBox, inputValue)
-    displayRecipes(listIndex);
+    if(inputValue.length > 2) { 
+      displayRecipes(listIndex)
+    };
   }
 }
 
@@ -73,7 +79,6 @@ function expandDropBox(e) {
   // console.log(" 1 === C R I T E R I A  W R A P P E R ", expandFlag);
 
   if (!arrowOpenClose) {
-    console.log("==============");
     return;
   }
 
@@ -93,12 +98,14 @@ function expandDropBox(e) {
 }
 
 function closeAllSelectors() {
-  // console.log("close all selectors ==============")
+  // console.log("close all selectors and reset input field ==============")
   const allSelectors = document.querySelectorAll(".criteriaWrapper");
   const allChevrons = document.querySelectorAll(".criteria__open");
   // console.log("poiuy: ", allSelectors)
   allSelectors.forEach((sel) => sel.classList.remove("expand"));
   allChevrons.forEach((sel) => sel.classList.remove("criteria__open"));
+  const allInputSelectors = document.querySelectorAll(".inputFieldSelector");
+  allInputSelectors.forEach((sel) => sel.value = "");
 }
 //
 //
@@ -177,6 +184,7 @@ function resetInputField(e) {
       displayNumberOfRecipes(0);
     } else {
       updateAllCriteriaLists();
+      inputToBremoved.value = "";
       document.getElementById("recipesSelected").replaceChildren();
       displayNumberOfRecipes(0);
       closeAllSelectors();
@@ -219,6 +227,18 @@ function displayRecipes(listID) {
     const recipeCard = recipeModel.getRecipeCard();
     recipeDisplaySection.appendChild(recipeCard);
   });
+}
+
+function displayNoRecipeFound(msg) {
+  const recipeDisplaySection = document.getElementById("recipesSelected");
+  recipeDisplaySection.replaceChildren();
+  recipeDisplaySection.innerHTML += `<p> ${msg} </p>`;
+
+  const list = document.getElementById("list");
+
+  list.innerHTML += `<li><a href="#">Item ${list.children.length + 1}</a></li>`;
+
+
 }
 
 function displayResetCross(inputFieldName, onOff) {
