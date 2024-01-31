@@ -156,12 +156,14 @@ function updateCriteriaList(criteria, data) {
   //      criteria search field
 //
 //
+console.log("updateCriteriaList",criteria,data);
+
 let tagListValue = Object.keys(selectorsTagsList); // ["tomate", "concombre"]//
 // console.log("tagListValue=========!!!!!!!!!", tagListValue );// selectorsTagsList);
 //
 //
 
-  // console.log("updateCriteriaList(criteria, ",data);
+  
   const ulContent = document.querySelector(`#itemList${criteria}`);
   // Remove previous ul before update
   ulContent.replaceChildren();
@@ -208,6 +210,8 @@ let tagListValue = Object.keys(selectorsTagsList); // ["tomate", "concombre"]//
 
 // ==== T A G S =============================================
 // Tag template
+// creation and removal
+//
 function createTag(criteriaItem) {
   const recipesTags = document.querySelector("#recipes__tags");
 
@@ -228,4 +232,11 @@ function createTag(criteriaItem) {
   tagWrapper.appendChild(spanCloseTag);
 
   recipesTags.appendChild(tagWrapper);
+}
+
+function removeTag(selectedItem) {
+  const tagToRemove = document.querySelector(
+    `[data-criteria-tag = "${selectedItem}"]`
+  );
+  tagToRemove.remove();
 }
