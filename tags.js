@@ -117,9 +117,11 @@ function updateSelectedRecipes(option, itemSelected) {
 function mergeList(arr) {
   let mergedArr = [];
   for (let i = 0; i < Object.values(arr).length; i++) {
-    console.log("iteration: ", i, "/arr item: ", Object.values(arr)[i]);
-    tempo = [...mergedArr, ...Object.values(arr)[i]];
+  //  console.log("iteration: ", i, "/arr item: ", Object.values(arr)[i]);
+    mergedArr = [...mergedArr, ...Object.values(arr)[i]];
+  //  console.log("tempo: ", mergedArr);
   }
+  // console.log("merged array: ", mergedArr);
   return mergedArr;
 }
 
