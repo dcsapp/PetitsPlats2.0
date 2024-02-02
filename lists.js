@@ -18,6 +18,8 @@ let mainTagList = [];
 let mainSearchInputIdList = [];
 // Recipe IDs from selectors item / ID
 let selectorsTagsList = {}; //[];
+let tryTest = {};
+let fullTagsList = {};
 
 // R E S U L T  O F  S E A R C H E S  I N P U T  B O X E S
 // List of recipes IDs to be displayed
@@ -26,7 +28,7 @@ let recipesListIds = [];
 
 let selectedTagList = [];
 
-// U P D A T E D  R E C I P E S  L I S T  ============================
+// U P D A T E D  R E C I P E S  L I S T S ============================
 // Reorganized Recipes data
 // searchRecipe[index= recipe.id].ingredients  .ustensils  .appliance
 function updateRecipes(recipe) {
@@ -65,9 +67,56 @@ const newRecipes = recipes.reduce((acc, recipe) => {
   ]
 }
 */
-// console.log("recipe.appliance;", newRecipes)
-// ===================================================================
 
+// All in one
+function iuaVsRecipeId() {
+  // iua: i ngredients  u stensils  a ppliance
+  const getListOfIngredients = {};
+  const getListOfUstensils = {};
+  const getListOfAppliances = {};
+
+  recipes.forEach((recipe) => {
+    let ingredients = recipe.ingredients;
+    let ustensils = recipe.ustensils;
+    let appliance = recipe.appliance;
+
+    // ingredients
+    ingredients.map((ingredient) => {
+      if (!getListOfIngredients[ingredient.ingredient]) {
+        getListOfIngredients[ingredient.ingredient] = [recipe.id];
+      } else {
+        getListOfIngredients[ingredient.ingredient].push(recipe.id);
+      }
+    });
+    // ustensils
+    ustensils.map((ustensil) => {
+      if (!getListOfUstensils[ustensil]) {
+        getListOfUstensils[ustensil] = [recipe.id];
+      } else {
+        getListOfUstensils[ustensil].push(recipe.id);
+      }
+    });
+    // appliances
+    if (!getListOfAppliances[appliance]) {
+      getListOfAppliances[appliance] = [recipe.id];
+    } else {
+      getListOfAppliances[appliance].push(recipe.id);
+    }
+  });
+  return { getListOfIngredients, getListOfUstensils, getListOfAppliances };
+}
+
+const alls = iuaVsRecipeId();
+const { getListOfIngredients, getListOfUstensils, getListOfAppliances } = alls;
+const listOfIngredients = getListOfIngredients;
+const listOfUstensils = getListOfUstensils;
+const listOfAppliances = getListOfAppliances;
+//
+// 3 lists merged in one
+fullList = { ...listOfIngredients, ...listOfUstensils, ...listOfAppliances };
+// console.log("full list: ", fullList)
+//
+//
 // L I S T  H A N D L I N G
 // =============================================================
 //
@@ -165,58 +214,16 @@ function retrieveRecipes(inputValue, inputBox) {
   }
 }
 
-// All in one
-function iuaVsRecipeId() {
-  // iua: i ngredients  u stensils  a ppliance
-  const getListOfIngredients = {};
-  const getListOfUstensils = {};
-  const getListOfAppliances = {};
 
-  recipes.forEach((recipe) => {
-    let ingredients = recipe.ingredients;
-    let ustensils = recipe.ustensils;
-    let appliance = recipe.appliance;
 
-    // ingredients
-    ingredients.map((ingredient) => {
-      if (!getListOfIngredients[ingredient.ingredient]) {
-        getListOfIngredients[ingredient.ingredient] = [recipe.id];
-      } else {
-        getListOfIngredients[ingredient.ingredient].push(recipe.id);
-      }
-    });
-    // ustensils
-    ustensils.map((ustensil) => {
-      if (!getListOfUstensils[ustensil]) {
-        getListOfUstensils[ustensil] = [recipe.id];
-      } else {
-        getListOfUstensils[ustensil].push(recipe.id);
-      }
-    });
-    // appliances
-    if (!getListOfAppliances[appliance]) {
-      getListOfAppliances[appliance] = [recipe.id];
-    } else {
-      getListOfAppliances[appliance].push(recipe.id);
-    }
-  });
-  return { getListOfIngredients, getListOfUstensils, getListOfAppliances };
-}
 
-const alls = iuaVsRecipeId();
-const { getListOfIngredients, getListOfUstensils, getListOfAppliances } = alls;
-const listOfIngredients = getListOfIngredients;
-const listOfUstensils = getListOfUstensils;
-const listOfAppliances = getListOfAppliances;
-/* 
-console.log("const listOfIngredients", listOfIngredients);
-console.log("vbgfdrtyyyy: =======> ", Object.keys(listOfIngredients)[0]);
-console.log("saladier: =======> ", listOfAppliances["Saladier"]);
- */
-//
-// 3 lists merged in one
-fullList = { ...listOfIngredients, ...listOfUstensils, ...listOfAppliances };
-// console.log("full list: ", fullList)
+
+
+
+
+
+
+
 
 /*  */
 function retrieveItems(inputValue, inputBox) {
@@ -294,6 +301,71 @@ function retrieveItems(inputValue, inputBox) {
     case appliances:
       statements */
 
+function createCriteriaListByItems(listItems, inputBox, inputValue) {
+  console.log(
+    "----  E N T E R I N G  C R E A T E  C R I T E R I A  L I S T  B Y  N A M E -----"
+  );
+  console.log("createCriteriaListByItems ==> 1,", listItems);
+  console.log("createCriteriaListByItems ==> 2,", inputBox);
+  console.log("createCriteriaListByItems ==> 3,", inputValue);
+
+  const setOfIngredients = new Set();
+  const setOfUstensils = new Set();
+  const setOfAppliances = new Set();
+
+  switch (inputBox) {
+    case "ingredients":
+      for (const [key, value] of Object.entries(listOfIngredients)) {
+        if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
+          console.log(
+            "// ingredient added to the list Ingredients =================="
+          );
+          setOfIngredients.add(`${key}`);
+        }
+      }
+    // selectedRecipesIngredients = [...setOfIngredients].sort();
+    // updateCriteriaList("ingredients", selectedRecipesIngredients);
+
+    case "ustensils":
+      for (const [key, value] of Object.entries(listOfUstensils)) {
+        if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
+          console.log(
+            "// ingredient added to the list Ustensils =================="
+          );
+          setOfUstensils.add(`${key}`);
+        }
+      }
+    // selectedRecipesUstensils = [...setOfUstensils].sort();
+    // updateCriteriaList("ustensils", selectedRecipesUstensils);
+
+    case "appliances":
+      for (const [key, value] of Object.entries(listOfAppliances)) {
+        if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
+          console.log(
+            "// ingredient added to the list Appliances =================="
+          );
+          setOfAppliances.add(`${key}`);
+        }
+      }
+    // selectedRecipesAppliances = [...setOfAppliances].sort();
+    // updateCriteriaList("appliances", selectedRecipesAppliances);
+
+    default:
+      console.log("erreur");
+  }
+
+  selectedRecipesIngredients = [...setOfIngredients].sort();
+  updateCriteriaList("ingredients", selectedRecipesIngredients);
+  selectedRecipesUstensils = [...setOfUstensils].sort();
+  updateCriteriaList("ustensils", selectedRecipesUstensils);
+  selectedRecipesAppliances = [...setOfAppliances].sort();
+  updateCriteriaList("appliances", selectedRecipesAppliances);
+
+  console.log("E N D ==============>>>>");
+}
+
+// ====================================================================================
+
 function displayNumberOfRecipes(nbrRecipes) {
   const totalRecipes = document.querySelector(".total_recipes");
   totalRecipes.innerHTML = nbrRecipes + " recette(s)";
@@ -315,26 +387,34 @@ function displayRecipes(listID) {
 // get from mainbar search
 function createCriteriaList(listID) {
   console.log("L I S T   I D: ", listID);
+  //
+
+  if (listID === 0) {
+    // updateAllCriteriaLists();
+    return;
+  }
+ 
+  //
   const setOfIngredients = new Set();
   const setOfAppliances = new Set();
   const setOfUstensils = new Set();
 
-  let updtIngredientList = [];
+  let updtIngredientsList = [];
   let updtUstensilsList = [];
-
+console.log("before for each 405", listID)
   listID.forEach((id) => {
-    updtIngredientList = [...updtIngredientList, ...newRecipes[id].ingredients];
+    updtIngredientsList = [...updtIngredientsList, ...newRecipes[id].ingredients];
     updtUstensilsList = [...updtUstensilsList, ...newRecipes[id].ustensils];
     setOfAppliances.add(...newRecipes[id].appliance);
-  //  setOfUstensils.add(...newRecipes[id].ustensils);
-  //  setOfIngredients.add(newRecipes[id].ingredients);
+    //  setOfUstensils.add(...newRecipes[id].ustensils);
+    //  setOfIngredients.add(newRecipes[id].ingredients);
     // setOfIngredients(ingrTest = [...ingrTest, ...newRecipes[id].ingredients])
   });
-//
+  //
   // selectedRecipesIngredients = [...setOfIngredients].sort(); //.sort();
-  selectedRecipesIngredients = [...new Set(updtIngredientList)].sort()
+  selectedRecipesIngredients = [...new Set(updtIngredientsList)].sort();
   // selectedRecipesUstensils = [...setOfUstensils].sort();
-  selectedRecipesUstensils = [...new Set(updtUstensilsList)].sort()
+  selectedRecipesUstensils = [...new Set(updtUstensilsList)].sort();
   selectedRecipesAppliances = [...setOfAppliances].sort();
   //
   // in template.js:

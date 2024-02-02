@@ -76,7 +76,11 @@ function createCriteriaSelectors(criteria, criteriaTitle) {
   //
   // Criteria search input field
   const criteriaInput = document.createElement("div");
-  criteriaInput.classList.add(`selector-${criteria}`, "searchField", "input-control");
+  criteriaInput.classList.add(
+    `selector-${criteria}`,
+    "searchField",
+    "input-control"
+  );
   //
   const inputBox = document.createElement("input");
   inputBox.setAttribute("id", `criteriaBox${criteria}`);
@@ -111,10 +115,13 @@ function createCriteriaSelectors(criteria, criteriaTitle) {
   //
   // Selected item
   const selectedIndividualItem = document.createElement("div");
-  selectedIndividualItem.classList.add("sel_indiv_item", `sel_indiv_item${criteria}`);
+  selectedIndividualItem.classList.add(
+    "sel_indiv_item",
+    `sel_indiv_item${criteria}`
+  );
   criteriaWrapper.appendChild(selectedIndividualItem);
   //
-/* 
+  /* 
   const selectedIndividualItem__name = document.createElement("p");
   selectedIndividualItem__name.classList.add("para_indv_item", `${criteria}CloseCross`);
   selectedIndividualItem__name.textContent = "para_indv_item";
@@ -154,16 +161,15 @@ function updateCriteriaList(criteria, data) {
   // data: criteria associated items from:
   //      main bar selected recipes and / or
   //      criteria search field
-//
-//
-console.log("updateCriteriaList",criteria,data);
+  //
+  //
+  // console.log("updateCriteriaList",criteria,data);
 
-let tagListValue = Object.keys(selectorsTagsList); // ["tomate", "concombre"]//
-// console.log("tagListValue=========!!!!!!!!!", tagListValue );// selectorsTagsList);
-//
-//
+  let tagListValue = Object.keys(fullTagsList); // ["tomate", "concombre"]//
+  // console.log("tagListValue=========!!!!!!!!!", tagListValue );// fullTagsList);
+  //
+  //
 
-  
   const ulContent = document.querySelector(`#itemList${criteria}`);
   // Remove previous ul before update
   ulContent.replaceChildren();
@@ -192,21 +198,24 @@ let tagListValue = Object.keys(selectorsTagsList); // ["tomate", "concombre"]//
     //
     itemLi.appendChild(spanXmark);
     //
-    
-    if(tagListValue.includes(`${item}`.toLowerCase())) {
+
+    //console.log("templates: ", tagListValue)
+
+    if (tagListValue.includes(`${item}`.toLowerCase())) {
       itemLi.setAttribute("data-selected", "true");
       // console.log("item true", `${item}`.toLowerCase());
       itemLi.classList.add("recipeAsTag");
+      // itemLi.classList.toggle("recipeAsTag");
       spanXmark.classList.toggle("hide");
     } else {
       itemLi.classList.remove("recipeAsTag");
+      // spanXmark.classList.toggle("hide");
       // console.log("item false", `${item}`.toLowerCase());
     }
-    
+
     ul.appendChild(itemLi);
   });
 }
-
 
 // ==== T A G S =============================================
 // Tag template
@@ -235,8 +244,15 @@ function createTag(criteriaItem) {
 }
 
 function removeTag(selectedItem) {
+  console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
   const tagToRemove = document.querySelector(
     `[data-criteria-tag = "${selectedItem}"]`
   );
   tagToRemove.remove();
+
+  const liToRemove = document.querySelector(
+    `[data-criteria-li = "${selectedItem}"]`
+  );
+  console.log("liToRemove.dataset.selected", liToRemove);
+  liToRemove.dataset.selected = "false";
 }

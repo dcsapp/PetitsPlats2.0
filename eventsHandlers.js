@@ -69,13 +69,12 @@ function getData(e) {
     //createCriteriaList(recipesListIds);
     // createCriteriaList_includingTags(recipesListIds);
     createCriteriaListByItems(recipesListIds, inputBox, inputValue);
-/* 
+    /* 
     if (inputValue.length > 2) {
       displayRecipes(recipesListIds);
     }
      */
   }
-
 }
 
 // D R O P B O X  S E L E C T O R S
@@ -133,38 +132,46 @@ criteriaSelectorsHandlers.addEventListener("click", tagHandling);
 function tagHandling(e) {
   let selectedItem = e.target.closest(".recipeItem");
   let tagsDisplayed = e.target.closest(".tag__wrapper");
-  console.log("selectedItem: <<<<<<<<>>>>>>>>>><", selectedItem);
-  console.log("tagsDisplayed: <<<<<<<<>>>>>>>>>><", tagsDisplayed);
-//
-// An item from the dropdown list is clicked
-// - get the value: liCriteria
-// - check if data-selected is false or true
-//
-// - if  f a l s e 
-// - the tags is created (createTag with the value: criteriaLi) => template
-// - tag list is updated updateTagList with option "added" and value criteriaLi
-//
-// if  t r u e
-// - the tags is removed (removeTag with the value: criteriaLi)
-// - tag list is updated updateTagList with option "removed" and value criteriaLi
+  console.log("li Item: ===>", selectedItem);
+  console.log("tag Item: ==>", tagsDisplayed);
+  //
+  // An item from the dropdown list is clicked
+  // - get the value: liCriteria
+  // - check if data-selected is false or true
+  //
+  // - if  f a l s e
+  // - the tags is created (createTag with the value: criteriaLi) => template
+  // - tag list is updated updateTagList with option "added" and value criteriaLi
+  //
+  // if  t r u e
+  // - the tags is removed (removeTag with the value: criteriaLi)
+  // - tag list is updated updateTagList with option "removed" and value criteriaLi
   if (selectedItem) {
     console.log("enter S E L E C T  li", selectedItem);
+    // recipesListIds = retrieveRecipes(inputValue, inputBox);
     if (selectedItem.classList.contains("recipeItem")) {
       let liCriteria = selectedItem.dataset.criteriaLi;
-      console.log("M A T C H !!!!!!!", liCriteria);
+      console.log("Selected li", liCriteria);
       if (selectedItem.dataset.selected === "false") {
-        console.log("==> Item for tag: ", selectedItem.dataset.criteriaLi);
-        createTag(selectedItem.dataset.criteriaLi); // template
+        console.log("==> Item for tag / false: ", liCriteria);
+        // createTag(selectedItem.dataset.criteriaLi); // template
+        selectedItem.dataset.selected = "true";
+        console.log("==> Status updated to true: ", liCriteria);
+        createTag(liCriteria); // template
         updateSelectedRecipes("added", liCriteria);
         // updateTagList("added", liCriteria);
-        return;
+        // return;
       } else {
+        console.log("enter R E M O V E  li", selectedItem);
+        selectedItem.dataset.selected = "false";
+        console.log("updated li", selectedItem);
         // tag is removed
         removeTag(liCriteria); // template
-        updateSelectedRecipes("removed", liCriteria)
+
+        updateSelectedRecipes("removed", liCriteria);
         // updateTagList("removed", liCriteria);
         // updateData()
-        return;
+        // return;
       }
     }
   }
@@ -175,17 +182,18 @@ function tagHandling(e) {
     let dataCriteriaLi = tagsDisplayed.dataset.criteriaTag;
     console.log("M A T C H !!!!!!!", dataCriteriaLi);
     // targets li criteria ref:
-    console.log("D A T A  L I  C R I T E R I A",dataCriteriaLi);
+    console.log("D A T A  L I  C R I T E R I A $$$$$", dataCriteriaLi);
     let liSelectedItem = document.querySelector(
       `[data-criteria-li = "${dataCriteriaLi}"]`
     );
+    console.log("LI LI LI ", liSelectedItem);
     // console.log("tag1 !", selectedItem.dataset.attr);
-    // console.log("tag2 !", selectedItem);
+    console.log("tag2 !", selectedItem);
     console.log("tag3 !", liSelectedItem);
     // selectedItem.remove(); // remove tag
     tagsDisplayed.remove();
     // updateTagList("removed", dataCriteriaLi); // liSelectedItem);
-    updateSelectedRecipes("removed", dataCriteriaLi)
+    updateSelectedRecipes("removed", dataCriteriaLi);
   }
 }
 //
@@ -248,8 +256,12 @@ function clearInputField(e) {
 }
 
 function displayRecipes(listID) {
+  console.log("===> Entering Display recipes ");
   const recipeDisplaySection = document.getElementById("recipesSelected");
   recipeDisplaySection.replaceChildren();
+  //
+  if (listID === 0) return;
+  //
   listID.forEach((id) => {
     const recipeModel = recipeCardTemplate(id);
     const recipeCard = recipeModel.getRecipeCard();
