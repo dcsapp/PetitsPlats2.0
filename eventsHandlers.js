@@ -56,6 +56,7 @@ function getData(e) {
         recipesListIds = retrieveRecipes(inputValue, inputBox);
         // if no recipes found message is displayed
         if (recipesListIds.length === 0) {
+          displayRecipes([]);
           displayNoRecipeFound(inputValue);
         }
         // recipes IDs selected from yhis input is store for tags handling
@@ -226,14 +227,18 @@ const resetSearchInputField = document.querySelector("body");
 resetSearchInputField.addEventListener("click", resetInputField); // clearInputField);
 //
 function resetInputField(e) {
+  // let resetSearchCrossnnn = e.target.closest(".closeCross");
   let resetSearchCross = e.target.closest(".closeCross");
-  let inputToBremoved = e.target.closest("div").children[0];
-  let inputName = e.target.closest("div").children[0].dataset.name;
+  // let inputToBremoved = e.target.closest("div").children[0];
+  // let inputName = e.target.closest("div").children[0].dataset.name;
 
   if (!resetSearchCross) return;
 
   if (resetSearchCross) {
-    console.log("cross click!!!!!!......");
+    let inputToBremoved = e.target.closest("div").children[0];
+    let inputName = e.target.closest("div").children[0].dataset.name;
+
+    console.log("cross click!!!!!!......", resetSearchCross);
     console.log("cross inputToBremoved", inputToBremoved); //.dataset.name);
     console.log("cross inputName", inputName); //.dataset.name);
     console.log("recipes List Ids", recipesListIds);
@@ -252,77 +257,17 @@ function resetInputField(e) {
       // B - At least 1 recipe selected when current selection is cancelled
       //     Re-instate previous status
       //
-      // localSearch = [];
-      // clearInputField()
       console.log("avant: ", recipesListIds, "/ local: ");
       updateCriteriaList("ingredients", selectedRecipesIngredients);
       console.log("apres: ", recipesListIds, "/ local: ");
 
       return;
-      if (recipesListIds.length === 0) {
-        localSearch = [];
-        console.log(
-          "S E L E C T O R  input box  C L I C K E D = 1",
-          inputName,
-          "/ local: ",
-          localSearch,
-          "/ tag recipe id list ",
-          tagRecipeIdList,
-          "/ "
-        );
-        // updateCriteriaList(inputName, selectedRecipesIngredients)
-        updateAllCriteriaLists();
-      } else {
-        console.log(
-          "S E L E C T O R  input box  C L I C K E D = 2 - ",
-          inputName,
-          "/ local: ",
-          localSearch,
-          "/ tag recipe id list ",
-          tagRecipeIdList,
-          "/ "
-        );
-        updateCriteriaList(inputName, localSearch);
-        // updateSelectedRecipes(option, itemSelected)
-      }
-    }
-  }
-  // console.log("input: ", inputName.parentElement.si);// e.target.closest("div").children[0].value="")
-  // console.log("input: ", e.target.closest("div").children[0].value="")
-}
-
-/* 
-function resetInputField(e) {
-  let resetSearchCross = e.target.closest(".closeCross");
-  if (!resetSearchCross) return;
-
-  if (resetSearchCross) {
-    console.log("cross click!!!!!!......");
-    let inputToBremoved = e.target.closest("div").children[0].dataset.name;
-    console.log("cross inputToBremoved", inputToBremoved)//.dataset.name);
-
-    inputToBremoved.value = "";
-    resetSearchCross.style.display = "none";
-    if (resetSearchCross.classList.contains("mainSearchInputCloseCross")) {
-      console.log("========= mainSearchInputCloseCross clicked ========");
-      resetSearch(); // clean all the data and close all selectors
-    } else {
-      // console.log("S E L E C T O R  input box", e.target.closest("div").children[0]); //.children[0]);
-      console.log("S E L E C T O R  input box", inputToBremoved);
-      updateCriteriaList(inputToBremoved, localSearch);
       
-      // updateAllCriteriaLists();
-      inputToBremoved.value = "";
-
-      // document.getElementById("recipesSelected").replaceChildren();
-      // displayNumberOfRecipes(0);
-      // closeAllSelectors();
     }
   }
   // console.log("input: ", inputName.parentElement.si);// e.target.closest("div").children[0].value="")
   // console.log("input: ", e.target.closest("div").children[0].value="")
 }
- */
 
 // Reset search if logo is clicked
 const resetFromSiteTitle = document.querySelector("#logo");
@@ -387,14 +332,14 @@ function displayRecipes(listID) {
 function displayNoRecipeFound(msg) {
   console.log("message: ", msg);
   const message = `Aucune recette ne contient <strong>"${msg}"</strong>,</br> 
-  Vous pouvez chercher "tarte aux pommes", "poisson", etc. ou utiliser la recherche avancée.`;
+  Vous pouvez chercher <strong>"tarte aux pommes"</strong>, <strong>"poisson",</strong> etc.  ou utiliser la recherche avancée.`;
   const messageSection = document.getElementById("message");
   messageSection.replaceChildren();
   messageSection.innerHTML += `<p> ${message} </p>`;
 
-  const list = document.getElementById("list");
+  //const list = document.getElementById("list");
 
-  list.innerHTML += `<li><a href="#">Item ${list.children.length + 1}</a></li>`;
+  // list.innerHTML += `<li><a href="#">Item ${list.children.length + 1}</a></li>`;
 }
 
 function displayResetCross(inputFieldName, onOff) {
@@ -408,168 +353,3 @@ function displayResetCross(inputFieldName, onOff) {
     toBeDisplayed.style.display = "none";
   }
 }
-
-/* 
-const searchFields = document.querySelectorAll(".main__searchBar");
-console.log("searchFields = ", searchFields);
- */
-/* =================------ T R A S H ------============ */
-
-/* 
-function clearInputField(e) {
-  const selectedField = (e.target.closest(
-    "span"
-  ).parentElement.parentElement.children[0].value = "");
-  // console.log("cross clear input Selected field: ", e.target.closest("span"));
-  console.log("cross clear input Selected field: ", selectedField);
-  // Hide cross icon
-  selectedField.closest("span").style.display = "none";
-  // e.target.closest("span").style.display = "none";
-
-  // Suppress displayed recipes
-  document.getElementById("recipesSelected").replaceChildren();
-  closeAllSelectors();
-  updateAllCriteriaLists();
-  displayNumberOfRecipes(0);
-}
- */
-
-/* 
-console.log(("etarget", e.target));
-  if (e.target.closest("body")) {
-    console.log("============ 88888888 ============", e.target.closest())
-    const allSelectors = document.querySelectorAll(".ctra")
-    allSelectors.forEach((ct) => {
-     //    console.log(
-       //  const cls = ct.children[0].classList;
-        if(ct.children[0].classList.contains("expand")) {
-            ct.children[0].classList.remove("expand")
-        }
-  })}
-
- */
-
-/*  if(e.target.closest("span").matches(".closeCross")) {
-        console.log("hellooooooo!!!", )
-    } */
-/*     let currentInputBox = e.target.closest("span");
-    let testy = e.target.closest(".searchInput")
-    // .children[0].value;
-    
-    console.log("hellooooooo!!!", testy, currentInputBox) */
-// }
-/* 
-function clearInputCleared(e) {
-  let inputField = e.target;
-  if(e.target.matches(".fa-xmark")) {
-    console.log("Y E S")
-    e.target.closest(".searchBar").children[0].value="";
-    let toto = e.target.closest("div")//.classList.add(".hide")//.add(".hide")
-    // clearInput.style.display = "none";
-    console.log("toto: ", toto);
-  }
-*/
-/* let toto = e.target.closest("input");
-  console.log("body click: ", inputField) */
-
-// ====== old ======
-/* 
-  if (inputValue.length >= 3) {
-    let recipesListIds = retrieveRecipes(inputValue, inputBox);
-    console.log("list index: ", recipesListIds);
-    displayRecipes(recipesListIds);
-    createCriteriaList(recipesListIds);
-  } else {
-    createCriteriaList([]);
-    recipesSelected.innerHTML = "Aucune recette sélectionnée...";
-  }
-  */
-// ====== old ======
-
-/* 
-
-function expandDropBox2(e) {
-  let tre = e.target.closest(".criteria__header");
-  console.log("etarget........",tre);
-
-  if (e.target.matches(".criteria__header")) {
-    // pointer-event disabled for p and span
-    // arrow rotation
-    
-    closeAllSelectors();
-    e.target.children[1].firstElementChild.classList.toggle("criteria__open");
-    // dropdown expand
-    e.target.closest(".criteriaWrapper").classList.toggle("expand");
-  }
-}
- */
-
-/* 
-  if (inputValue.length >= 3) {
-    console.log("3 S I Z E  O F :", inputValue.length);
-    // Check input location
-    // Main search bar or one of the dropbox selector
-    if (inputBox === "mainSearchInput") {
-      recipesListIds = retrieveRecipes(inputValue, inputBox);
-      console.log("list  I N D E X: ", recipesListIds);
-      mainSearchInputIdList = [...recipesListIds];
-      console.log("mainSearchInputIdList: ", mainSearchInputIdList)
-      createCriteriaList(recipesListIds);
-      displayRecipes(recipesListIds);
-    } else {
-      // search on specific selector: ingredient
-      const listItems = retrieveItems(inputValue, inputBox);
-      console.log("list  I T E M S: ", listItems);
-      console.log("I N P U T  B O X: ", inputBox);
-      createCriteriaListByItems(listItems, inputBox, inputValue);
-    }
-  }
- */
-
-/* 
-function expandDropBox(e) {
-  let arrowOpenClose = e.target.closest(".criteria__header"); //.children[1];
-  console.log("C R I T E R I A  H E A D E R ", arrowOpenClose); //.children);
-  // Close the dropbox if it is clicked and already open
-  if (arrowOpenClose.children[0].classList.contains("criteria__open")) {
-    console.log("C R I T E R I A");
-    closeAllSelectors();
-  } else {
-    if (e.target.closest(".criteria__header")) {
-      // pointer-event disabled for p and span
-      // arrow rotation
-      closeAllSelectors();
-      arrowOpenClose.firstElementChild.classList.toggle("criteria__open");
-      // ====>e.target.children[1].firstElementChild.classList.toggle("criteria__open");
-      // dropdown expand
-      e.target.closest(".criteriaWrapper").classList.toggle("expand");
-      // arrowOpenClose.classList.contains("criteria__open")
-    }
-  }
-}
- */
-
-/* 
-  // if click target is li
-  if (e.target.classList.contains("recipeItem")) {
-    console.log("M A T C H !!!!!!!")
-    let liCriteria = selectedItem.dataset.criteriaLi;
-    if (selectedItem.dataset.selected === "false") {
-      selectLi(selectedItem);
-      createTag(selectedItem.dataset.criteriaLi);
-      updateTagList("add", liCriteria);
-      return;
-    }
-    // console.log("selectedItem: ", selectedItem);
-    // console.log("selectedItem: ", selectedItem.children[1]);
-    // tagTemplate(toto.dataset.criteriaItem);
-
-    if (selectedItem.dataset.selected === "true") {
-      unSelectLi(selectedItem);
-      // tag is removed
-      removeTag(liCriteria);
-      updateTagList("remove", liCriteria);
-      return;
-    }
-  }
- */
