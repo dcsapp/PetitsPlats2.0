@@ -102,6 +102,7 @@ function updateSelectedRecipes(option, itemSelected) {
         displayRecipes(recipesListIds);
         displayNumberOfRecipes(0);
         closeAllSelectors();
+        resetSearch();
       } else {
         console.log("=========  K E E P  G O I N G ... =======");
         createCriteriaList(recipesListIds);
