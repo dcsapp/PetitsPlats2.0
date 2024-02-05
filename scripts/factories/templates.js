@@ -94,6 +94,7 @@ function createCriteriaSelectors(criteria, criteriaTitle) {
   const spanCloseCross = document.createElement("span");
   spanCloseCross.classList.add(
     "closeCross",
+    "closeCrossSelectors",
     "clearSearch",
     `${criteria}CloseCross`,
     ".displayFlex"

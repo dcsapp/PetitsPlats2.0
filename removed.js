@@ -1,128 +1,124 @@
-
 function createCriteriaListByItems(listItems, inputBox, inputValue) {
-    console.log(
-      "----  E N T E R I N G  C R E A T E  C R I T E R I A  L I S T  B Y  N A M E -----"
-    );
-    console.log("createCriteriaListByItems ==> 1,", listItems);
-    console.log("createCriteriaListByItems ==> 2,", inputBox);
-    console.log("createCriteriaListByItems ==> 3,", inputValue);
-  
-    const setOfIngredients = new Set();
-    const setOfUstensils = new Set();
-    const setOfAppliances = new Set();
-  
-    switch (inputBox) {
-      case "ingredients":
-        for (const [key, value] of Object.entries(listOfIngredients)) {
-          if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
-            console.log(
-              "// ingredient added to the list Ingredients =================="
-            );
-            setOfIngredients.add(`${key}`);
-          }
+  console.log(
+    "----  E N T E R I N G  C R E A T E  C R I T E R I A  L I S T  B Y  N A M E -----"
+  );
+  console.log("createCriteriaListByItems ==> 1,", listItems);
+  console.log("createCriteriaListByItems ==> 2,", inputBox);
+  console.log("createCriteriaListByItems ==> 3,", inputValue);
+
+  const setOfIngredients = new Set();
+  const setOfUstensils = new Set();
+  const setOfAppliances = new Set();
+
+  switch (inputBox) {
+    case "ingredients":
+      for (const [key, value] of Object.entries(listOfIngredients)) {
+        if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
+          console.log(
+            "// ingredient added to the list Ingredients =================="
+          );
+          setOfIngredients.add(`${key}`);
         }
-      // selectedRecipesIngredients = [...setOfIngredients].sort();
-      // updateCriteriaList("ingredients", selectedRecipesIngredients);
-  
-      case "ustensils":
-        for (const [key, value] of Object.entries(listOfUstensils)) {
-          if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
-            console.log(
-              "// ingredient added to the list Ustensils =================="
-            );
-            setOfUstensils.add(`${key}`);
-          }
+      }
+    // selectedRecipesIngredients = [...setOfIngredients].sort();
+    // updateCriteriaList("ingredients", selectedRecipesIngredients);
+
+    case "ustensils":
+      for (const [key, value] of Object.entries(listOfUstensils)) {
+        if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
+          console.log(
+            "// ingredient added to the list Ustensils =================="
+          );
+          setOfUstensils.add(`${key}`);
         }
-      // selectedRecipesUstensils = [...setOfUstensils].sort();
-      // updateCriteriaList("ustensils", selectedRecipesUstensils);
-  
-      case "appliances":
-        for (const [key, value] of Object.entries(listOfAppliances)) {
-          if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
-            console.log(
-              "// ingredient added to the list Appliances =================="
-            );
-            setOfAppliances.add(`${key}`);
-          }
+      }
+    // selectedRecipesUstensils = [...setOfUstensils].sort();
+    // updateCriteriaList("ustensils", selectedRecipesUstensils);
+
+    case "appliances":
+      for (const [key, value] of Object.entries(listOfAppliances)) {
+        if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
+          console.log(
+            "// ingredient added to the list Appliances =================="
+          );
+          setOfAppliances.add(`${key}`);
         }
-      // selectedRecipesAppliances = [...setOfAppliances].sort();
-      // updateCriteriaList("appliances", selectedRecipesAppliances);
-  
-      default:
-        console.log("erreur");
-    }
-  
-    selectedRecipesIngredients = [...setOfIngredients].sort();
-    updateCriteriaList("ingredients", selectedRecipesIngredients);
-    selectedRecipesUstensils = [...setOfUstensils].sort();
-    updateCriteriaList("ustensils", selectedRecipesUstensils);
-    selectedRecipesAppliances = [...setOfAppliances].sort();
-    updateCriteriaList("appliances", selectedRecipesAppliances);
-  
-    console.log("E N D ==============>>>>");
+      }
+    // selectedRecipesAppliances = [...setOfAppliances].sort();
+    // updateCriteriaList("appliances", selectedRecipesAppliances);
+
+    default:
+      console.log("erreur");
   }
 
-  
-  // ====================================================================================
+  selectedRecipesIngredients = [...setOfIngredients].sort();
+  updateCriteriaList("ingredients", selectedRecipesIngredients);
+  selectedRecipesUstensils = [...setOfUstensils].sort();
+  updateCriteriaList("ustensils", selectedRecipesUstensils);
+  selectedRecipesAppliances = [...setOfAppliances].sort();
+  updateCriteriaList("appliances", selectedRecipesAppliances);
 
+  console.log("E N D ==============>>>>");
+}
 
+// ====================================================================================
 
 function createCriteriaList_includingTags(listID) {
-    console.log(
-      "++++++++++++++++++ createCriteriaList_includingTags +++++++++++++++++++++++"
-    );
-    const setOfIngredients = new Set();
-    const setOfAppliances = new Set();
-    const setOfUstensils = new Set();
-    // -------
-    const recipesName = [];
-    console.log("list_________ID >>>: ", listID);
-  
-    listID.forEach((id) => {
-      let currentRecipe = recipes.filter(
-        (currentRecipe) => currentRecipe.id === id
-      ); //[recipeIndex];
-      // list of Appliances
-      setOfAppliances.add(currentRecipe[0].appliance);
-      // list of Ustensils
-      currentRecipe[0].ustensils.forEach((ustensil) => {
-        setOfUstensils.add(ustensil);
-      });
-      // list of ingredients
-      currentRecipe[0].ingredients.forEach((ingredient) => {
-        setOfIngredients.add(ingredient.ingredient);
-      });
-      // ----------
-      // Recipe Name
-  
-      recipesName.push(currentRecipe[0].name);
+  console.log(
+    "++++++++++++++++++ createCriteriaList_includingTags +++++++++++++++++++++++"
+  );
+  const setOfIngredients = new Set();
+  const setOfAppliances = new Set();
+  const setOfUstensils = new Set();
+  // -------
+  const recipesName = [];
+  console.log("list_________ID >>>: ", listID);
+
+  listID.forEach((id) => {
+    let currentRecipe = recipes.filter(
+      (currentRecipe) => currentRecipe.id === id
+    ); //[recipeIndex];
+    // list of Appliances
+    setOfAppliances.add(currentRecipe[0].appliance);
+    // list of Ustensils
+    currentRecipe[0].ustensils.forEach((ustensil) => {
+      setOfUstensils.add(ustensil);
     });
-  
-    console.log("selectedRecipesIngredients", selectedRecipesIngredients);
-    selectedRecipesIngredients = [...setOfIngredients].sort();
-    selectedRecipesUstensils = [...setOfUstensils].sort();
-    selectedRecipesAppliances = [...setOfAppliances].sort();
-  
-    /* 
+    // list of ingredients
+    currentRecipe[0].ingredients.forEach((ingredient) => {
+      setOfIngredients.add(ingredient.ingredient);
+    });
+    // ----------
+    // Recipe Name
+
+    recipesName.push(currentRecipe[0].name);
+  });
+
+  console.log("selectedRecipesIngredients", selectedRecipesIngredients);
+  selectedRecipesIngredients = [...setOfIngredients].sort();
+  selectedRecipesUstensils = [...setOfUstensils].sort();
+  selectedRecipesAppliances = [...setOfAppliances].sort();
+
+  /* 
     templateSelectorUpdate("ingredients", selectedRecipesIngredients);
     templateSelectorUpdate("appliances", selectedRecipesAppliances);
     templateSelectorUpdate("ustensils", selectedRecipesUstensils);
    */
-  
-    updateCriteriaList("ingredients", selectedRecipesIngredients);
-    updateCriteriaList("appliances", selectedRecipesAppliances);
-    updateCriteriaList("ustensils", selectedRecipesUstensils);
-    /* 
+
+  updateCriteriaList("ingredients", selectedRecipesIngredients);
+  updateCriteriaList("appliances", selectedRecipesAppliances);
+  updateCriteriaList("ustensils", selectedRecipesUstensils);
+  /* 
     console.log("Ingrédients", selectedRecipesIngredients);
     console.log("Ustensiles", selectedRecipesUstensils);
     console.log("Appareils", selectedRecipesAppliances);
      */
-    //
-    console.log("Recipe Name: ", recipesName);
-  }
-  
-  // =========== S T A N D  B Y ================================================= //
-  /* 
+  //
+  console.log("Recipe Name: ", recipesName);
+}
+
+// =========== S T A N D  B Y ================================================= //
+/* 
   case "mainSearchInput":
   
   currentRecipes.clear();
@@ -146,138 +142,132 @@ function createCriteriaList_includingTags(listID) {
     }
   });
    */
-  
-  // ======================================================================= //
-  
-  function retrieveRecipes5(inputValue, inputBox) {
-    console.log("E N T E R I N G  R E T R I E V E  R E C I P E S : ", inputBox);
-    console.log("inputValue: ", inputValue);
-    console.log("inputBox: ", inputBox);
-    // Input Box:
-    // mainSearchInput: ingredients / name / description
-    // ingredients: ingredients
-    // appliances: appliances
-    // ustensils: ustensils
-  
-    let recipeIDing = new Set(); // ID list of selected recipes / unique
-    let recipeIDust = new Set();
-    let recipeIDapp = new Set();
-    let recipeIDmain = new Set();
-    let recipeIDmerged = new Set();
-  
-    let searchString = inputValue;
-    console.log("searchSring: ", searchString);
-    let criteriaBox = inputBox;
-    searchString.toLocaleLowerCase();
-  
-    recipes.forEach((recipe) => {
+
+// ======================================================================= //
+
+function retrieveRecipes5(inputValue, inputBox) {
+  console.log("E N T E R I N G  R E T R I E V E  R E C I P E S : ", inputBox);
+  console.log("inputValue: ", inputValue);
+  console.log("inputBox: ", inputBox);
+  // Input Box:
+  // mainSearchInput: ingredients / name / description
+  // ingredients: ingredients
+  // appliances: appliances
+  // ustensils: ustensils
+
+  let recipeIDing = new Set(); // ID list of selected recipes / unique
+  let recipeIDust = new Set();
+  let recipeIDapp = new Set();
+  let recipeIDmain = new Set();
+  let recipeIDmerged = new Set();
+
+  let searchString = inputValue;
+  console.log("searchSring: ", searchString);
+  let criteriaBox = inputBox;
+  searchString.toLocaleLowerCase();
+
+  recipes.forEach((recipe) => {
+    recipe.ingredients.forEach((item) => {
+      // Retrieve ingredients
+
       recipe.ingredients.forEach((item) => {
-        // Retrieve ingredients
-  
-        recipe.ingredients.forEach((item) => {
-          if (
-            item.ingredient.toLowerCase().includes(searchString.toLowerCase())
-          ) {
-            recipeIDing.add(recipe.id);
-          }
-        });
-        // Retrieve ustensils
-        recipe.ustensils.forEach((item) => {
-          if (item.toLowerCase().includes(searchString.toLowerCase())) {
-            recipeIDust.add(recipe.id);
-          }
-        });
-        // Retrieve appliance
-        if (recipe.appliance.toLowerCase().includes(searchString.toLowerCase())) {
-          recipeIDapp.add(recipe.id);
-        }
-        // If search comes from main search bar
-        if (criteriaBox === "mainSearchInput") {
-          if (
-            recipe.name.toLowerCase().includes(searchString.toLowerCase()) ||
-            recipe.description.toLowerCase().includes(searchString.toLowerCase())
-          ) {
-            recipeIDing.add(recipe.id);
-            // recipeIDmain.add(recipe.id);
-          }
+        if (
+          item.ingredient.toLowerCase().includes(searchString.toLowerCase())
+        ) {
+          recipeIDing.add(recipe.id);
         }
       });
+      // Retrieve ustensils
+      recipe.ustensils.forEach((item) => {
+        if (item.toLowerCase().includes(searchString.toLowerCase())) {
+          recipeIDust.add(recipe.id);
+        }
+      });
+      // Retrieve appliance
+      if (recipe.appliance.toLowerCase().includes(searchString.toLowerCase())) {
+        recipeIDapp.add(recipe.id);
+      }
+      // If search comes from main search bar
+      if (criteriaBox === "mainSearchInput") {
+        if (
+          recipe.name.toLowerCase().includes(searchString.toLowerCase()) ||
+          recipe.description.toLowerCase().includes(searchString.toLowerCase())
+        ) {
+          recipeIDing.add(recipe.id);
+          // recipeIDmain.add(recipe.id);
+        }
+      }
     });
-  
-    switch (inputBox) {
-      case "ingredients":
-        console.log("// Retrieve ingredients", criteriaBox);
-        displayNumberOfRecipes([...recipeIDing].length);
-        createCriteriaList([...recipeIDing]);
-        return [...recipeIDing];
-      case "ustensils":
-        console.log("// Retrieve ustensils", criteriaBox);
-        displayNumberOfRecipes([...recipeIDust].length);
-        createCriteriaList([...recipeIDust]);
-        return [...recipeIDust];
-      case "appliances":
-        console.log("// Retrieve appliance", criteriaBox);
-        displayNumberOfRecipes([...recipeIDapp].length);
-        createCriteriaList([...recipeIDapp]);
-        return [...recipeIDapp];
-      case "mainSearchInput":
-        console.log("// Retrieve default", criteriaBox);
-        displayNumberOfRecipes([...recipeIDing].length);
-        createCriteriaList([...recipeIDing]);
-        return [...recipeIDing];
-      default:
-        console.log("Error...");
-    }
-    // displayNumberOfRecipes([...recipeIDing].length);
-    // return [...recipeIDing];
-    //return [...recipeID];
+  });
+
+  switch (inputBox) {
+    case "ingredients":
+      console.log("// Retrieve ingredients", criteriaBox);
+      displayNumberOfRecipes([...recipeIDing].length);
+      createCriteriaList([...recipeIDing]);
+      return [...recipeIDing];
+    case "ustensils":
+      console.log("// Retrieve ustensils", criteriaBox);
+      displayNumberOfRecipes([...recipeIDust].length);
+      createCriteriaList([...recipeIDust]);
+      return [...recipeIDust];
+    case "appliances":
+      console.log("// Retrieve appliance", criteriaBox);
+      displayNumberOfRecipes([...recipeIDapp].length);
+      createCriteriaList([...recipeIDapp]);
+      return [...recipeIDapp];
+    case "mainSearchInput":
+      console.log("// Retrieve default", criteriaBox);
+      displayNumberOfRecipes([...recipeIDing].length);
+      createCriteriaList([...recipeIDing]);
+      return [...recipeIDing];
+    default:
+      console.log("Error...");
   }
-  
-
-
+  // displayNumberOfRecipes([...recipeIDing].length);
+  // return [...recipeIDing];
+  //return [...recipeID];
+}
 
 function getDuplicatesRecipesID(dataArray) {
-    console.log("I N  get dup ");
-    let uniqueItemsList = new Set();
-    let duplicated = [];
-    for (let i = 0; i < dataArray.length; i++) {
-      if (uniqueItemsList.has(dataArray[i])) {
-        duplicated.push(dataArray[i]);
-        console.log("zzzz ===>: ", duplicated);
-      }
-      uniqueItemsList.add(dataArray[i]);
-      console.log("unique ===>: ", uniqueItemsList);
+  console.log("I N  get dup ");
+  let uniqueItemsList = new Set();
+  let duplicated = [];
+  for (let i = 0; i < dataArray.length; i++) {
+    if (uniqueItemsList.has(dataArray[i])) {
+      duplicated.push(dataArray[i]);
+      console.log("zzzz ===>: ", duplicated);
     }
-    return [...new Set(duplicated)];
+    uniqueItemsList.add(dataArray[i]);
+    console.log("unique ===>: ", uniqueItemsList);
   }
-  
-
-
+  return [...new Set(duplicated)];
+}
 
 // console.log("Full list as array: ", Array.from(fullList));
 
 function dispatchItemBySelectorFromRecipeId(listId) {
-    const setOfIngredients = new Set();
-    const setOfAppliances = new Set();
-    const setOfUstensils = new Set();
-    listId.forEach((item) => {
-      // ingredient
-      fullList(item.toLowerCase);
-    });
-  }
-  
+  const setOfIngredients = new Set();
+  const setOfAppliances = new Set();
+  const setOfUstensils = new Set();
+  listId.forEach((item) => {
+    // ingredient
+    fullList(item.toLowerCase);
+  });
+}
 
+// let lower = {}
+let filteredArray = Object.keys(selectorsTagsList).filter(
+  (e) => e !== itemSelected.toLowerCase()
+);
 
-   // let lower = {}
-   let filteredArray = Object.keys(selectorsTagsList).filter(e => e !== itemSelected.toLowerCase())
-        
-   let lower = itemSelected.toLowerCase()
+let lower = itemSelected.toLowerCase();
 
-
-
-   const tempo = Object.entries(selectorsTagsList);
-   const filtered2 = tempo.filter(([key, value]) => key != itemSelected.toLowerCase())
-   console.log("filtered2 ====: ", Object.fromEntries(filtered2));
+const tempo = Object.entries(selectorsTagsList);
+const filtered2 = tempo.filter(
+  ([key, value]) => key != itemSelected.toLowerCase()
+);
+console.log("filtered2 ====: ", Object.fromEntries(filtered2));
 /* 
    const obj = {
        name: 'Luke Skywalker',
@@ -296,47 +286,40 @@ function dispatchItemBySelectorFromRecipeId(listId) {
      const justStrings = Object.fromEntries(filtered);
 */
 
-
-
-
-
-
 function retrieveRecipes66(inputValue, inputBox) {
-    let currentRecipes = new Set();
-    let searchString = inputValue;
-  
-    console.log("44444444444")
-  
-    switch (inputBox) {
-      case "ingredients":
-      case "ustensils":
-      case "appliance":
-        Object.keys(fullList).forEach((item) => {
-          //console.log(item)
-          // console.log(str1.match(/^abc$/))
-          //console.log(str2.match(/^abc$/))
-          let cleanText = searchString.toLowerCase();
-          if (item.toLowerCase().match(`/^${cleanText}$/`)){
-            // if (item.toLowerCase().match(/^`${searchString}.toLowerCase()`$/)){
-            //=== searchString.toLowerCase()) {
-            // if (item.toLowerCase() === searchString.toLowerCase()) {
-            // if (item.toLowerCase().startsWith(searchString.toLowerCase())) {
-            return console.log("result: ", item); // (str1.startsWith('Sat'));
-          } else {
-            console.log("no match...", cleanText, "//", item.toLowerCase())
-          }
-          });
-        break;
-  
-      default:
-        console.log("ee");
-    }
+  let currentRecipes = new Set();
+  let searchString = inputValue;
+
+  console.log("44444444444");
+
+  switch (inputBox) {
+    case "ingredients":
+    case "ustensils":
+    case "appliance":
+      Object.keys(fullList).forEach((item) => {
+        //console.log(item)
+        // console.log(str1.match(/^abc$/))
+        //console.log(str2.match(/^abc$/))
+        let cleanText = searchString.toLowerCase();
+        if (item.toLowerCase().match(`/^${cleanText}$/`)) {
+          // if (item.toLowerCase().match(/^`${searchString}.toLowerCase()`$/)){
+          //=== searchString.toLowerCase()) {
+          // if (item.toLowerCase() === searchString.toLowerCase()) {
+          // if (item.toLowerCase().startsWith(searchString.toLowerCase())) {
+          return console.log("result: ", item); // (str1.startsWith('Sat'));
+        } else {
+          console.log("no match...", cleanText, "//", item.toLowerCase());
+        }
+      });
+      break;
+
+    default:
+      console.log("ee");
   }
-  // console.log("Full list :", fullList);
-  // retrieveRecipes66("Banane", "ingredients")
-  // console.log("T E S T   T E S T :", retrieveRecipes44("Ba", "ingredients"));
-  
-  
+}
+// console.log("Full list :", fullList);
+// retrieveRecipes66("Banane", "ingredients")
+// console.log("T E S T   T E S T :", retrieveRecipes44("Ba", "ingredients"));
 
 // console.log("recipe.appliance;", newRecipes)
 // ===================================================================
@@ -474,6 +457,7 @@ function updateSelectedRecipes2(option, itemSelected) {
         /* createCriteriaList(recipesListIds);
         displayRecipes(recipesListIds);
         displayNumberOfRecipes(recipesListIds.length); */
+/*         
     } else if (
         // Case 2 - M O R E  T H A N  O N E  T A G  S E L E C T E D
         //          A N D  O N L Y  T A G S  T A G S  S E L E C T E D
@@ -628,9 +612,9 @@ function updateSelectedRecipes2(option, itemSelected) {
 
     default:
       console.log("Error...");
-  }
-
-  /* 
+ }
+ */
+/* 
     if (
       recipesListIds.length === 0 ||
       Object.keys(fullTagsList).length === 1
@@ -705,96 +689,257 @@ function updateSelectedRecipes2(option, itemSelected) {
     closeAllSelectors();
   
    */
-}
-
-
+//}
 
 function updateTagList(option, itemSelected) {
+  //
+  // A tag with value "itemSelected has been option "added" or "removed"
+  // - the associated recipe id list is retrieved in "tagRecipeIdList"
+
+  // - if  a d d
+  // - the new itemSelected is added to the "tagsList" array
+  //
+  console.log("--  E N T E R I N G  U P D A T E  T A G  L I S T  -- ");
+
+  // Get the item from full array
+  console.log("item list ===>", selectedTagList);
+  console.log("fullList ===>", fullList);
+  console.log("item selected ===>", itemSelected);
+  // let tagRecipeIdList = fullList[itemSelected];
+  tagRecipeIdList = fullList[itemSelected];
+  // const tagRecipeIdList = fullList[0][itemSelected];
+  // const tagDetail = fullList[0][itemSelected.toLowerCase()];
+  // console.log("tag Detail===>", tagDetail);
+
+  if (option === "added") {
+    console.log("++++++++++++ ADDing", itemSelected);
+    console.log("tagDetail: ", tagRecipeIdList);
     //
-    // A tag with value "itemSelected has been option "added" or "removed"
-    // - the associated recipe id list is retrieved in "tagRecipeIdList"
-  
-    // - if  a d d
-    // - the new itemSelected is added to the "tagsList" array
+    // ======>    selectedTagList.push(itemSelected);
     //
-    console.log("--  E N T E R I N G  U P D A T E  T A G  L I S T  -- ");
-  
-    // Get the item from full array
-    console.log("item list ===>", selectedTagList);
-    console.log("fullList ===>", fullList);
-    console.log("item selected ===>", itemSelected);
-    // let tagRecipeIdList = fullList[itemSelected];
-    tagRecipeIdList = fullList[itemSelected];
-    // const tagRecipeIdList = fullList[0][itemSelected];
-    // const tagDetail = fullList[0][itemSelected.toLowerCase()];
-    // console.log("tag Detail===>", tagDetail);
-  
-    if (option === "added") {
-      console.log("++++++++++++ ADDing", itemSelected);
-      console.log("tagDetail: ", tagRecipeIdList);
-      //
-      // ======>    selectedTagList.push(itemSelected);
-      //
-      console.log("item list: ", selectedTagList);
-      //newTag[itemSelected.toLowerCase()] = tagRecipeIdList;
-      // console.log("new taaag: ", newTag, typeof newTag)
-      // fullTagsList.push(newTag);
-      fullTagsList[itemSelected.toLowerCase()] = tagRecipeIdList;
-  
-      console.log("tag List ADD ===> : ", fullTagsList);
-      // 2 - Update list of recipes
-      // => get intersection of current recipes and new tag recipe(s)
-      // updateSelectedRecipes();
-      updateSelectedRecipes(tagRecipeIdList);
-    }
-  
-    if (option === "removed") {
-      console.log("++++++++++++ REMOVing", itemSelected, fullTagsList);
-      // 1 - Delele the tag from fullTagsList:
-      // console.log("fullTagsList BEFORE: ", fullTagsList);
-      delete fullTagsList[`${itemSelected.toLowerCase()}`];
-      console.log("fullTagsList AFTER: ", fullTagsList);
-      console.log(
-        "fullTagsList AFTER length: ",
-        Object.keys(fullTagsList).length
-      );
-      // 2 - remove from tagsList
-      // fullTagsList.splice(index, 1);
-      if (Object.keys(fullTagsList).length === 0) {
-        console.log("E M P T Y ");
-        tagRecipeIdList.length = 0;
-      }
-      if (Object.keys(fullTagsList).length === 1) {
-        console.log("tagRecipeIdList :", Object.values(fullTagsList)[0]);
-        tagRecipeIdList = Object.values(fullTagsList)[0];
-  
-        //tagRecipeIdList = fullList[itemSelected.toLowerCase()];
-        // console.log("TTTTT ============== TTTTTTTT", tagRecipeIdList, "item", itemSelected, "tytyty: ", tytyty)
-      }
-      console.log("fullTagsList: ", fullTagsList); // [`${itemSelected.toLowerCase()}`]);
-      console.log("tagRecipeIdList :", tagRecipeIdList);
-      updateSelectedRecipes(tagRecipeIdList);
-      closeAllSelectors();
-    }
+    console.log("item list: ", selectedTagList);
+    //newTag[itemSelected.toLowerCase()] = tagRecipeIdList;
+    // console.log("new taaag: ", newTag, typeof newTag)
+    // fullTagsList.push(newTag);
+    fullTagsList[itemSelected.toLowerCase()] = tagRecipeIdList;
+
+    console.log("tag List ADD ===> : ", fullTagsList);
+    // 2 - Update list of recipes
+    // => get intersection of current recipes and new tag recipe(s)
+    // updateSelectedRecipes();
+    updateSelectedRecipes(tagRecipeIdList);
   }
-  
-  // Get
-  function compare(mergedArray) {
-    console.log("M E R G E D  A R R A Y", mergedArray);
-    const intersection = new Set();
-    for (id1 in mergedArray) {
-      for (id2 in mergedArray) {
-        if (id1 === id2) {
-          continue;
-        } else {
-          if (mergedArray[id1] === mergedArray[id2]) {
-            intersection.add(mergedArray[id1]);
-          }
+
+  if (option === "removed") {
+    console.log("++++++++++++ REMOVing", itemSelected, fullTagsList);
+    // 1 - Delele the tag from fullTagsList:
+    // console.log("fullTagsList BEFORE: ", fullTagsList);
+    delete fullTagsList[`${itemSelected.toLowerCase()}`];
+    console.log("fullTagsList AFTER: ", fullTagsList);
+    console.log(
+      "fullTagsList AFTER length: ",
+      Object.keys(fullTagsList).length
+    );
+    // 2 - remove from tagsList
+    // fullTagsList.splice(index, 1);
+    if (Object.keys(fullTagsList).length === 0) {
+      console.log("E M P T Y ");
+      tagRecipeIdList.length = 0;
+    }
+    if (Object.keys(fullTagsList).length === 1) {
+      console.log("tagRecipeIdList :", Object.values(fullTagsList)[0]);
+      tagRecipeIdList = Object.values(fullTagsList)[0];
+
+      //tagRecipeIdList = fullList[itemSelected.toLowerCase()];
+      // console.log("TTTTT ============== TTTTTTTT", tagRecipeIdList, "item", itemSelected, "tytyty: ", tytyty)
+    }
+    console.log("fullTagsList: ", fullTagsList); // [`${itemSelected.toLowerCase()}`]);
+    console.log("tagRecipeIdList :", tagRecipeIdList);
+    updateSelectedRecipes(tagRecipeIdList);
+    closeAllSelectors();
+  }
+}
+
+// Get
+function compare(mergedArray) {
+  console.log("M E R G E D  A R R A Y", mergedArray);
+  const intersection = new Set();
+  for (id1 in mergedArray) {
+    for (id2 in mergedArray) {
+      if (id1 === id2) {
+        continue;
+      } else {
+        if (mergedArray[id1] === mergedArray[id2]) {
+          intersection.add(mergedArray[id1]);
         }
       }
     }
-    console.log("recipesListIds =", [...intersection]);
-    return [...intersection];
+  }
+  console.log("recipesListIds =", [...intersection]);
+  return [...intersection];
+}
+
+function getData2(e) {
+  // Get inputValue origin: mainSearch / ingredients / appliances / ustensils
+  let inputBox = e.target.dataset.name;
+  let inputBoxClassName = `${inputBox}CloseCross`;
+  console.log("e.target: ", e.target.parentElement.children[0]);
+  console.log("e.target_value: ", e.target.closest("input").value);
+  console.log("inputBox: ", inputBox);
+  console.log("inputBoxClassName: ", inputBoxClassName);
+  //
+  // Get value inserted in input field
+  let inputValue = e.target.parentElement.children[0].value;
+  console.log("key pressed: ", inputValue);
+
+  console.log("S I Z E  O F :", inputValue.length);
+  // Display reset field cross when a caracter is typed in field
+  if (inputValue.length > 0) {
+    displayResetCross(inputBoxClassName, "ON");
+  } else {
+    displayResetCross(inputBoxClassName, "OFF");
+  }
+  //
+  // Case of insertion in main search bar
+  // - Search begins with at least 3 caracters are inserted
+  if (inputBox === "mainSearchInput") {
+    if (inputValue.length < 3) {
+      recipesListIds.length = 0;
+      recipesListIds = 0;
+      mainSearchInputIdList = 0;
+    } else {
+      recipesListIds = retrieveRecipes(inputValue, inputBox);
+      console.log("list  I N D E X: ", recipesListIds);
+      if (recipesListIds.length === 0) {
+        displayNoRecipeFound(inputValue);
+      }
+      mainSearchInputIdList = [...recipesListIds];
+      //console.log("mainSearchInputIdList: ", mainSearchInputIdList);
+      createCriteriaList(recipesListIds);
+      // createCriteriaListByItems(recipesListIds, inputBox, inputValue)
+    }
+    displayRecipes(recipesListIds);
+    // Case of insertion in selectors
+  } else {
+    console.log(
+      "E N T E R I N G  S E L E C T O R S  I N P U T  B O X: ",
+      inputBox
+    );
+    /* 
+      // search on specific selector: ingredient
+      const listItems = retrieveItems(inputValue, inputBox);
+      console.log("list  I T E M S: ", listItems);
+      console.log("I N P U T  B O X: ", inputBox);
+      createCriteriaListByItems(listItems, inputBox, inputValue);
+      displayRecipes(recipesListIds);
+   */
+    // const listItems = retrieveItems(inputValue, inputBox);
+    // ========== >  recipesListIds = retrieveRecipes(inputValue, inputBox);
+    console.log("list  I T E M S: ", recipesListIds);
+    console.log("I N P U T  B O X: ", inputBox);
+    // createCriteriaListByItems(recipesListIds, inputBox, inputValue);
+    //createCriteriaList(recipesListIds);
+    // createCriteriaList_includingTags(recipesListIds);
+    createCriteriaListByItems(recipesListIds, inputBox, inputValue);
+    /* 
+      if (inputValue.length > 2) {
+        displayRecipes(recipesListIds);
+      }
+       */
+  }
+}
+
+
+function retrieveRecipes2(inputValue, inputBox) {
+    console.log(
+      "E N T E R I N G  R E T R I E V E  R E C I P E S : ",
+      inputBox,
+      " / ",
+      inputValue
+    );
+  
+    let currentRecipes = new Set();
+  
+    let searchString = inputValue;
+  
+    switch (inputBox) {
+      case "ingredients":
+        currentRecipes.clear();
+        recipes.forEach((recipe) => {
+          recipe.ingredients.forEach((item) => {
+            // Retrieve ingredients
+            recipe.ingredients.forEach((item) => {
+              if (
+                item.ingredient.toLowerCase().includes(searchString.toLowerCase())
+              ) {
+                currentRecipes.add(recipe.id);
+              }
+            });
+          });
+        });
+        console.log("// Retrieve ingredients", inputBox);
+        displayNumberOfRecipes([...currentRecipes].length);
+        // createCriteriaList([...currentRecipes]);
+        return [...currentRecipes];
+  
+      case "ustensils":
+        currentRecipes.clear();
+        recipes.forEach((recipe) => {
+          recipe.ustensils.forEach((item) => {
+            if (item.toLowerCase().includes(searchString.toLowerCase())) {
+              currentRecipes.add(recipe.id);
+            }
+          });
+          console.log("// Retrieve ustensils", inputBox);
+          displayNumberOfRecipes([...currentRecipes].length);
+          // createCriteriaList([...currentRecipes]);
+          return [...currentRecipes];
+        });
+  
+      case "appliances":
+        currentRecipes.clear();
+        recipes.forEach((recipe) => {
+          if (
+            recipe.appliance.toLowerCase().includes(searchString.toLowerCase())
+          ) {
+            currentRecipes.add(recipe.id);
+          }
+        });
+        console.log("// Retrieve appliances", inputBox);
+        displayNumberOfRecipes([...currentRecipes].length);
+        // createCriteriaList([...currentRecipes]);
+        return [...currentRecipes];
+  
+      case "mainSearchInput":
+        currentRecipes.clear();
+        recipes.forEach((recipe) => {
+          recipe.ingredients.forEach((item) => {
+            // Retrieve ingredients
+            recipe.ingredients.forEach((item) => {
+              if (
+                item.ingredient.toLowerCase().includes(searchString.toLowerCase())
+              ) {
+                currentRecipes.add(recipe.id);
+              }
+            });
+          });
+          if (
+            recipe.name.toLowerCase().includes(searchString.toLowerCase()) ||
+            recipe.description.toLowerCase().includes(searchString.toLowerCase())
+          ) {
+            currentRecipes.add(recipe.id);
+            // recipeIDmain.add(recipe.id);
+          }
+        });
+        console.log("// mainSearchInput", inputBox);
+        displayNumberOfRecipes([...currentRecipes].length);
+        // createCriteriaList([...currentRecipes]);
+        console.log("R E T R I E V E  R E C I P E S - mainSearchInput", [
+          ...currentRecipes,
+        ]);
+        return [...currentRecipes];
+      default:
+        console.log("Error...");
+    }
   }
   
-

@@ -7,6 +7,7 @@ let selectedRecipesIngredients = [];
 let selectedRecipesUstensils = [];
 let selectedRecipesAppliances = [];
 //
+let localSearch = [];
 //
 const recipesName = [];
 
@@ -17,7 +18,7 @@ let tagRecipeIdList = [];
 let mainTagList = [];
 let mainSearchInputIdList = [];
 // Recipe IDs from selectors item / ID
-let selectorsTagsList = {}; //[];
+
 let tryTest = {};
 let fullTagsList = {};
 
@@ -117,69 +118,80 @@ fullList = { ...listOfIngredients, ...listOfUstensils, ...listOfAppliances };
 // console.log("full list: ", fullList)
 //
 //
-// L I S T  H A N D L I N G
-// =============================================================
-//
-// R E T R I E V E  D A T A  F R O M  R E C I P E S
-// Feed differents lists according to input box used (crit):
-//    mainSearch / ingredients / appliances / ustensils
-//
+
 function retrieveRecipes(inputValue, inputBox) {
   console.log(
     "E N T E R I N G  R E T R I E V E  R E C I P E S : ",
     inputBox,
     " / ",
-    inputValue
+    inputValue,
+    " / recipes id list",
+    recipesListIds
+    //
+    /* 
+  updateCriteriaList("ingredients", selectedRecipesIngredients);
+  updateCriteriaList("appliances", selectedRecipesAppliances);
+  updateCriteriaList("ustensils", selectedRecipesUstensils);
+ */
   );
-
   let currentRecipes = new Set();
-
   let searchString = inputValue;
-
+  //
   switch (inputBox) {
     case "ingredients":
+      if (selectedRecipesIngredients.length === 0) {
+        selectedRecipesIngredients = [...Object.keys(listOfIngredients).sort()];
+      }
+      console.log("list of ingredients: ", listOfIngredients);
+      console.log("=================================================");
+      console.log("current list of ingredients: ", selectedRecipesIngredients);
+      console.log("current searchString : ", searchString);
+      // currentRecipes.clear();
+      localSearch = [];
+      selectedRecipesIngredients.forEach((item) => {
+        if (item.toLowerCase().startsWith(searchString.toLowerCase())) {
+          localSearch.push(item);
+          updateCriteriaList("ingredients", localSearch);
+          console.log("Y E S !!: ", localSearch);
+        }
+      });
+      console.log("// Retrieve ingredients", inputBox, "/", [...currentRecipes]);
+      displayNumberOfRecipes(recipesListIds);
+      // createCriteriaList([...currentRecipes]);
+      return [...currentRecipes];
+
+    case "ustensils":
+      if (selectedRecipesUstensils.length === 0) {
+        selectedRecipesUstensils = [...Object.keys(listOfUstensils).sort()];
+      }
       currentRecipes.clear();
-      recipes.forEach((recipe) => {
-        recipe.ingredients.forEach((item) => {
-          // Retrieve ingredients
-          recipe.ingredients.forEach((item) => {
-            if (
-              item.ingredient.toLowerCase().includes(searchString.toLowerCase())
-            ) {
-              currentRecipes.add(recipe.id);
-            }
-          });
-        });
+      localSearch = [];
+      selectedRecipesUstensils.forEach((item) => {
+        if (item.toLowerCase().startsWith(searchString.toLowerCase())) {
+          localSearch.push(item);
+          updateCriteriaList("ustensils", localSearch);
+          console.log("Y E S ustensils !!: ", localSearch);
+        }
       });
       console.log("// Retrieve ingredients", inputBox);
       displayNumberOfRecipes([...currentRecipes].length);
       // createCriteriaList([...currentRecipes]);
       return [...currentRecipes];
 
-    case "ustensils":
-      currentRecipes.clear();
-      recipes.forEach((recipe) => {
-        recipe.ustensils.forEach((item) => {
-          if (item.toLowerCase().includes(searchString.toLowerCase())) {
-            currentRecipes.add(recipe.id);
-          }
-        });
-        console.log("// Retrieve ustensils", inputBox);
-        displayNumberOfRecipes([...currentRecipes].length);
-        // createCriteriaList([...currentRecipes]);
-        return [...currentRecipes];
-      });
-
     case "appliances":
+      if (selectedRecipesAppliances.length === 0) {
+        selectedRecipesAppliances = [...Object.keys(listOfAppliances).sort()];
+      }
       currentRecipes.clear();
-      recipes.forEach((recipe) => {
-        if (
-          recipe.appliance.toLowerCase().includes(searchString.toLowerCase())
-        ) {
-          currentRecipes.add(recipe.id);
+      localSearch = [];
+      selectedRecipesAppliances.forEach((item) => {
+        if (item.toLowerCase().startsWith(searchString.toLowerCase())) {
+          localSearch.push(item);
+          updateCriteriaList("appliances", localSearch);
+          console.log("Y E S ustensils !!: ", localSearch);
         }
       });
-      console.log("// Retrieve appliances", inputBox);
+      console.log("// Retrieve ingredients", inputBox);
       displayNumberOfRecipes([...currentRecipes].length);
       // createCriteriaList([...currentRecipes]);
       return [...currentRecipes];
@@ -208,22 +220,22 @@ function retrieveRecipes(inputValue, inputBox) {
       console.log("// mainSearchInput", inputBox);
       displayNumberOfRecipes([...currentRecipes].length);
       // createCriteriaList([...currentRecipes]);
+      console.log("R E T R I E V E  R E C I P E S - mainSearchInput", [
+        ...currentRecipes,
+      ]);
       return [...currentRecipes];
     default:
       console.log("Error...");
   }
 }
 
-
-
-
-
-
-
-
-
-
-
+// L I S T  H A N D L I N G
+// =============================================================
+//
+// R E T R I E V E  D A T A  F R O M  R E C I P E S
+// Feed differents lists according to input box used (crit):
+//    mainSearch / ingredients / appliances / ustensils
+//
 
 /*  */
 function retrieveItems(inputValue, inputBox) {
@@ -237,7 +249,11 @@ function retrieveItems(inputValue, inputBox) {
           // Retrieve ingredients
           recipe.ingredients.forEach((item) => {
             if (
-              item.ingredient.toLowerCase().includes(searchString.toLowerCase())
+              item.ingredient
+                .toLowerCase()
+                .substr(0, searchString.length)
+                .toLowerCase()
+              //  item.ingredient.toLowerCase().includes(searchString.toLowerCase())
             ) {
               recipeID.add(recipe.id);
             }
@@ -309,6 +325,17 @@ function createCriteriaListByItems(listItems, inputBox, inputValue) {
   console.log("createCriteriaListByItems ==> 2,", inputBox);
   console.log("createCriteriaListByItems ==> 3,", inputValue);
 
+  const ingList = document.querySelectorAll(".recipeItem");
+  console.log("ingList: ", ingList);
+  ingList.forEach((ing) => {
+    if (ing.parentElement.classList.contains(`ul-${inputBox}`)) {
+      // (`${inputBox}`)){
+      console.log(ing.textContent, " / ", ing.parentElement);
+    } else {
+      console.log("nothoing");
+    }
+  });
+
   const setOfIngredients = new Set();
   const setOfUstensils = new Set();
   const setOfAppliances = new Set();
@@ -323,9 +350,9 @@ function createCriteriaListByItems(listItems, inputBox, inputValue) {
           setOfIngredients.add(`${key}`);
         }
       }
-    // selectedRecipesIngredients = [...setOfIngredients].sort();
-    // updateCriteriaList("ingredients", selectedRecipesIngredients);
-
+      // selectedRecipesIngredients = [...setOfIngredients].sort();
+      // updateCriteriaList("ingredients", selectedRecipesIngredients);
+      break;
     case "ustensils":
       for (const [key, value] of Object.entries(listOfUstensils)) {
         if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
@@ -335,9 +362,9 @@ function createCriteriaListByItems(listItems, inputBox, inputValue) {
           setOfUstensils.add(`${key}`);
         }
       }
-    // selectedRecipesUstensils = [...setOfUstensils].sort();
-    // updateCriteriaList("ustensils", selectedRecipesUstensils);
-
+      // selectedRecipesUstensils = [...setOfUstensils].sort();
+      // updateCriteriaList("ustensils", selectedRecipesUstensils);
+      break;
     case "appliances":
       for (const [key, value] of Object.entries(listOfAppliances)) {
         if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
@@ -347,9 +374,9 @@ function createCriteriaListByItems(listItems, inputBox, inputValue) {
           setOfAppliances.add(`${key}`);
         }
       }
-    // selectedRecipesAppliances = [...setOfAppliances].sort();
-    // updateCriteriaList("appliances", selectedRecipesAppliances);
-
+      // selectedRecipesAppliances = [...setOfAppliances].sort();
+      // updateCriteriaList("appliances", selectedRecipesAppliances);
+      break;
     default:
       console.log("erreur");
   }
@@ -386,24 +413,26 @@ function displayRecipes(listID) {
 // Retrieve Ingredients / Ustensils / Appliances from recipes
 // get from mainbar search
 function createCriteriaList(listID) {
+  console.log("E N T E R I N G  C R E A T E  C R I T E R I A  L I S T ");
   console.log("L I S T   I D: ", listID);
   //
-
   if (listID === 0) {
     // updateAllCriteriaLists();
     return;
   }
- 
   //
   const setOfIngredients = new Set();
   const setOfAppliances = new Set();
   const setOfUstensils = new Set();
-
+  //
   let updtIngredientsList = [];
   let updtUstensilsList = [];
-console.log("before for each 405", listID)
+  //
   listID.forEach((id) => {
-    updtIngredientsList = [...updtIngredientsList, ...newRecipes[id].ingredients];
+    updtIngredientsList = [
+      ...updtIngredientsList,
+      ...newRecipes[id].ingredients,
+    ];
     updtUstensilsList = [...updtUstensilsList, ...newRecipes[id].ustensils];
     setOfAppliances.add(...newRecipes[id].appliance);
     //  setOfUstensils.add(...newRecipes[id].ustensils);
@@ -671,14 +700,14 @@ const merged = []
 
 // 1 - Get index of tag to be removed:
 /* 
-    let index = selectorsTagsList.findIndex(
+    let index = fullTagsList.findIndex(
       (elem) => elem["item"] === itemSelected.toLowerCase()
     );
  */
 
 /* 
-  if (selectorsTagsList.length === 1) {
-    recipesListIds = [...selectorsTagsList];
+  if (fullTagsList.length === 1) {
+    recipesListIds = [...fullTagsList];
     console.log("selected Recipes: ", selectedRecipes);
   }
   updateSelectedRecipes();
@@ -736,7 +765,7 @@ function activateLiSelectedTag(tag) {
  */
 /* 
   tempoArr = [];
-  selectorsTagsList.forEach((elem) => {
+  fullTagsList.forEach((elem) => {
     console.log("rec ID", elem["recID"]);
     tempoArr = [...tempoArr, ...elem["recID"]];
   });

@@ -1,6 +1,18 @@
 // E V E N T S  D E L E G A T I O N
 // ------------------------------------
 //
+// - getData
+// - displayResetCross
+// - expandDropBox
+// - closeAllSelectors
+// - tagHandling
+// - resetInputField
+// - resetSearch
+// - clearInputField
+// - displayResetCross
+//
+//
+
 // R E T R I E V E  D A T A  F R O M  I N P U T  B O X E S
 //
 //    Ref is body in order to access to all input boxes
@@ -10,17 +22,13 @@ const inputBoxContent = document.querySelector("body");
 inputBoxContent.addEventListener("keyup", getData);
 
 function getData(e) {
-  // Get inputValue origin: mainSearch / ingredients / appliances / ustensils
+  // get location of search: mainsearch bar or from selectors (ingredients/ustensils/appliances)
   let inputBox = e.target.dataset.name;
   let inputBoxClassName = `${inputBox}CloseCross`;
-  console.log("inputBox: ", inputBox);
-  console.log("inputBoxClassName: ", inputBoxClassName);
+  let inputValue = e.target.closest("input").value;
   //
-  // Get value inserted in input field
-  let inputValue = e.target.parentElement.children[0].value;
   console.log("key pressed: ", inputValue);
-
-  console.log("S I Z E  O F :", inputValue.length);
+  //
   // Display reset field cross when a caracter is typed in field
   if (inputValue.length > 0) {
     displayResetCross(inputBoxClassName, "ON");
@@ -28,52 +36,58 @@ function getData(e) {
     displayResetCross(inputBoxClassName, "OFF");
   }
   //
-  // Case of insertion in main search bar
-  // - Search begins with at least 3 caracters are inserted
-  if (inputBox === "mainSearchInput") {
-    if (inputValue.length < 3) {
-      recipesListIds.length = 0;
-      recipesListIds = 0;
-      mainSearchInputIdList = 0;
-    } else {
-      recipesListIds = retrieveRecipes(inputValue, inputBox);
-      console.log("list  I N D E X: ", recipesListIds);
-      if (recipesListIds.length === 0) {
-        displayNoRecipeFound("Pas de chance - try again...");
+  switch (inputBox) {
+    case "mainSearchInput":
+      // As long as number of caracters is less than 3 nothing happens
+      if (inputValue.length < 3) {
+        recipesListIds.length = 0;
+        recipesListIds = [];
+        mainSearchInputIdList = [];
+        // 3 or more carateres get recipes IDs
+      } else {
+        recipesListIds = retrieveRecipes(inputValue, inputBox);
+        // if no recipes found message is displayed
+        if (recipesListIds.length === 0) {
+          displayNoRecipeFound(inputValue);
+        }
+        // recipes IDs selected from yhis input is store for tags handling
+        mainSearchInputIdList = [...recipesListIds];
+        // create/update selectors dropdown lists
+        createCriteriaList(recipesListIds);
       }
-      mainSearchInputIdList = [...recipesListIds];
-      //console.log("mainSearchInputIdList: ", mainSearchInputIdList);
-      createCriteriaList(recipesListIds);
-      // createCriteriaListByItems(recipesListIds, inputBox, inputValue)
-    }
-    displayRecipes(recipesListIds);
-    // Case of insertion in selectors
-  } else {
-    console.log(
-      "E N T E R I N G  S E L E C T O R S  I N P U T  B O X: ",
-      inputBox
-    );
-    /* 
-    // search on specific selector: ingredient
-    const listItems = retrieveItems(inputValue, inputBox);
-    console.log("list  I T E M S: ", listItems);
-    console.log("I N P U T  B O X: ", inputBox);
-    createCriteriaListByItems(listItems, inputBox, inputValue);
-    displayRecipes(recipesListIds);
- */
-    // const listItems = retrieveItems(inputValue, inputBox);
-    recipesListIds = retrieveRecipes(inputValue, inputBox);
-    console.log("list  I T E M S: ", recipesListIds);
-    console.log("I N P U T  B O X: ", inputBox);
-    // createCriteriaListByItems(recipesListIds, inputBox, inputValue);
-    //createCriteriaList(recipesListIds);
-    // createCriteriaList_includingTags(recipesListIds);
-    createCriteriaListByItems(recipesListIds, inputBox, inputValue);
-    /* 
-    if (inputValue.length > 2) {
+      // selected recipe(s) are displayed
       displayRecipes(recipesListIds);
-    }
-     */
+
+      break;
+
+    case "ingredients":
+    case "ustensils":
+    case "appliances":
+      let tempoSearch = retrieveRecipes(inputValue, inputBox);
+      displayNumberOfRecipes(recipesListIds.length);
+      // recipesListIds = retrieveRecipes(inputValue, inputBox);
+      console.log("U N D E R  C O N S T R U C T I O N");
+      console.log(
+        "Dropdown selected Recipes Ingredients",
+        selectedRecipesIngredients
+      );
+      console.log(
+        "Dropdown selected Recipes Appliances",
+        selectedRecipesAppliances
+      );
+      console.log(
+        "Dropdown selected Recipes Appliances",
+        selectedRecipesUstensils
+      );
+      console.log(
+        "============ ++++++++++ =============",
+        selectedRecipesUstensils
+      );
+      console.log(
+        "recipesListIds",
+        recipesListIds
+      );
+      break;
   }
 }
 
@@ -117,10 +131,13 @@ function closeAllSelectors() {
   //
   const allInputSelectors = document.querySelectorAll(".inputFieldSelector");
   allInputSelectors.forEach((sel) => (sel.value = ""));
+  //
+  console.log("trigger hide cross");
+  //displayResetCross(inputFieldName, onOff)
+  displayResetCross("closeCrossSelectors", "OFF");
 }
 //
 //
-
 // T A G S  A N D  L I  S E L E C T I O N
 // Tag is created when an item is cliccked in a dropdown selector list
 // The first check is what has been clicked:
@@ -199,35 +216,124 @@ function tagHandling(e) {
 //
 // S E A R C H  F I E L D S  H A N D L I N G S
 // Delete input field containt
-//
+// Reset list of dropdown list items
 const resetSearchInputField = document.querySelector("body");
-// resetSearchInputField.addEventListener("click", clearInputField);
 resetSearchInputField.addEventListener("click", resetInputField); // clearInputField);
 //
-
+//
+//
 function resetInputField(e) {
   let resetSearchCross = e.target.closest(".closeCross");
+  let inputToBremoved = e.target.closest("div").children[0];
+  let inputName = e.target.closest("div").children[0].dataset.name;
+
   if (!resetSearchCross) return;
+
   if (resetSearchCross) {
-    let inputToBremoved = e.target.closest("div").children[0];
-    inputToBremoved.value = "";
+    console.log("cross click!!!!!!......");
+    console.log("cross inputToBremoved", inputToBremoved); //.dataset.name);
+    console.log("cross inputName", inputName); //.dataset.name);
+    console.log("recipes List Ids", recipesListIds);
+    //
+    inputToBremoved.value = ""; // input field emptied
     resetSearchCross.style.display = "none";
-    if (resetSearchCross.classList.contains("mainSearchInputCloseCross")) {
-      console.log("===============!!!!!!!!!=============");
-      document.getElementById("recipesSelected").replaceChildren();
-      closeAllSelectors();
-      updateAllCriteriaLists();
-      displayNumberOfRecipes(0);
+    // C A S E  - 1  If input box is "mainSearchInputCloseCross")) {
+    if (inputName === "mainSearchInputCloseCross") {
+      console.log("========= mainSearchInputCloseCross clicked ========");
+      resetSearch(); // clean all the data and close all selectors
     } else {
-      updateAllCriteriaLists();
-      inputToBremoved.value = "";
-      document.getElementById("recipesSelected").replaceChildren();
-      displayNumberOfRecipes(0);
-      closeAllSelectors();
+      // C A S E  - 2  Other Input boxes: "ingredients" / "ustensils" / "appliances"
+      // A - No recipes selected
+      //     Reset of all dropdown lists
+      //
+      // B - At least 1 recipe selected when current selection is cancelled
+      //     Re-instate previous status
+      //
+      // localSearch = [];
+      // clearInputField()
+      console.log("avant: ",recipesListIds , "/ local: ",);
+      updateCriteriaList("ingredients", selectedRecipesIngredients);
+      console.log("apres: ",recipesListIds , "/ local: ",);
+
+      return
+      if (recipesListIds.length === 0) {
+        localSearch = [];
+        console.log(
+          "S E L E C T O R  input box  C L I C K E D = 1",
+          inputName,
+          "/ local: ",
+          localSearch,
+          "/ tag recipe id list ",
+          tagRecipeIdList,
+          "/ "
+        );
+        // updateCriteriaList(inputName, selectedRecipesIngredients)
+        updateAllCriteriaLists();
+      } else {
+        console.log(
+          "S E L E C T O R  input box  C L I C K E D = 2 - ",
+          inputName,
+          "/ local: ",
+          localSearch,
+          "/ tag recipe id list ",
+          tagRecipeIdList,
+          "/ "
+        );
+        updateCriteriaList(inputName, localSearch);
+        // updateSelectedRecipes(option, itemSelected)
+      }
     }
   }
   // console.log("input: ", inputName.parentElement.si);// e.target.closest("div").children[0].value="")
   // console.log("input: ", e.target.closest("div").children[0].value="")
+}
+
+/* 
+function resetInputField(e) {
+  let resetSearchCross = e.target.closest(".closeCross");
+  if (!resetSearchCross) return;
+
+  if (resetSearchCross) {
+    console.log("cross click!!!!!!......");
+    let inputToBremoved = e.target.closest("div").children[0].dataset.name;
+    console.log("cross inputToBremoved", inputToBremoved)//.dataset.name);
+
+    inputToBremoved.value = "";
+    resetSearchCross.style.display = "none";
+    if (resetSearchCross.classList.contains("mainSearchInputCloseCross")) {
+      console.log("========= mainSearchInputCloseCross clicked ========");
+      resetSearch(); // clean all the data and close all selectors
+    } else {
+      // console.log("S E L E C T O R  input box", e.target.closest("div").children[0]); //.children[0]);
+      console.log("S E L E C T O R  input box", inputToBremoved);
+      updateCriteriaList(inputToBremoved, localSearch);
+      
+      // updateAllCriteriaLists();
+      inputToBremoved.value = "";
+
+      // document.getElementById("recipesSelected").replaceChildren();
+      // displayNumberOfRecipes(0);
+      // closeAllSelectors();
+    }
+  }
+  // console.log("input: ", inputName.parentElement.si);// e.target.closest("div").children[0].value="")
+  // console.log("input: ", e.target.closest("div").children[0].value="")
+}
+ */
+
+// Reset search if logo is clicked
+const resetFromSiteTitle = document.querySelector("#logo");
+resetFromSiteTitle.addEventListener("click", resetSearch); // clearInputField);
+//
+function resetSearch() {
+  document.getElementById("recipesSelected").replaceChildren();
+  document.getElementById("message").replaceChildren();
+  document.getElementById("recipes__tags").replaceChildren();
+  recipesListIds = [];
+  fullTagsList = {};
+  closeAllSelectors();
+  updateAllCriteriaLists();
+  displayNumberOfRecipes(0);
 }
 
 function clearInputField(e) {
@@ -270,9 +376,12 @@ function displayRecipes(listID) {
 }
 
 function displayNoRecipeFound(msg) {
-  const recipeDisplaySection = document.getElementById("recipesSelected");
-  recipeDisplaySection.replaceChildren();
-  recipeDisplaySection.innerHTML += `<p> ${msg} </p>`;
+  console.log("message: ", msg);
+  const message = `Aucune recette ne contient <strong>"${msg}"</strong>,</br> 
+  Vous pouvez chercher "tarte aux pommes", "poisson", etc. ou utiliser la recherche avancée.`;
+  const messageSection = document.getElementById("message");
+  messageSection.replaceChildren();
+  messageSection.innerHTML += `<p> ${message} </p>`;
 
   const list = document.getElementById("list");
 
@@ -290,6 +399,7 @@ function displayResetCross(inputFieldName, onOff) {
     toBeDisplayed.style.display = "none";
   }
 }
+
 /* 
 const searchFields = document.querySelectorAll(".main__searchBar");
 console.log("searchFields = ", searchFields);

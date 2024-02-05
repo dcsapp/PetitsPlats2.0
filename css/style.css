@@ -9,15 +9,14 @@ body {
   max-width: 1440px;
   margin: 0 auto;
   font-family: "Manrope", sans-serif;
- /*  position: relative; */
-display: flex;
-flex-direction: column;
-
+  display: flex;
+  flex-direction: column;
 }
 
 /* H E A D E R */
 header {
- position: relative;
+  position: relative;
+  margin: 20px 20px 30px;
 }
 
 .header__img {
@@ -26,12 +25,16 @@ header {
   background: lightgray;
 }
 
-.logo {
+#logo {
   position: absolute;
   top: 69px;
   left: 51px;
   width: 207px;
   height: 25.26px;
+}
+
+#logo:hover {
+  cursor: pointer;
 }
 
 .mainTitle {
@@ -123,24 +126,12 @@ h1 span {
   color: #fff;
   font-size: 30px;
 }
-/* 
-  button .fa-solid {
-    color: #fff;
-    font-size: 30px;
-  }
-   */
+
+
 /* M A I N  &  S E C T I O N S   */
 main {
   width: 1236px;
   margin: 0 auto;
-  /*  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start; */
-
-  /* border: 1px solid black; */
-
- /*  position: relative; */
 }
 
 /*  */
@@ -148,57 +139,37 @@ main {
   display: none;
 }
 
-header {
-  margin: 20px 20px 50px;
-}
 
 .displayFlex {
   display: flex;
 }
-/* 
-hr {
-  margin-top: 30px;
-}
- */
+
 /* section S U B _ _ S E A R C H  and  T O T A L  R E C I P E S */
 
 .sub__search {
-
   margin: 10px auto;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
+  height: 70px;
   max-height: 370px;
+
+  /* border: 1px solid red; */
+  position: relative;
 }
-/* .criterias {
-    position: absolute;
-  display: flex;
-  gap: 30px;
-  z-index: 2;
-} */
-/* 
-.tytytyty {
-  position: absolute;
-  z-index: 10;
-}
- */
+
 .criterias {
-  /* 
-    position: absolute;
-    z-index: 10;
-   */
   display: flex;
   flex-direction: row;
   align-items: start;
-  gap: 70px;
+  gap: 265px;
+
+  /* border: 1px solid black; */
+  position: relative;
 }
 
 .total_recipes {
- /*  position: absolute;
-  z-index: 10;
-  right: 0px;
- */
   align-items: start;
   font-size: 21px;
   font-family: "Anton", sans-serif;
@@ -216,6 +187,10 @@ hr {
   border-radius: 11px;
   margin-left: 20px;
   transition: 500ms;
+
+ /*  border: 1px solid green; */
+  position: absolute;
+  z-index: 2;
 }
 
 .expand {
@@ -224,14 +199,8 @@ hr {
   margin-bottom: 15px;
 }
 
-/* 0 -Tag section */
-/* 
-.test {
-  position: relative;
-}
- */
 #recipes__tags {
- /*  position: absolute; */
+  /*  position: absolute; */
   top: 50px;
   display: flex;
   flex-direction: row;
@@ -265,7 +234,6 @@ hr {
 }
 
 /* 1 - Header: title & chevron handling  */
-
 
 .criteria__header {
   display: flex;
@@ -321,8 +289,6 @@ hr {
   border: 1px solid lightgrey;
   border-radius: 2px;
   caret-color: lightgrey;
-  /* width: 195px;
-    height: 56px; */
 }
 .input-control input {
   width: 100%;
@@ -350,7 +316,6 @@ hr {
 }
 
 .input-control label .clearSearch {
-  /*  display: inline-flex; */
   display: none;
   align-items: center;
   justify-content: center;
@@ -363,21 +328,16 @@ hr {
   cursor: pointer;
 }
 /* 
-.input-control label span i{
-  display: flex;
-} */
-/*  none; .closeCross */
+
 /*  */
-.para_indv_item{
+.para_indv_item {
   padding: 10px 10px 20px;
   font-weight: 700;
 }
 
-.para_indv_item:hover{
+.para_indv_item:hover {
   background: #ffd700;
 }
-
-
 
 /* 3 - Selected item  */
 
@@ -403,15 +363,6 @@ hr {
   margin-right: 10px;
 }
 
-/* List of items */
-/* 
-.item__list {
-  overflow: hidden;
-  overflow-y: auto;
-  margin-bottom: 10px;
-}
- */
-
 .item__selected {
   overflow: hidden;
   overflow-y: auto;
@@ -421,13 +372,7 @@ hr {
 .input-control {
   margin: 10px 10px;
 }
-/* 
-.criteria ul {
-  overflow: hidden;
-  overflow-y: auto;
-  padding: 10px 0;
-}
- */
+
 li {
   padding: 10px;
 }
@@ -438,6 +383,7 @@ li {
   justify-content: space-between;
   align-items: center;
   height: 19px;
+  cursor: pointer;
 }
 
 li .recipeItem p {
@@ -461,8 +407,18 @@ li p {
 }
 
 .recipeAsTag {
-  background : #ffd700;
-  font-weight : 700;
+  background: #ffd700;
+  font-weight: 700;
+}
+
+
+/*  */
+#message {
+  font-family: "Manrope", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  color: black;
+
 }
 
 /* section S E L E C T E D  R E C I P E S  D I S P L A Y */
