@@ -127,7 +127,6 @@ h1 span {
   font-size: 30px;
 }
 
-
 /* M A I N  &  S E C T I O N S   */
 main {
   width: 1236px;
@@ -138,7 +137,6 @@ main {
 .hide {
   display: none;
 }
-
 
 .displayFlex {
   display: flex;
@@ -188,7 +186,7 @@ main {
   margin-left: 20px;
   transition: 500ms;
 
- /*  border: 1px solid green; */
+  /*  border: 1px solid green; */
   position: absolute;
   z-index: 2;
 }
@@ -411,14 +409,12 @@ li p {
   font-weight: 700;
 }
 
-
 /*  */
 #message {
   font-family: "Manrope", sans-serif;
   font-weight: 400;
   font-size: 24px;
   color: black;
-
 }
 
 /* section S E L E C T E D  R E C I P E S  D I S P L A Y */
