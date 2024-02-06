@@ -19,25 +19,19 @@
 //    Each input box has a data attribute data-name=
 //        mainSearch / ingredients / ustensils / appliances
 const inputBoxContent = document.querySelector("body");
-inputBoxContent.addEventListener("keyup", getData);
+/* inputBoxContent.addEventListener("keyup", getData); */
+inputBoxContent.addEventListener("input", getData);
 
 function getData(e) {
   // get location of search: mainsearch bar or from selectors (ingredients/ustensils/appliances)
   let inputBox = e.target.dataset.name;
   let inputBoxClassName = `${inputBox}CloseCross`;
   let inputValue = e.target.closest("input").value;
-
-  /* 
-  if(recipesListIds.length === 0) {
-    resetSearch()
-    console.log("A L L  R E S E T . . .")
-  }
- */
-
   //
   console.log("key pressed: ", inputValue);
   //
-  // Display reset field cross when a caracter is typed in field
+  // For all input boxes
+  //  reset field cross is displayed when a caracter is typed in the field
   if (inputValue.length > 0) {
     displayResetCross(inputBoxClassName, "ON");
   } else {
@@ -46,6 +40,11 @@ function getData(e) {
   //
   switch (inputBox) {
     case "mainSearchInput":
+      // If data are in inserted in main search bar and tags are displayed
+      // au all tags data are removed (data & display)
+      if (fullTagsList) {
+        cleanTags();
+      }
       // As long as number of caracters is less than 3 nothing happens
       if (inputValue.length < 3) {
         recipesListIds.length = 0;
@@ -57,7 +56,9 @@ function getData(e) {
         // if no recipes found message is displayed
         if (recipesListIds.length === 0) {
           displayRecipes([]);
-          displayNoRecipeFound(inputValue);
+          displayNoRecipeFound(inputValue, "ON");
+        } else {
+          displayNoRecipeFound(inputValue, "OFF");
         }
         // recipes IDs selected from yhis input is store for tags handling
         mainSearchInputIdList = [...recipesListIds];
@@ -153,6 +154,11 @@ const criteriaSelectorsHandlers = document.querySelector("main");
 criteriaSelectorsHandlers.addEventListener("click", tagHandling);
 //
 function tagHandling(e) {
+  let selectedItemSelelectorList = e.target.closest("div");
+  console.log(
+    "li selectedItemSelelectorList: ===>",
+    selectedItemSelelectorList
+  );
   let selectedItem = e.target.closest(".recipeItem");
   let tagsDisplayed = e.target.closest(".tag__wrapper");
   console.log("li Item: ===>", selectedItem);
@@ -175,13 +181,17 @@ function tagHandling(e) {
     if (selectedItem.classList.contains("recipeItem")) {
       let liCriteria = selectedItem.dataset.criteriaLi;
       console.log("Selected li", liCriteria);
+
+      let listSelector = selectedItem.dataset.selector;
+      console.log("Selected selector", listSelector);
+
       if (selectedItem.dataset.selected === "false") {
         console.log("==> Item for tag / false: ", liCriteria);
         // createTag(selectedItem.dataset.criteriaLi); // template
         selectedItem.dataset.selected = "true";
         console.log("==> Status updated to true: ", liCriteria);
         createTag(liCriteria); // template
-        updateSelectedRecipes("added", liCriteria);
+        updateSelectedRecipes("added", listSelector, liCriteria);
         // updateTagList("added", liCriteria);
         // return;
       } else {
@@ -191,7 +201,7 @@ function tagHandling(e) {
         // tag is removed
         removeTag(liCriteria); // template
 
-        updateSelectedRecipes("removed", liCriteria);
+        updateSelectedRecipes("removed", listSelector, liCriteria);
         // updateTagList("removed", liCriteria);
         // updateData()
         // return;
@@ -262,7 +272,6 @@ function resetInputField(e) {
       console.log("apres: ", recipesListIds, "/ local: ");
 
       return;
-      
     }
   }
   // console.log("input: ", inputName.parentElement.si);// e.target.closest("div").children[0].value="")
@@ -329,17 +338,17 @@ function displayRecipes(listID) {
   });
 }
 
-function displayNoRecipeFound(msg) {
-  console.log("message: ", msg);
-  const message = `Aucune recette ne contient <strong>"${msg}"</strong>,</br> 
-  Vous pouvez chercher <strong>"tarte aux pommes"</strong>, <strong>"poisson",</strong> etc.  ou utiliser la recherche avancée.`;
+function displayNoRecipeFound(msg, option) {
   const messageSection = document.getElementById("message");
-  messageSection.replaceChildren();
-  messageSection.innerHTML += `<p> ${message} </p>`;
-
-  //const list = document.getElementById("list");
-
-  // list.innerHTML += `<li><a href="#">Item ${list.children.length + 1}</a></li>`;
+  if (option === "ON") {
+    console.log("message: ", msg);
+    const message = `Aucune recette ne contient <strong>"${msg}"</strong>,</br> 
+    Vous pouvez chercher <strong>"tarte aux pommes"</strong>, <strong>"poisson",</strong> etc.  ou utiliser la recherche avancée.`;
+    messageSection.replaceChildren();
+    messageSection.innerHTML += `<p> ${message} </p>`;
+  } else if (option === "OFF") {
+    messageSection.replaceChildren();
+  }
 }
 
 function displayResetCross(inputFieldName, onOff) {
@@ -352,4 +361,10 @@ function displayResetCross(inputFieldName, onOff) {
   if (onOff === "OFF") {
     toBeDisplayed.style.display = "none";
   }
+}
+
+function cleanTags() {
+  const tagSection = document.querySelector("#recipes__tags");
+  tagSection.replaceChildren();
+  fullTagsList = {};
 }

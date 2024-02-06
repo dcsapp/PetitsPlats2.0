@@ -184,6 +184,9 @@ function updateCriteriaList(criteria, data) {
     const itemLi = document.createElement("li");
     itemLi.classList.add("recipeItem");
     itemLi.setAttribute("data-criteria-li", `${item}`);
+
+    itemLi.setAttribute("data-selector", `${criteria}`);
+
     itemLi.setAttribute("data-selected", "false");
     // p item name
     const paraLi = document.createElement("p");

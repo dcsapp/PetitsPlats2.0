@@ -1732,3 +1732,127 @@ function createCriteriaList_old(listID) {
 //  console.log("Recipe Name: ", recipesName);
 } 
 */
+
+
+
+const a = [12, 23, 36, 45];
+const b = [12, 25, 36, 46];
+const c = [13, 27, 36, 45, 54];
+const d = [];
+console.log("array: ", [...a, ...b, ...c, ...d]);
+
+
+
+/*    
+        } else {
+          // tag is removed from the list 
+          delete fullTagsList[`${itemSelected}`.toLowerCase()];
+          console.log("After: ", fullTagsList, "/");
+          if (Object.keys(fullTagsList).length === 1) {
+            recipesListIds = [...Object.values(fullTagsList)[0]];
+          } else {
+            mergedArray = mergeList(fullTagsList);
+            console.log("11 - mergedArray: ", mergedArray);
+            mergedArray = [...recipesListIds, ...mergedArray];
+            recipesListIds = getDupeIds(mergedArray);
+            console.log("recipesListIds After: ", recipesListIds, "/");
+          }
+        }
+  */
+
+
+
+
+
+
+
+
+        function updateSelectedRecipes2(option, itemSelected) {
+            let mergedArray = [];
+            selectedTagDetails = {}; // get individual tag details name and id array / reset for each new tag
+            selectedTagDetails[itemSelected.toLowerCase()] = fullList[itemSelected];
+            fullTagsList[itemSelected.toLowerCase()] = fullList[itemSelected];
+            console.log("- A - fullTagsList: ", fullTagsList);
+            console.log("- B - recipesListIds: ", recipesListIds);
+          
+            switch (option) {
+              case "added":
+                fullTagsList = { ...fullTagsList, ...selectedTagDetails };
+                if (recipesListIds.length === 0) {
+                  recipesListIds = [...Object.values(selectedTagDetails)[0]];
+                  console.log("1 - recipesListIds: ", recipesListIds);
+                } else {
+                  recipesListIds = [
+                    ...recipesListIds,
+                    ...Object.values(selectedTagDetails)[0],
+                  ];
+                  console.log("2--- - recipesListIds: ", recipesListIds);
+                  mergedArray = getDupeIds(recipesListIds);
+                  recipesListIds = [...mergedArray];
+                  console.log("2 - recipesListIds: ", recipesListIds);
+                }
+                createCriteriaList(recipesListIds);
+                displayRecipes(recipesListIds);
+                displayNumberOfRecipes(recipesListIds.length);
+                closeAllSelectors();
+                break;
+          
+              case "removed":
+              // no more tag remaining / check if "mainSearchInputIdList" exists 
+                if (Object.keys(fullTagsList).length === 1) {
+                  fullTagsList = {};
+                  if (mainSearchInputIdList) {
+                    recipesListIds = [...mainSearchInputIdList];
+                  }
+              } else {
+                  // tag is removed from the list 
+                  delete fullTagsList[`${itemSelected}`.toLowerCase()];
+                  // One tag remaining
+                  /* if (Object.keys(fullTagsList).length >= 1) { */
+                      mergedArray = mergeList(fullTagsList);
+                      console.log("11 - mergedArray: ", mergedArray);
+                      mergedArray = [...recipesListIds, ...mergedArray];
+                      recipesListIds = getDupeIds(mergedArray);
+              }
+          /*    
+                } else {
+                  // tag is removed from the list 
+                  delete fullTagsList[`${itemSelected}`.toLowerCase()];
+                  console.log("After: ", fullTagsList, "/");
+                  if (Object.keys(fullTagsList).length === 1) {
+                    recipesListIds = [...Object.values(fullTagsList)[0]];
+                  } else {
+                    mergedArray = mergeList(fullTagsList);
+                    console.log("11 - mergedArray: ", mergedArray);
+                    mergedArray = [...recipesListIds, ...mergedArray];
+                    recipesListIds = getDupeIds(mergedArray);
+                    console.log("recipesListIds After: ", recipesListIds, "/");
+                  }
+                }
+          */
+          
+          
+                if (
+                  mainSearchInputIdList.length === 0 &&
+                  recipesListIds.length === 0 &&
+                  Object.keys(fullTagsList).length === 0
+                ) {
+                  console.log("=========  N O T H I N G  T O  D I S P L A Y =======");
+                  updateAllCriteriaLists();
+                  displayRecipes(recipesListIds);
+                  displayNumberOfRecipes(0);
+                  closeAllSelectors();
+                  resetSearch();
+                } else {
+                  console.log("=========  K E E P  G O I N G ... =======");
+                  createCriteriaList(recipesListIds);
+                  displayRecipes(recipesListIds);
+                  displayNumberOfRecipes(recipesListIds.length);
+                }
+                break;
+          
+              default:
+            }
+          }
+          
+  

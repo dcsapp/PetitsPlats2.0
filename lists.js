@@ -165,6 +165,10 @@ function retrieveRecipes(inputValue, inputBox) {
       if (selectedRecipesUstensils.length === 0) {
         selectedRecipesUstensils = [...Object.keys(listOfUstensils).sort()];
       }
+      console.log("list of ustensils: ", listOfUstensils);
+      console.log("=================================================");
+      console.log("current list of ustensils: ", selectedRecipesUstensils);
+      console.log("current searchString : ", searchString);
       currentRecipes.clear();
       localSearch = [];
       selectedRecipesUstensils.forEach((item) => {
@@ -362,4 +366,3 @@ function createCriteriaList(listID) {
   updateCriteriaList("appliances", selectedRecipesAppliances);
   updateCriteriaList("ustensils", selectedRecipesUstensils);
 }
-

@@ -43,11 +43,33 @@
 // ----------> D - display recipes
 //
 
-function updateSelectedRecipes(option, itemSelected) {
+function updateSelectedRecipes(option, selector, itemSelected) {
   let mergedArray = [];
   selectedTagDetails = {}; // get individual tag details name and id array / reset for each new tag
-  selectedTagDetails[itemSelected.toLowerCase()] = fullList[itemSelected];
-  fullTagsList[itemSelected.toLowerCase()] = fullList[itemSelected];
+
+  switch (selector) {
+    case "ingredients":
+      selectedTagDetails[itemSelected.toLowerCase()] =
+        listOfIngredients[itemSelected];
+      fullTagsList[itemSelected.toLowerCase()] =
+        listOfIngredients[itemSelected];
+      break;
+
+    case "ustensils":
+      selectedTagDetails[itemSelected.toLowerCase()] =
+        listOfUstensils[itemSelected];
+      fullTagsList[itemSelected.toLowerCase()] = listOfUstensils[itemSelected];
+      break;
+
+    case "appliances":
+      selectedTagDetails[itemSelected.toLowerCase()] =
+        listOfAppliances[itemSelected];
+      fullTagsList[itemSelected.toLowerCase()] = listOfAppliances[itemSelected];
+      break;
+
+    default:
+      console.log("error");
+  }
   console.log("- A - fullTagsList: ", fullTagsList);
   console.log("- B - recipesListIds: ", recipesListIds);
 
@@ -74,23 +96,21 @@ function updateSelectedRecipes(option, itemSelected) {
       break;
 
     case "removed":
+      // no more tag remaining / check if "mainSearchInputIdList" exists
       if (Object.keys(fullTagsList).length === 1) {
         fullTagsList = {};
         if (mainSearchInputIdList) {
           recipesListIds = [...mainSearchInputIdList];
         }
       } else {
+        // tag is removed from the list
         delete fullTagsList[`${itemSelected}`.toLowerCase()];
-        console.log("After: ", fullTagsList, "/");
-        if (Object.keys(fullTagsList).length === 1) {
-          recipesListIds = [...Object.values(fullTagsList)[0]];
-        } else {
-          mergedArray = mergeList(fullTagsList);
-          console.log("11 - mergedArray: ", mergedArray);
-          mergedArray = [...recipesListIds, ...mergedArray];
-          recipesListIds = getDupeIds(mergedArray);
-          console.log("recipesListIds After: ", recipesListIds, "/");
-        }
+        // One tag remaining
+        /* if (Object.keys(fullTagsList).length >= 1) { */
+        mergedArray = mergeList(fullTagsList);
+        console.log("11 - mergedArray: ", mergedArray);
+        mergedArray = [...recipesListIds, ...mergedArray];
+        recipesListIds = getDupeIds(mergedArray);
       }
       if (
         mainSearchInputIdList.length === 0 &&
@@ -118,9 +138,12 @@ function updateSelectedRecipes(option, itemSelected) {
 function mergeList(arr) {
   let mergedArr = [];
   for (let i = 0; i < Object.values(arr).length; i++) {
-  //  console.log("iteration: ", i, "/arr item: ", Object.values(arr)[i]);
+    //  console.log("iteration: ", i, "/arr item: ", Object.values(arr)[i]);
     mergedArr = [...mergedArr, ...Object.values(arr)[i]];
-  //  console.log("tempo: ", mergedArr);
+    //  console.log("tempo: ", mergedArr);
+  }
+  if (mainSearchInputIdList) {
+    mergedArr = [...mergedArr, ...mainSearchInputIdList];
   }
   // console.log("merged array: ", mergedArr);
   return mergedArr;
