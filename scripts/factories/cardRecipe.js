@@ -1,6 +1,8 @@
 // R E C I P E  C A R D
 function recipeCardTemplate(recipeID) {
-  let currentRecipe = recipes.filter((currentRecipe) => currentRecipe.id === recipeID); //[recipeIndex];
+  let currentRecipe = recipes.filter(
+    (currentRecipe) => currentRecipe.id === recipeID
+  ); //[recipeIndex];
 
   const pathToImage = "./assets/images/recettes";
   const { image, time, name, description, ingredients } = currentRecipe[0];
@@ -18,8 +20,8 @@ function recipeCardTemplate(recipeID) {
     const recipeDuration = document.createElement("div");
     recipeDuration.classList.add("reciCard__duration");
     const recipeDuration__text = document.createElement("p");
-    recipeDuration.appendChild(recipeDuration__text)
-    recipeDuration__text.textContent = `${time}min`;
+    recipeDuration.appendChild(recipeDuration__text);
+    recipeDuration__text.textContent = `${time} min`;
     article.appendChild(recipeDuration);
     //
     article.appendChild(recipeCard__img);
@@ -47,7 +49,7 @@ function recipeCardTemplate(recipeID) {
     recipeDescription__text.classList.add("recipe__description");
     const recipeDescription__shortText = document.createElement("p");
     recipeDescription__shortText.textContent = description;
-    recipeDescription__text.appendChild(recipeDescription__shortText)
+    recipeDescription__text.appendChild(recipeDescription__shortText);
     recipeCard__details.appendChild(recipeDescription__text);
 
     // I N G R E D I E N T S
@@ -63,28 +65,32 @@ function recipeCardTemplate(recipeID) {
     recipeCard__details.appendChild(recipeIngredients__list);
 
     ingredients.forEach((ingredient) => {
-        const ingredientsDetails = document.createElement("div");
-        ingredientsDetails.classList.add("ingredientsDetails");
-        
-        /* Ingredient name */
-        const ingredientName = document.createElement("div");
-        ingredientName.classList.add("ingredientName");
-        ingredientName.textContent = ingredient.ingredient;
-        ingredientsDetails.appendChild(ingredientName);
+      const ingredientsDetails = document.createElement("div");
+      ingredientsDetails.classList.add("ingredientsDetails");
 
-        /* Ingredient quantity / unit */
-        const ingredientQuantityUnit = document.createElement("div");
-        ingredientQuantityUnit.classList.add("ingredientQuantityUnit");
-        if(!ingredient.quantity) {ingredient.quantity = ""}
-        if(!ingredient.unit) {ingredient.unit = ""}
-        ingredientQuantityUnit.textContent = `${ingredient.quantity} ${ingredient.unit}`;
+      /* Ingredient name */
+      const ingredientName = document.createElement("div");
+      ingredientName.classList.add("ingredientName");
+      ingredientName.textContent = ingredient.ingredient;
+      ingredientsDetails.appendChild(ingredientName);
 
-        ingredientsDetails.appendChild(ingredientQuantityUnit);
+      /* Ingredient quantity / unit */
+      const ingredientQuantityUnit = document.createElement("div");
+      ingredientQuantityUnit.classList.add("ingredientQuantityUnit");
+      if (!ingredient.quantity) {
+        ingredient.quantity = "";
+      }
+      if (!ingredient.unit) {
+        ingredient.unit = "";
+      }
+      ingredientQuantityUnit.textContent = `${ingredient.quantity} ${ingredient.unit}`;
 
-        recipeCard__details.appendChild(ingredientsDetails);
-        recipeIngredients__list.appendChild(ingredientsDetails);
-    })
+      ingredientsDetails.appendChild(ingredientQuantityUnit);
+
+      recipeCard__details.appendChild(ingredientsDetails);
+      recipeIngredients__list.appendChild(ingredientsDetails);
+    });
     return article;
   }
   return { getRecipeCard };
-};
+}

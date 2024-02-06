@@ -225,12 +225,13 @@ function updateCriteriaList(criteria, data) {
 // Tag template
 // creation and removal
 //
-function createTag(criteriaItem) {
+function createTag(selectorList, criteriaItem) {
   const recipesTags = document.querySelector("#recipes__tags");
 
   const tagWrapper = document.createElement("div");
   tagWrapper.classList.add("tag__wrapper");
   tagWrapper.setAttribute("data-criteria-tag", `${criteriaItem}`);
+  tagWrapper.setAttribute("data-selector", `${selectorList}`);
   // p
   const tagTitle = document.createElement("p");
   tagTitle.textContent = `${criteriaItem}`;

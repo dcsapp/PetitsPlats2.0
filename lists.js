@@ -338,7 +338,6 @@ function createCriteriaList(listID) {
   console.log("L I S T   I D: ", listID);
   //
   if (listID === 0) {
-    // updateAllCriteriaLists();
     return;
   }
   //

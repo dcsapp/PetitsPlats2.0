@@ -18,6 +18,8 @@ updateAllCriteriaLists();
 // console.log("listOfUstensils", listOfUstensils)
 // console.log("listOfAppliances", listOfAppliances)
 
+// displayNumberOfRecipes(recipes.length);
+
 // Insert cursor in the main input search bar when the page is loaded
 window.onload = function () {
   mainSearchInput.focus();

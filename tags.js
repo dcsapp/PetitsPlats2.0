@@ -96,15 +96,20 @@ function updateSelectedRecipes(option, selector, itemSelected) {
       break;
 
     case "removed":
+      console.log("Remove area: NBR", Object.keys(fullTagsList).length);
       // no more tag remaining / check if "mainSearchInputIdList" exists
       if (Object.keys(fullTagsList).length === 1) {
+        console.log("no more tags...");
         fullTagsList = {};
         if (mainSearchInputIdList) {
           recipesListIds = [...mainSearchInputIdList];
         }
-      } else {
+      } else if (Object.keys(fullTagsList).length > 1) {
+        console.log("Remove area: ELSE: ", Object.keys(fullTagsList).length);
         // tag is removed from the list
+        console.log("before remaining tag: ", fullTagsList, itemSelected);
         delete fullTagsList[`${itemSelected}`.toLowerCase()];
+        console.log("remaining tag: ", fullTagsList);
         // One tag remaining
         /* if (Object.keys(fullTagsList).length >= 1) { */
         mergedArray = mergeList(fullTagsList);

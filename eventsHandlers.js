@@ -45,6 +45,7 @@ function getData(e) {
       if (fullTagsList) {
         cleanTags();
       }
+      closeAllSelectors();
       // As long as number of caracters is less than 3 nothing happens
       if (inputValue.length < 3) {
         recipesListIds.length = 0;
@@ -189,8 +190,8 @@ function tagHandling(e) {
         console.log("==> Item for tag / false: ", liCriteria);
         // createTag(selectedItem.dataset.criteriaLi); // template
         selectedItem.dataset.selected = "true";
-        console.log("==> Status updated to true: ", liCriteria);
-        createTag(liCriteria); // template
+        console.log("==> Status updated to true: ", liCriteria, listSelector);
+        createTag(listSelector, liCriteria); // template
         updateSelectedRecipes("added", listSelector, liCriteria);
         // updateTagList("added", liCriteria);
         // return;
@@ -198,9 +199,10 @@ function tagHandling(e) {
         console.log("enter R E M O V E  li", selectedItem);
         selectedItem.dataset.selected = "false";
         console.log("updated li", selectedItem);
+        console.log("listSelector", listSelector);
         // tag is removed
         removeTag(liCriteria); // template
-
+        console.log("removed", listSelector, liCriteria);
         updateSelectedRecipes("removed", listSelector, liCriteria);
         // updateTagList("removed", liCriteria);
         // updateData()
@@ -213,7 +215,8 @@ function tagHandling(e) {
   // if (e.target.matches(".tag__wrapper")) {
   if (tagsDisplayed) {
     let dataCriteriaLi = tagsDisplayed.dataset.criteriaTag;
-    console.log("M A T C H !!!!!!!", dataCriteriaLi);
+    let listSelector = tagsDisplayed.dataset.selector;
+    console.log("M A T C H !!!!!!!", tagsDisplayed.dataset);
     // targets li criteria ref:
     console.log("D A T A  L I  C R I T E R I A $$$$$", dataCriteriaLi);
     let liSelectedItem = document.querySelector(
@@ -226,7 +229,7 @@ function tagHandling(e) {
     // selectedItem.remove(); // remove tag
     tagsDisplayed.remove();
     // updateTagList("removed", dataCriteriaLi); // liSelectedItem);
-    updateSelectedRecipes("removed", dataCriteriaLi);
+    updateSelectedRecipes("removed", listSelector, dataCriteriaLi);
   }
 }
 //
@@ -283,6 +286,10 @@ const resetFromSiteTitle = document.querySelector("#logo");
 resetFromSiteTitle.addEventListener("click", resetSearch); // clearInputField);
 //
 function resetSearch() {
+  location.reload();
+}
+
+function resetSearch2() {
   console.log("R E S E T  S E A R C H . . .");
   selectedRecipesIngredients = [];
   selectedRecipesUstensils = [];
@@ -293,13 +300,12 @@ function resetSearch() {
   document.getElementById("recipesSelected").replaceChildren();
   document.getElementById("message").replaceChildren();
   document.getElementById("recipes__tags").replaceChildren();
-
   closeAllSelectors();
   updateAllCriteriaLists();
   displayNumberOfRecipes(0);
 }
 
-function clearInputField(e) {
+function clearInputField() {
   console.log(
     "cross clear input Selected field: ",
     e.target.closest(".clearSearch")
@@ -342,7 +348,7 @@ function displayNoRecipeFound(msg, option) {
   const messageSection = document.getElementById("message");
   if (option === "ON") {
     console.log("message: ", msg);
-    const message = `Aucune recette ne contient <strong>"${msg}"</strong>,</br> 
+    const message = `Aucune recette contient <strong>"${msg}"</strong>.</br> 
     Vous pouvez chercher <strong>"tarte aux pommes"</strong>, <strong>"poisson",</strong> etc.  ou utiliser la recherche avancée.`;
     messageSection.replaceChildren();
     messageSection.innerHTML += `<p> ${message} </p>`;
