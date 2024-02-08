@@ -1932,3 +1932,87 @@ function resetSearch2() {
       // selected recipe(s) are displayed
       displayRecipes(recipesListIds);
  */
+
+
+// ==============================================================================
+
+// L I S T  H A N D L I N G
+// =============================================================
+//
+// R E T R I E V E  D A T A  F R O M  R E C I P E S
+// Feed differents lists according to input box used (crit):
+//    mainSearch / ingredients / appliances / ustensils
+//
+function createCriteriaListByItems(listItems, inputBox, inputValue) {
+    console.log(
+      "----  E N T E R I N G  C R E A T E  C R I T E R I A  L I S T  B Y  N A M E -----"
+    );
+    console.log("createCriteriaListByItems ==> 1,", listItems);
+    console.log("createCriteriaListByItems ==> 2,", inputBox);
+    console.log("createCriteriaListByItems ==> 3,", inputValue);
+  
+    const ingList = document.querySelectorAll(".recipeItem");
+    console.log("ingList: ", ingList);
+    ingList.forEach((ing) => {
+      if (ing.parentElement.classList.contains(`ul-${inputBox}`)) {
+        // (`${inputBox}`)){
+        console.log(ing.textContent, " / ", ing.parentElement);
+      } else {
+        console.log("nothoing");
+      }
+    });
+  
+    const setOfIngredients = new Set();
+    const setOfUstensils = new Set();
+    const setOfAppliances = new Set();
+  
+    switch (inputBox) {
+      case "ingredients":
+        for (const [key, value] of Object.entries(listOfIngredients)) {
+          if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
+            console.log(
+              "// ingredient added to the list Ingredients =================="
+            );
+            setOfIngredients.add(`${key}`);
+          }
+        }
+        break;
+  
+      case "ustensils":
+        for (const [key, value] of Object.entries(listOfUstensils)) {
+          if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
+            console.log(
+              "// ingredient added to the list Ustensils =================="
+            );
+            setOfUstensils.add(`${key}`);
+          }
+        }
+        break;
+  
+      case "appliances":
+        for (const [key, value] of Object.entries(listOfAppliances)) {
+          if (`${key}`.toLowerCase().includes(inputValue.toLowerCase())) {
+            console.log(
+              "// ingredient added to the list Appliances =================="
+            );
+            setOfAppliances.add(`${key}`);
+          }
+        }
+        break;
+  
+      default:
+        console.log("erreur");
+    }
+  
+    selectedRecipesIngredients = [...setOfIngredients].sort();
+    updateCriteriaList("ingredients", selectedRecipesIngredients);
+    selectedRecipesUstensils = [...setOfUstensils].sort();
+    updateCriteriaList("ustensils", selectedRecipesUstensils);
+    selectedRecipesAppliances = [...setOfAppliances].sort();
+    updateCriteriaList("appliances", selectedRecipesAppliances);
+  }
+  // ====================================================================================
+  
+  console.log(
+    "----  E N T E R I N G  C R E A T E  C R I T E R I A  L I S T  -  reduce -----"
+  );

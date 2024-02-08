@@ -70,24 +70,19 @@ function updateSelectedRecipes(option, selector, itemSelected) {
     default:
       console.log("error");
   }
-  console.log("- A - fullTagsList: ", fullTagsList);
-  console.log("- B - recipesListIds: ", recipesListIds);
 
   switch (option) {
     case "added":
       fullTagsList = { ...fullTagsList, ...selectedTagDetails };
       if (recipesListIds.length === 0) {
         recipesListIds = [...Object.values(selectedTagDetails)[0]];
-        console.log("1 - recipesListIds: ", recipesListIds);
       } else {
         recipesListIds = [
           ...recipesListIds,
           ...Object.values(selectedTagDetails)[0],
         ];
-        console.log("2--- - recipesListIds: ", recipesListIds);
         mergedArray = getDupeIds(recipesListIds);
         recipesListIds = [...mergedArray];
-        console.log("2 - recipesListIds: ", recipesListIds);
       }
       createCriteriaList(recipesListIds);
       displayRecipes(recipesListIds);
@@ -96,21 +91,16 @@ function updateSelectedRecipes(option, selector, itemSelected) {
       break;
 
     case "removed":
-      console.log("E N T E R I N G  R E M O V E D . . .");
-      console.log("Tags list: ", fullTagsList);
-      console.log("======================================");
-
       // 1 - if at least 1 tag is displayed it is removed
       if (Object.keys(fullTagsList).length > 0) {
         delete fullTagsList[`${itemSelected}`.toLowerCase()];
-        console.log("Tags list at step one: ", fullTagsList);
       }
       console.log("Number of tags: ", Object.keys(fullTagsList).length);
       // 2 - if no more tag remaining check if "mainSearchInputList" is not empty.
       //     if not the "recipesListIds" is filled with "mainSearchInputList"
       //     otherwise "recipesListIds" is empty
       if (Object.keys(fullTagsList).length === 0) {
-        console.log("no more tags...");
+        // no more tags
         fullTagsList = {};
         if (mainSearchInputIdList) {
           recipesListIds = [...mainSearchInputIdList];
@@ -139,20 +129,19 @@ function updateSelectedRecipes(option, selector, itemSelected) {
           console.log("recipe List IDs: ", recipesListIds);
         }
       }
-
       if (
         mainSearchInputIdList.length === 0 &&
         recipesListIds.length === 0 &&
         Object.keys(fullTagsList).length === 0
       ) {
-        console.log("=========  N O T H I N G  T O  D I S P L A Y =======");
+        // =========  N O T H I N G  T O  D I S P L A Y ======
         updateAllCriteriaLists();
         displayRecipes(recipesListIds);
         displayNumberOfRecipes(0);
         closeAllSelectors();
         resetSearch();
       } else {
-        console.log("=========  K E E P  G O I N G ... =======");
+        // =========  D I S P L A Y  R E S U L T  =======
         createCriteriaList(recipesListIds);
         displayRecipes(recipesListIds);
         displayNumberOfRecipes(recipesListIds.length);
@@ -169,15 +158,12 @@ function mergeList(arr) {
     mergedArr = [...Object.values(arr)[0]];
   } else {
     for (let i = 0; i < Object.values(arr).length; i++) {
-      //  console.log("iteration: ", i, "/arr item: ", Object.values(arr)[i]);
       mergedArr = [...mergedArr, ...Object.values(arr)[i]];
-      //  console.log("tempo: ", mergedArr);
     }
   }
   if (mainSearchInputIdList) {
     mergedArr = [...mergedArr, ...mainSearchInputIdList];
   }
-  // console.log("merged array: ", mergedArr);
   return mergedArr;
 }
 

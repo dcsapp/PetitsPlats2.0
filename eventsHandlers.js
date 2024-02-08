@@ -252,15 +252,12 @@ function resetInputField(e) {
       // B - At least 1 recipe selected when current selection is cancelled
       //     Re-instate previous status
       //
-      console.log("avant: ", recipesListIds, "/ local: ");
+      
       updateCriteriaList("ingredients", selectedRecipesIngredients);
-      console.log("apres: ", recipesListIds, "/ local: ");
 
       return;
     }
   }
-  // console.log("input: ", inputName.parentElement.si);// e.target.closest("div").children[0].value="")
-  // console.log("input: ", e.target.closest("div").children[0].value="")
 }
 
 // Reset search if logo is clicked
@@ -283,11 +280,9 @@ function clearInputField() {
     "cross clear input Selected field: ",
     e.target.closest(".clearSearch")
   );
-  // console.log("cross clear input Selected field: ", selectedField);
   // Hide cross icon
   selectedField.closest(".clearSearch").style.display = "none";
-  // e.target.closest("span").style.display = "none";
-
+  
   // Suppress displayed recipes
   console.log("===============!!!!!!!!!=============");
   document.getElementById("recipesSelected").replaceChildren();
@@ -297,7 +292,6 @@ function clearInputField() {
 }
 
 function displayRecipes(listID) {
-  console.log("===> Entering Display recipes ");
   const recipeDisplaySection = document.getElementById("recipesSelected");
   recipeDisplaySection.replaceChildren();
   //
@@ -325,8 +319,6 @@ function displayNoRecipeFound(msg, option) {
 
 function displayResetCross(inputFieldName, onOff) {
   const toBeDisplayed = document.querySelector(`.${inputFieldName}`);
-  // console.log("toBeDisplayed", toBeDisplayed);
-  // console.log("inputFieldName", inputFieldName);
   if (onOff === "ON") {
     toBeDisplayed.style.display = "flex";
   }
