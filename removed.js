@@ -1856,3 +1856,40 @@ console.log("array: ", [...a, ...b, ...c, ...d]);
           }
           
   
+
+
+
+      // delete fullTagsList[`${itemSelected}`.toLowerCase()];
+
+      /* 
+      console.log("Remove area: NBR", Object.keys(fullTagsList).length);
+      //  
+      if (Object.keys(fullTagsList).length === 1) {
+        console.log("no more tags...");
+        fullTagsList = {};
+        if (mainSearchInputIdList) {
+          recipesListIds = [...mainSearchInputIdList];
+        }
+      } else if (Object.keys(fullTagsList).length > 1) {
+        console.log("Remove area: ELSE: ", Object.keys(fullTagsList).length);
+        // tag is removed from the list
+        console.log("before remaining tag: ", fullTagsList, itemSelected);
+        delete fullTagsList[`${itemSelected}`.toLowerCase()];
+        console.log("remaining tag: ", fullTagsList);
+        // One tag remaining
+        // if (Object.keys(fullTagsList).length >= 1) { 
+        mergedArray = mergeList(fullTagsList);
+        console.log("11 - mergedArray: ", mergedArray);
+        mergedArray = [...recipesListIds, ...mergedArray];
+        recipesListIds = getDupeIds(mergedArray);
+      }
+ */
+
+
+
+  if (e.which === 9) {
+    console.log("===============")
+    e.preventDefault()
+    return;
+    // Do Something, may be an 'Undo' operation
+  }

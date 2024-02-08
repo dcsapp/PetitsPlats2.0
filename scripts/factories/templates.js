@@ -85,6 +85,7 @@ function createCriteriaSelectors(criteria, criteriaTitle) {
   const inputBox = document.createElement("input");
   inputBox.setAttribute("id", `criteriaBox${criteria}`);
   inputBox.classList.add("inputFieldSelector");
+  inputBox.setAttribute("tabIndex", "-1");
   inputBox.setAttribute("data-name", `${criteria}`);
   criteriaInput.appendChild(inputBox);
   // label

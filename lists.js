@@ -15,11 +15,11 @@ let tagRecipeIdList = [];
 
 // S E A R C H  I N P U T  L I S T S
 // Recipe IDs from main bar search:
-let mainTagList = [];
+// let mainTagList = [];
 let mainSearchInputIdList = [];
 // Recipe IDs from selectors item / ID
 
-let tryTest = {};
+// let tryTest = {};
 let fullTagsList = {};
 
 // R E S U L T  O F  S E A R C H E S  I N P U T  B O X E S

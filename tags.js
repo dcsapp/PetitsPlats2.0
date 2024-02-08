@@ -96,27 +96,50 @@ function updateSelectedRecipes(option, selector, itemSelected) {
       break;
 
     case "removed":
-      console.log("Remove area: NBR", Object.keys(fullTagsList).length);
-      // no more tag remaining / check if "mainSearchInputIdList" exists
-      if (Object.keys(fullTagsList).length === 1) {
+      console.log("E N T E R I N G  R E M O V E D . . .");
+      console.log("Tags list: ", fullTagsList);
+      console.log("======================================");
+
+      // 1 - if at least 1 tag is displayed it is removed
+      if (Object.keys(fullTagsList).length > 0) {
+        delete fullTagsList[`${itemSelected}`.toLowerCase()];
+        console.log("Tags list at step one: ", fullTagsList);
+      }
+      console.log("Number of tags: ", Object.keys(fullTagsList).length);
+      // 2 - if no more tag remaining check if "mainSearchInputList" is not empty.
+      //     if not the "recipesListIds" is filled with "mainSearchInputList"
+      //     otherwise "recipesListIds" is empty
+      if (Object.keys(fullTagsList).length === 0) {
         console.log("no more tags...");
         fullTagsList = {};
         if (mainSearchInputIdList) {
           recipesListIds = [...mainSearchInputIdList];
+        } else {
+          recipesListIds = [];
         }
-      } else if (Object.keys(fullTagsList).length > 1) {
-        console.log("Remove area: ELSE: ", Object.keys(fullTagsList).length);
-        // tag is removed from the list
-        console.log("before remaining tag: ", fullTagsList, itemSelected);
-        delete fullTagsList[`${itemSelected}`.toLowerCase()];
-        console.log("remaining tag: ", fullTagsList);
-        // One tag remaining
-        /* if (Object.keys(fullTagsList).length >= 1) { */
+        // 3 - the "recipesListIds" is updated with the remaining tags
+        //     and if it exits with the "mainSearchInputList"
+        //     done in mergeList function
+        //     all tags ID are merged in one array and with the "mainSearchInputIdList"
+        //     the returned array is cleanup with the removal of dupe IDs
+      } else {
         mergedArray = mergeList(fullTagsList);
-        console.log("11 - mergedArray: ", mergedArray);
-        mergedArray = [...recipesListIds, ...mergedArray];
-        recipesListIds = getDupeIds(mergedArray);
+        console.log(
+          "Full tag list: ",
+          fullTagsList,
+          "/ Merged array: ",
+          mergedArray
+        );
+        // if only one tag is remaining and "mainSearchInputIdList" is empty
+        // no need to to trigger the dupe function
+        if (Object.keys(fullTagsList).length === 1 && mainSearchInputIdList.length === 0) {
+          recipesListIds = [...mergedArray];
+        } else {
+          recipesListIds = getDupeIds(mergedArray);
+          console.log("recipe List IDs: ", recipesListIds);
+        }
       }
+
       if (
         mainSearchInputIdList.length === 0 &&
         recipesListIds.length === 0 &&
@@ -142,10 +165,14 @@ function updateSelectedRecipes(option, selector, itemSelected) {
 
 function mergeList(arr) {
   let mergedArr = [];
-  for (let i = 0; i < Object.values(arr).length; i++) {
-    //  console.log("iteration: ", i, "/arr item: ", Object.values(arr)[i]);
-    mergedArr = [...mergedArr, ...Object.values(arr)[i]];
-    //  console.log("tempo: ", mergedArr);
+  if (Object.values(arr).length === 1) {
+    mergedArr = [...Object.values(arr)[0]];
+  } else {
+    for (let i = 0; i < Object.values(arr).length; i++) {
+      //  console.log("iteration: ", i, "/arr item: ", Object.values(arr)[i]);
+      mergedArr = [...mergedArr, ...Object.values(arr)[i]];
+      //  console.log("tempo: ", mergedArr);
+    }
   }
   if (mainSearchInputIdList) {
     mergedArr = [...mergedArr, ...mainSearchInputIdList];

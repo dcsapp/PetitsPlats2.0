@@ -20,13 +20,16 @@
 //        mainSearch / ingredients / ustensils / appliances
 const inputBoxContent = document.querySelector("body");
 /* inputBoxContent.addEventListener("keyup", getData); */
-inputBoxContent.addEventListener("input", getData);
+inputBoxContent.addEventListener("keyup", getData);
 
 function getData(e) {
   // get location of search: mainsearch bar or from selectors (ingredients/ustensils/appliances)
   let inputBox = e.target.dataset.name;
   let inputBoxClassName = `${inputBox}CloseCross`;
   let inputValue = e.target.closest("input").value;
+  let keyValue = e.target.closest("input").keyValue;
+  console.log("key Value : ", keyValue);
+
   //
   console.log("key pressed: ", inputValue);
   //
@@ -41,9 +44,11 @@ function getData(e) {
   switch (inputBox) {
     case "mainSearchInput":
       // If data are in inserted in main search bar and tags are displayed
-      // au all tags data are removed (data & display)
+      // all tags data are removed (data & display) and reset number of recipes
       if (fullTagsList) {
         cleanTags();
+        updateAllCriteriaLists()
+        displayNumberOfRecipes(0);
       }
       closeAllSelectors();
       // As long as number of caracters is less than 3 nothing happens
@@ -51,6 +56,7 @@ function getData(e) {
         recipesListIds.length = 0;
         recipesListIds = [];
         mainSearchInputIdList = [];
+        displayNoRecipeFound("", "OFF");
         // 3 or more carateres get recipes IDs
       } else {
         recipesListIds = retrieveRecipes(inputValue, inputBox);
