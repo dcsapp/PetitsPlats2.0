@@ -70,6 +70,8 @@ const newRecipes = recipes.reduce((acc, recipe) => {
 */
 
 // All in one
+// Create lists of item and associated ID
+// 
 function iuaVsRecipeId() {
   // iua: i ngredients  u stensils  a ppliance
   const getListOfIngredients = {};

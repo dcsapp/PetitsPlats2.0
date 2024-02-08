@@ -1893,3 +1893,42 @@ console.log("array: ", [...a, ...b, ...c, ...d]);
     return;
     // Do Something, may be an 'Undo' operation
   }
+
+
+
+function resetSearch2() {
+    console.log("R E S E T  S E A R C H . . .");
+    selectedRecipesIngredients = [];
+    selectedRecipesUstensils = [];
+    selectedRecipesAppliances = [];
+    recipesListIds = [];
+    fullTagsList = {};
+    mainSearchInputIdList = [];
+    document.getElementById("recipesSelected").replaceChildren();
+    document.getElementById("message").replaceChildren();
+    document.getElementById("recipes__tags").replaceChildren();
+    closeAllSelectors();
+    updateAllCriteriaLists();
+    displayNumberOfRecipes(0);
+  }
+  
+
+
+      /* 
+
+        recipesListIds = retrieveRecipes(inputValue, inputBox);
+        // if no recipes found message is displayed
+        if (recipesListIds.length === 0) {
+          displayRecipes([]);
+          displayNoRecipeFound(inputValue, "ON");
+        } else {
+          displayNoRecipeFound(inputValue, "OFF");
+        }
+        // recipes IDs selected from this input is store for tags handling
+        mainSearchInputIdList = [...recipesListIds];
+        // create/update selectors dropdown lists
+        createCriteriaList(recipesListIds);
+      }
+      // selected recipe(s) are displayed
+      displayRecipes(recipesListIds);
+ */
