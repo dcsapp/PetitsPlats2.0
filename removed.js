@@ -2016,3 +2016,74 @@ function createCriteriaListByItems(listItems, inputBox, inputValue) {
   console.log(
     "----  E N T E R I N G  C R E A T E  C R I T E R I A  L I S T  -  reduce -----"
   );
+
+
+
+
+function displayRecipes(listID) {
+    const recipeDisplaySection = document.getElementById("recipesSelected");
+    recipeDisplaySection.replaceChildren();
+  
+    for(let id in listIDg) {
+      console.log("idddddd", id)
+  }
+    if (listID > 0) {
+      listID.forEach((id) => {
+        const recipeModel = recipeCardTemplate(id);
+        const recipeCard = recipeModel.getRecipeCard();
+        recipeDisplaySection.appendChild(recipeCard);
+      }); 
+    }
+  }
+  
+
+
+function displayRecipes(listID) {
+    const recipeDisplaySection = document.getElementById("recipesSelected");
+    recipeDisplaySection.replaceChildren();
+    if (listID > 0) {
+      listID.forEach((id) => {
+        const recipeModel = recipeCardTemplate(id);
+        const recipeCard = recipeModel.getRecipeCard();
+        recipeDisplaySection.appendChild(recipeCard);
+      });
+    }
+  }
+  
+
+
+
+
+<div class="clearSearch" data-field-ref="mainSearchBar">
+  <i class="fa-solid fa-xmark"></i>
+</div>
+<button class="loopCTA">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+
+<input
+  type="text"
+  id="mainSearchInput"
+  class="searchInput"
+  data-name="mainSearch"
+  placeholder="Rechercher une recette, un ingrédient, ..."
+  autocomplete="off"
+/>
+<label for="search">
+  <span class="clearSearch" data-field-ref="mainSearchBar">
+    <i class="fa-solid fa-xmark"></i>
+  </span>
+  <span class="loopCTA">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </span>
+</label>
+
+
+
+
+
+
+
+
+
+
