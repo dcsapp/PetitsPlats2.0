@@ -2078,7 +2078,22 @@ function displayRecipes(listID) {
   </span>
 </label>
 
+/* 
+function updateCriteriaSelectedItem(criteria, item) {
+const toto = document.querySelector(`.sel_indiv_item${criteria}`);
 
+const ulContent = document.querySelector(`#itemList${criteria}`);
+  // Remove previous ul before update
+  ulContent.replaceChildren();
+
+const selectedIndividualItem__name = document.createElement("p");
+selectedIndividualItem__name.classList.add("para_indv_item", `para_indv_item${criteria}`);
+selectedIndividualItem__name.textContent = `${item}`;
+  // selectedIndividualItem__name.appendChild(selectedIndividualItem__name);
+  //
+toto.appendChild(selectedIndividualItem__name);
+}
+ */
 
 
 

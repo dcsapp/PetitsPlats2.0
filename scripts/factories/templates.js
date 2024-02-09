@@ -12,6 +12,7 @@ function createMainSearchBar() {
   inputBox.setAttribute("id", "mainSearchInput");
   inputBox.classList.add("inputField");
   inputBox.setAttribute("data-name", "mainSearchInput");
+  inputBox.setAttribute("tabindex", "-1");
   inputBox.setAttribute(
     "placeholder",
     "Rechercher une recette, un ingrédient, ..."
@@ -85,7 +86,7 @@ function createCriteriaSelectors(criteria, criteriaTitle) {
   const inputBox = document.createElement("input");
   inputBox.setAttribute("id", `criteriaBox${criteria}`);
   inputBox.classList.add("inputFieldSelector");
-  inputBox.setAttribute("tabIndex", "-1");
+  inputBox.setAttribute("tabindex", "-1");
   inputBox.setAttribute("data-name", `${criteria}`);
   criteriaInput.appendChild(inputBox);
   // label
@@ -114,50 +115,20 @@ function createCriteriaSelectors(criteria, criteriaTitle) {
   criteriaInput.appendChild(inputLabel);
   criteriaWrapper.appendChild(criteriaInput);
   //
-  //
-  // Selected item
-  const selectedIndividualItem = document.createElement("div");
-  selectedIndividualItem.classList.add(
-    "sel_indiv_item",
-    `sel_indiv_item${criteria}`
-  );
-  criteriaWrapper.appendChild(selectedIndividualItem);
-  //
-  /* 
-  const selectedIndividualItem__name = document.createElement("p");
-  selectedIndividualItem__name.classList.add("para_indv_item", `${criteria}CloseCross`);
-  selectedIndividualItem__name.textContent = "para_indv_item";
-  selectedIndividualItem.appendChild(selectedIndividualItem__name);
-  //
-  criteriaWrapper.appendChild(selectedIndividualItem);
- */
-  //
   // List of items
   const selectedItemList = document.createElement("div");
   selectedItemList.classList.add("item__selected");
   selectedItemList.setAttribute("id", `itemList${criteria}`);
+
+  selectedItemList.setAttribute("tabindex", "-1");
   criteriaWrapper.appendChild(selectedItemList);
   // toto.appendChild(selectedItemList);
   //
   //
   criteriaID.appendChild(criteriaWrapper);
 }
-/* 
-function updateCriteriaSelectedItem(criteria, item) {
-const toto = document.querySelector(`.sel_indiv_item${criteria}`);
-
-const ulContent = document.querySelector(`#itemList${criteria}`);
-  // Remove previous ul before update
-  ulContent.replaceChildren();
-
-const selectedIndividualItem__name = document.createElement("p");
-selectedIndividualItem__name.classList.add("para_indv_item", `para_indv_item${criteria}`);
-selectedIndividualItem__name.textContent = `${item}`;
-  // selectedIndividualItem__name.appendChild(selectedIndividualItem__name);
-  //
-toto.appendChild(selectedIndividualItem__name);
-}
- */
+//
+//
 function updateCriteriaList(criteria, data) {
   // criteria = selector: ingredients / appliances / ustentils
   // data: criteria associated items from:
