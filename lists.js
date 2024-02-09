@@ -355,7 +355,6 @@ function createCriteriaList(listID) {
   });
  */
 for(let id in listID) {
-    console.log("listID.id", listID[id])
     updtIngredientsList = [
         ...updtIngredientsList,
         ...newRecipes[listID[id]].ingredients,

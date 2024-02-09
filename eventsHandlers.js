@@ -297,11 +297,19 @@ function displayRecipes(listID) {
   //
   if (listID === 0) return;
   //
+  /* 
   listID.forEach((id) => {
     const recipeModel = recipeCardTemplate(id);
     const recipeCard = recipeModel.getRecipeCard();
     recipeDisplaySection.appendChild(recipeCard);
   });
+ */
+for( let id in listID) {
+  const recipeModel = recipeCardTemplate(listID[id]);
+    const recipeCard = recipeModel.getRecipeCard();
+    recipeDisplaySection.appendChild(recipeCard);
+}
+
 }
 
 function displayNoRecipeFound(msg, option) {
