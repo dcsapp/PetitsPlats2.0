@@ -24,7 +24,7 @@ let fullTagsList = {};
 
 // R E S U L T  O F  S E A R C H E S  I N P U T  B O X E S
 // List of recipes IDs to be displayed
-// let selectedRecipes = [];
+// let selectedRecipes = []; 
 let recipesListIds = [];
 
 // let selectedTagList = [];
@@ -35,35 +35,20 @@ let recipesListIds = [];
 function updateRecipes(recipe) {
   newRec = {};
   ingredientsList = [];
-  /* 
   let uptd = recipe.ingredients.forEach((ing) => {
     ingredientsList.push(ing.ingredient);
   });
- */
-  for (let i in recipe.ingredients) {
-    ingredientsList.push(recipe.ingredients[i]["ingredient"]);
-  }
   newRec["ingredients"] = ingredientsList;
   newRec["ustensils"] = recipe.ustensils;
   newRec["appliance"] = [recipe.appliance];
-  // console.log("new rec: ", newRec);
+  // console.log("recipe.appliance;", recipe.appliance)
   return newRec;
 }
 //
-/* 
 const newRecipes = recipes.reduce((acc, recipe) => {
   let uptdRecipe = updateRecipes(recipe);
   return { ...acc, [recipe.id]: uptdRecipe };
 }, {});
- */
-// ISO reduce
-const newRecipes = {};
-for (let recipe in recipes) {
-  // console.log("recipe.id:", recipes[recipe]["id"], ":/:", recipes[recipe]);
-  let recipeId = recipes[recipe]["id"];
-  newRecipes[recipeId] = updateRecipes(recipes[recipe]);
-}
-
 /* return 
   2: {
     "ingredients": [
@@ -93,7 +78,6 @@ function iuaVsRecipeId() {
   const getListOfUstensils = {};
   const getListOfAppliances = {};
 
-  /* 
   recipes.forEach((recipe) => {
     let ingredients = recipe.ingredients;
     let ustensils = recipe.ustensils;
@@ -107,42 +91,7 @@ function iuaVsRecipeId() {
         getListOfIngredients[ingredient.ingredient].push(recipe.id);
       }
     });
-
- */
-
-  for (const recipe of recipes) {
-    let ingredients = recipe.ingredients;
-    let ustensils = recipe.ustensils;
-    let appliance = recipe.appliance;
-    //
-    let currentId = recipe["id"];
-
-    // }
-    // ingredients
-    /* 
- ingredients.map((ingredient) => {
-    if (!getListOfIngredients[ingredient.ingredient]) {
-      getListOfIngredients[ingredient.ingredient] = [recipe.id];
-    } else {
-      getListOfIngredients[ingredient.ingredient].push(recipe.id);
-    }
-  });
- */
-    for (const ing in ingredients) {
-      let currentIng = ingredients[ing]["ingredient"];
-      // let currentId = recipe["id"];
-      //console.log("ing: ", currentIng, "/", currentId);
-      if (!getListOfIngredients[currentIng]) {
-        getListOfIngredients[currentIng] = [currentId]; // [recipe.id];
-        // console.log("getListOfIngredients: ", getListOfIngredients);
-      } else {
-        // getListOfIngredients[currentIng].push(currentId);
-        getListOfIngredients[currentIng].push(currentId);
-      }
-    }
-
     // ustensils
-    /*    
     ustensils.map((ustensil) => {
       if (!getListOfUstensils[ustensil]) {
         getListOfUstensils[ustensil] = [recipe.id];
@@ -150,35 +99,21 @@ function iuaVsRecipeId() {
         getListOfUstensils[ustensil].push(recipe.id);
       }
     });
-    */
-    for (ust in ustensils) {
-      let currentUst = ustensils[ust];
-      if (!getListOfUstensils[currentUst]) {
-        getListOfUstensils[currentUst] = [currentId];
-      } else {
-        getListOfUstensils[currentUst].push(currentId);
-      }
-    }
-
     // appliances
-    // no changes with for loop version
     if (!getListOfAppliances[appliance]) {
       getListOfAppliances[appliance] = [recipe.id];
     } else {
       getListOfAppliances[appliance].push(recipe.id);
     }
-  }
+  });
   return { getListOfIngredients, getListOfUstensils, getListOfAppliances };
 }
 
 const alls = iuaVsRecipeId();
 const { getListOfIngredients, getListOfUstensils, getListOfAppliances } = alls;
 const listOfIngredients = getListOfIngredients;
-console.log("listOfIngredients =", getListOfIngredients);
 const listOfUstensils = getListOfUstensils;
-console.log("listOfUstensils =", getListOfUstensils);
 const listOfAppliances = getListOfAppliances;
-console.log("listOfAppliances", getListOfAppliances);
 //
 // 3 lists merged in one
 fullList = { ...listOfIngredients, ...listOfUstensils, ...listOfAppliances };
@@ -188,7 +123,6 @@ function retrieveRecipes(inputValue, inputBox) {
   let currentRecipes = new Set();
   let searchString = inputValue;
   //
-  console.log("inputValue, inputBox", inputValue, inputBox);
   switch (inputBox) {
     case "ingredients":
       if (selectedRecipesIngredients.length === 0) {
@@ -196,23 +130,13 @@ function retrieveRecipes(inputValue, inputBox) {
       }
       // Search in selector ingredients / starst from the first caracter
       // and search in available items in the list
-      currentRecipes.clear();
       localSearch = [];
-      /* 
       selectedRecipesIngredients.forEach((item) => {
         if (item.toLowerCase().startsWith(searchString.toLowerCase())) {
           localSearch.push(item);
           updateCriteriaList("ingredients", localSearch);
         }
       });
-     */
-      for (let ing in selectedRecipesIngredients) {
-        let currentIng = selectedRecipesIngredients[ing];
-        if (currentIng.toLowerCase().startsWith(searchString.toLowerCase())) {
-          localSearch.push(currentIng);
-          updateCriteriaList("ingredients", localSearch);
-        }
-      }
       displayNumberOfRecipes(recipesListIds);
       break;
 
@@ -222,21 +146,12 @@ function retrieveRecipes(inputValue, inputBox) {
       }
       currentRecipes.clear();
       localSearch = [];
-      /* 
       selectedRecipesUstensils.forEach((item) => {
         if (item.toLowerCase().startsWith(searchString.toLowerCase())) {
           localSearch.push(item);
           updateCriteriaList("ustensils", localSearch);
         }
       });
- */
-      for (let ust in selectedRecipesUstensils) {
-        let currentUst = selectedRecipesUstensils[ust];
-        if (currentUst.toLowerCase().startsWith(searchString.toLowerCase())) {
-          localSearch.push(currentUst);
-          updateCriteriaList("ustensils", localSearch);
-        }
-      }
       displayNumberOfRecipes([...currentRecipes].length);
       break;
 
@@ -246,27 +161,17 @@ function retrieveRecipes(inputValue, inputBox) {
       }
       currentRecipes.clear();
       localSearch = [];
-      /* 
       selectedRecipesAppliances.forEach((item) => {
         if (item.toLowerCase().startsWith(searchString.toLowerCase())) {
           localSearch.push(item);
           updateCriteriaList("appliances", localSearch);
         }
       });
- */
-      for (let app in selectedRecipesAppliances) {
-        let currentApp = selectedRecipesAppliances[app];
-        if (currentApp.toLowerCase().startsWith(searchString.toLowerCase())) {
-          localSearch.push(currentApp);
-          updateCriteriaList("ingredients", localSearch);
-        }
-      }
       displayNumberOfRecipes([...currentRecipes].length);
       break;
 
     case "mainSearchInput":
       currentRecipes.clear();
-/* 
       recipes.forEach((recipe) => {
         recipe.ingredients.forEach((item) => {
           // Retrieve ingredients
@@ -285,29 +190,6 @@ function retrieveRecipes(inputValue, inputBox) {
           currentRecipes.add(recipe.id);
         }
       });
- */
-      for(let recipe in recipes) {
-        for(let ing in recipes[recipe]) {
-            // console.log("ID:", recipes[recipe]["id"])
-            let currentId = recipes[recipe]["id"];
-            for(let item in recipes[recipe]["ingredients"]) {
-                let currentIng = recipes[recipe]["ingredients"][item]["ingredient"]
-                // console.log("item", currentIng); //["ingredient"])
-                if (
-                    currentIng.toLowerCase().includes(searchString.toLowerCase())
-                  ) {
-                    currentRecipes.add(currentId);
-                  }
-            }
-            // console.log("name / description:", recipes[recipe]["name"], "/", recipes[recipe]["description"]);
-            if (
-                recipes[recipe]["name"].toLowerCase().includes(searchString.toLowerCase()) ||
-                recipes[recipe]["description"].toLowerCase().includes(searchString.toLowerCase())
-            ) {
-                currentRecipes.add(currentId);
-              }
-        }
-      }
       displayNumberOfRecipes([...currentRecipes].length);
       break;
 
@@ -316,6 +198,8 @@ function retrieveRecipes(inputValue, inputBox) {
   }
   return [...currentRecipes];
 }
+
+
 
 function displayNumberOfRecipes(nbrRecipes) {
   const nbrTxt =
@@ -344,7 +228,6 @@ function createCriteriaList(listID) {
   let updtIngredientsList = [];
   let updtUstensilsList = [];
   //
-  /* 
   listID.forEach((id) => {
     updtIngredientsList = [
       ...updtIngredientsList,
@@ -353,16 +236,6 @@ function createCriteriaList(listID) {
     updtUstensilsList = [...updtUstensilsList, ...newRecipes[id].ustensils];
     setOfAppliances.add(...newRecipes[id].appliance);
   });
- */
-for(let id in listID) {
-    console.log("listID.id", listID[id])
-    updtIngredientsList = [
-        ...updtIngredientsList,
-        ...newRecipes[listID[id]].ingredients,
-      ];
-      updtUstensilsList = [...updtUstensilsList, ...newRecipes[listID[id]].ustensils];
-      setOfAppliances.add(...newRecipes[listID[id]].appliance);
-}
   selectedRecipesIngredients = [...new Set(updtIngredientsList)].sort();
   selectedRecipesUstensils = [...new Set(updtUstensilsList)].sort();
   selectedRecipesAppliances = [...setOfAppliances].sort();
