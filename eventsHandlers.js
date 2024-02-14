@@ -18,6 +18,16 @@
 const inputBoxContent = document.querySelector("body");
 inputBoxContent.addEventListener("keyup", getData);
 
+
+window.addEventListener("keydown",(event) => {
+  if(event.key === "Tab") {
+    // alert();
+    event.preventDefault();
+    // event.defaultPrevented;
+  }
+})
+
+
 function getData(e) {
   // get location of search: mainsearch bar or from selectors (ingredients/ustensils/appliances)
   let inputBox = e.target.dataset.name;
