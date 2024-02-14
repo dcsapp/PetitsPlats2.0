@@ -15,8 +15,17 @@
 //    Reference selector is body in order to access to all input boxes
 //    Each input box has a data attribute data-name=
 //        mainSearch / ingredients / ustensils / appliances
+// const tabIssueInSafari = 
 const inputBoxContent = document.querySelector("body");
-inputBoxContent.addEventListener("input", getData);
+inputBoxContent.addEventListener("keyup", getData);
+
+window.addEventListener("keydown",(event) => {
+    if(event.key === "Tab") {
+      // alert();
+      event.preventDefault();
+      // event.defaultPrevented;
+    }
+  })
 
 function getData(e) {
   // get location of search: mainsearch bar or from selectors (ingredients/ustensils/appliances)
@@ -240,10 +249,6 @@ function resetInputField(e) {
     let inputToBremoved = e.target.closest("div").children[0];
     let inputName = e.target.closest("div").children[0].dataset.name;
 
-    console.log("cross click!!!!!!......", resetSearchCross);
-    console.log("cross inputToBremoved", inputToBremoved); //.dataset.name);
-    console.log("cross inputName", inputName); //.dataset.name);
-    console.log("recipes List Ids", recipesListIds);
     //
     inputToBremoved.value = ""; // input field emptied
     resetSearchCross.style.display = "none";
